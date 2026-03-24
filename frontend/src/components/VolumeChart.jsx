@@ -1,0 +1,106 @@
+import React, { useMemo, useState } from 'react'
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, LineChart, Line,
+} from 'recharts'
+import { startOfWeek, format, addDays } from 'date-fns'
+
+function getWeekKey(date) {
+  const d = new Date(date + 'T12:00:00')
+  const mon = startOfWeek(d, { weekStartsOn: 1 })
+  return format(mon, 'MMM d')
+}
+
+function buildWeeklyData(workouts, weeks) {
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - weeks * 7)
+
+  const map = {}
+  for (const w of workouts) {
+    if (new Date(w.date + 'T12:00:00') < cutoff) continue
+    if (w.status === 'skipped') continue
+    const key = getWeekKey(w.date)
+    if (!map[key]) map[key] = { week: key, swim: 0, bike: 0, run: 0, hours: 0 }
+    if (w.distance_km) {
+      if (w.sport === 'swim') map[key].swim += w.distance_km
+      if (w.sport === 'bike') map[key].bike += w.distance_km
+      if (w.sport === 'run') map[key].run += w.distance_km
+    }
+    if (w.duration_min) map[key].hours += w.duration_min / 60
+  }
+
+  return Object.values(map)
+    .sort((a, b) => new Date(a.week) - new Date(b.week))
+    .map(d => ({
+      ...d,
+      swim: Math.round(d.swim * 10) / 10,
+      bike: Math.round(d.bike * 10) / 10,
+      run: Math.round(d.run * 10) / 10,
+      hours: Math.round(d.hours * 10) / 10,
+    }))
+}
+
+export default function VolumeChart({ workouts }) {
+  const [range, setRange] = useState(8)
+  const [chartType, setChartType] = useState('distance')
+
+  const data = useMemo(() => buildWeeklyData(workouts, range), [workouts, range])
+
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
+        <h2 className="text-lg font-bold text-gray-800">Weekly Volume</h2>
+        <div className="flex gap-2">
+          <div className="flex rounded-lg border border-gray-200 overflow-hidden text-sm">
+            {['distance', 'hours'].map(t => (
+              <button key={t}
+                onClick={() => setChartType(t)}
+                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}>
+                {t === 'distance' ? 'Distance (km)' : 'Hours'}
+              </button>
+            ))}
+          </div>
+          <div className="flex rounded-lg border border-gray-200 overflow-hidden text-sm">
+            {[4, 8, 12].map(w => (
+              <button key={w}
+                onClick={() => setRange(w)}
+                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}>
+                {w}w
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {data.length === 0 ? (
+        <div className="flex items-center justify-center h-48 text-gray-400 text-sm">
+          No completed workouts yet — start logging to see your volume here.
+        </div>
+      ) : chartType === 'distance' ? (
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="week" tick={{ fontSize: 12 }} />
+            <YAxis tick={{ fontSize: 12 }} unit=" km" />
+            <Tooltip formatter={(v, n) => [`${v} km`, n]} />
+            <Legend />
+            <Bar dataKey="swim" name="Swim" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="bike" name="Bike" fill="#f97316" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="run" name="Run" fill="#22c55e" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      ) : (
+        <ResponsiveContainer width="100%" height={280}>
+          <LineChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="week" tick={{ fontSize: 12 }} />
+            <YAxis tick={{ fontSize: 12 }} unit=" h" />
+            <Tooltip formatter={(v) => [`${v} h`, 'Total hours']} />
+            <Line type="monotone" dataKey="hours" name="Hours" stroke="#6366f1" strokeWidth={2}
+              dot={{ r: 4, fill: '#6366f1' }} activeDot={{ r: 6 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  )
+}

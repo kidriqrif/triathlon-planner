@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Protect react-big-calendar from Tailwind's base reset ── */
+.rbc-calendar *,
+.rbc-calendar *::before,
+.rbc-calendar *::after {
+  box-sizing: border-box;
+}
+
+/* Tailwind preflight zeroes these out; restore them for the calendar */
+.rbc-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.rbc-time-header-content {
+  border-left: 1px solid #ddd;
+}
+
+.rbc-time-content {
+  border-top: 2px solid #ddd;
+}
+
+.rbc-timeslot-group {
+  border-bottom: 1px solid #ddd;
+}
+
+.rbc-time-slot {
+  border-top: 1px solid #f7f7f7;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid #ddd;
+}
+
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid #ddd;
+}
+
+.rbc-month-view {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.rbc-agenda-view table.rbc-agenda-table {
+  border: 1px solid #ddd;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
+  border-left: 1px solid #ddd;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  border-bottom: 1px solid #ddd;
+}
+
+/* ── Sport color overrides (applied via eventPropGetter inline styles) ── */
+/* These are fallbacks if class-based approach is used */
+.rbc-event.sport-swim  { background-color: #3b82f6 !important; }
+.rbc-event.sport-bike  { background-color: #f97316 !important; }
+.rbc-event.sport-run   { background-color: #22c55e !important; }
+.rbc-event.sport-brick { background-color: #a855f7 !important; }
+
+/* Ensure rbc-event keeps its default padding that Tailwind may strip */
+.rbc-event {
+  padding: 2px 5px;
+}
+
+.rbc-event-label {
+  font-size: 0.7rem;
+}

@@ -1,0 +1,151 @@
+import React, { useState } from 'react'
+import WorkoutForm from '../components/WorkoutForm'
+import { readableSummary } from '../components/WorkoutBuilder'
+import { brickReadableSummary } from '../components/BrickBuilder'
+import { createWorkout, updateWorkout, deleteWorkout } from '../api'
+
+const SPORT_CONFIG = {
+  swim:  { icon: '🏊', label: 'Swim',  border: 'border-l-blue-400',   badge: 'bg-blue-50 text-blue-700 border-blue-200'   },
+  bike:  { icon: '🚴', label: 'Bike',  border: 'border-l-orange-400', badge: 'bg-orange-50 text-orange-700 border-orange-200' },
+  run:   { icon: '🏃', label: 'Run',   border: 'border-l-green-400',  badge: 'bg-green-50 text-green-700 border-green-200'  },
+  brick: { icon: '🔄', label: 'Brick', border: 'border-l-violet-400', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
+  gym:   { icon: '🏋️', label: 'Gym',   border: 'border-l-rose-400',   badge: 'bg-rose-50 text-rose-700 border-rose-200'    },
+}
+
+const STATUS_CONFIG = {
+  completed: { icon: '✓', color: 'text-emerald-500', bg: 'bg-emerald-50', label: 'Done'    },
+  planned:   { icon: '○', color: 'text-slate-400',   bg: 'bg-slate-50',   label: 'Planned' },
+  skipped:   { icon: '✗', color: 'text-red-400',     bg: 'bg-red-50',     label: 'Skipped' },
+}
+
+const TYPE_LABELS = {
+  easy: 'Easy', tempo: 'Tempo', interval: 'Interval', long: 'Long', recovery: 'Recovery',
+  strength: 'Strength', mobility: 'Mobility', hiit: 'HIIT', circuit: 'Circuit', yoga: 'Yoga',
+}
+
+const FILTER_TABS = ['all', 'completed', 'planned', 'skipped']
+
+export default function LogPage({ workouts, onRefresh }) {
+  const [formState, setFormState] = useState(null)
+  const [filter, setFilter] = useState('all')
+
+  const sorted = [...workouts].sort((a, b) => b.date.localeCompare(a.date))
+  const filtered = filter === 'all' ? sorted : sorted.filter(w => w.status === filter)
+
+  const closeForm = () => setFormState(null)
+
+  const handleSave = async (payload) => {
+    if (formState?.workout) await updateWorkout(formState.workout.id, payload)
+    else await createWorkout(payload)
+    closeForm()
+    onRefresh()
+  }
+
+  const handleDelete = async (id) => {
+    if (!confirm('Delete this workout?')) return
+    await deleteWorkout(id)
+    closeForm()
+    onRefresh()
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800">Workout Log</h1>
+          <p className="text-slate-400 text-sm mt-0.5">{workouts.filter(w => w.status === 'completed').length} sessions completed</p>
+        </div>
+        <button onClick={() => setFormState({ workout: null, defaultDate: null })}
+          className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all shadow-sm">
+          + Log Workout
+        </button>
+      </div>
+
+      {/* Filter tabs */}
+      <div className="flex gap-2">
+        {FILTER_TABS.map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            className={`px-4 py-1.5 rounded-xl text-sm font-bold border-2 capitalize transition-all ${
+              filter === f
+                ? 'bg-slate-800 text-white border-slate-800'
+                : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+            }`}>
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {/* List */}
+      {filtered.length === 0 ? (
+        <div className="text-center py-20 text-slate-400">
+          <div className="text-6xl mb-4">📋</div>
+          <p className="text-lg font-semibold text-slate-500">No workouts here yet</p>
+          <p className="text-sm mt-1">Start logging to track your training</p>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {filtered.map(w => {
+            const sport = SPORT_CONFIG[w.sport] || SPORT_CONFIG.run
+            const status = STATUS_CONFIG[w.status] || STATUS_CONFIG.planned
+            const noteText = (w.sport === 'brick' ? brickReadableSummary(w.notes) : null)
+                          ?? readableSummary(w.notes)
+                          ?? w.notes
+
+            return (
+              <div key={w.id} onClick={() => setFormState({ workout: w, defaultDate: null })}
+                className={`bg-white rounded-2xl border border-slate-100 shadow-sm border-l-4 ${sport.border} cursor-pointer hover:shadow-md hover:border-l-4 transition-all group`}>
+                <div className="p-4 flex items-center gap-4">
+                  {/* Status icon */}
+                  <div className={`w-9 h-9 rounded-xl ${status.bg} flex items-center justify-center shrink-0`}>
+                    <span className={`text-sm font-black ${status.color}`}>{status.icon}</span>
+                  </div>
+
+                  {/* Date */}
+                  <div className="w-20 shrink-0">
+                    <p className="text-xs font-bold text-slate-400 leading-none">
+                      {new Date(w.date + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                    </p>
+                    <p className="text-[10px] text-slate-300 mt-0.5">
+                      {new Date(w.date + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short' })}
+                    </p>
+                  </div>
+
+                  {/* Sport badge */}
+                  <span className={`shrink-0 flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-xl border ${sport.badge}`}>
+                    <span>{sport.icon}</span> {sport.label}
+                  </span>
+
+                  {/* Description */}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold text-slate-700 capitalize">
+                      {TYPE_LABELS[w.workout_type] || w.workout_type}
+                    </p>
+                    {noteText && (
+                      <p className="text-xs text-slate-400 truncate mt-0.5">{noteText}</p>
+                    )}
+                  </div>
+
+                  {/* Stats */}
+                  <div className="text-right text-xs text-slate-400 shrink-0 space-y-0.5">
+                    {w.duration_min && <p className="font-semibold text-slate-600">{w.duration_min}<span className="font-normal text-slate-400"> min</span></p>}
+                    {w.distance_km  && <p>{w.distance_km} km</p>}
+                    {w.rpe          && <p>RPE {w.rpe}</p>}
+                  </div>
+
+                  {/* Arrow hint */}
+                  <span className="text-slate-300 group-hover:text-slate-400 text-sm shrink-0 transition-colors">›</span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
+      {formState !== null && (
+        <WorkoutForm workout={formState.workout} defaultDate={formState.defaultDate}
+          onSave={handleSave} onDelete={handleDelete} onClose={closeForm} />
+      )}
+    </div>
+  )
+}
