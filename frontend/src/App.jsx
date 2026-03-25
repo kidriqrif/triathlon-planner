@@ -6,6 +6,7 @@ import RacesPage from './pages/RacesPage'
 import ProfilePage from './pages/ProfilePage'
 import UpgradePage from './pages/UpgradePage'
 import AuthPage from './pages/AuthPage'
+import LandingPage from './pages/LandingPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
 
@@ -69,9 +70,17 @@ export default function App() {
     setPage('dashboard')
   }
 
-  // Not authenticated — show auth page
+  // Not authenticated — show landing or auth page
   if (!user) {
-    return <AuthPage onAuth={handleAuth} />
+    if (page === 'auth') {
+      return <AuthPage onAuth={handleAuth} />
+    }
+    return (
+      <LandingPage
+        onGetStarted={() => setPage('auth')}
+        onSignIn={() => setPage('auth')}
+      />
+    )
   }
 
   const renderPage = () => {
