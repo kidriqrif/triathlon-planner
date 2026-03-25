@@ -36,36 +36,42 @@ def create_checkout(
 
     variant_id = VARIANT_IDS[plan]
 
-    response = httpx.post(
-        "https://api.lemonsqueezy.com/v1/checkouts",
-        headers={
-            "Authorization": f"Bearer {LEMON_API_KEY}",
-            "Content-Type": "application/vnd.api+json",
-            "Accept": "application/vnd.api+json",
-        },
-        json={
-            "data": {
-                "type": "checkouts",
-                "attributes": {
-                    "checkout_data": {
-                        "email": current_user.email,
-                        "name": current_user.name,
-                        "custom": {
-                            "user_id": str(current_user.id),
+    try:
+        response = httpx.post(
+            "https://api.lemonsqueezy.com/v1/checkouts",
+            headers={
+                "Authorization": f"Bearer {LEMON_API_KEY}",
+                "Content-Type": "application/vnd.api+json",
+                "Accept": "application/vnd.api+json",
+            },
+            json={
+                "data": {
+                    "type": "checkouts",
+                    "attributes": {
+                        "checkout_data": {
+                            "email": current_user.email,
+                            "name": current_user.name,
+                            "custom": {
+                                "user_id": str(current_user.id),
+                            },
                         },
                     },
-                },
-                "relationships": {
-                    "store": {"data": {"type": "stores", "id": STORE_ID}},
-                    "variant": {"data": {"type": "variants", "id": variant_id}},
-                },
-            }
-        },
-        timeout=15,
-    )
+                    "relationships": {
+                        "store": {"data": {"type": "stores", "id": STORE_ID}},
+                        "variant": {"data": {"type": "variants", "id": variant_id}},
+                    },
+                }
+            },
+            timeout=15,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Checkout request failed: {str(e)}")
 
     if response.status_code not in (200, 201):
-        raise HTTPException(status_code=502, detail="Failed to create checkout session")
+        raise HTTPException(
+            status_code=502,
+            detail=f"LemonSqueezy error {response.status_code}: {response.text[:200]}",
+        )
 
     checkout_url = response.json()["data"]["attributes"]["url"]
     return {"checkout_url": checkout_url}
