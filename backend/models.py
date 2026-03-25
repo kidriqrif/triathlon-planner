@@ -46,6 +46,9 @@ class User(Base):
     email = Column(String, unique=True, nullable=False, index=True)
     password_hash = Column(String, nullable=False)
     name = Column(String, nullable=False)
+    plan = Column(String, nullable=False, default="free")  # "free" | "pro"
+    lemon_customer_id = Column(String, nullable=True)
+    lemon_subscription_id = Column(String, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     workouts = relationship("Workout", back_populates="owner")

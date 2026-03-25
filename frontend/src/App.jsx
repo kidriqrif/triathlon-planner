@@ -4,9 +4,10 @@ import PlanPage from './pages/PlanPage'
 import LogPage from './pages/LogPage'
 import RacesPage from './pages/RacesPage'
 import ProfilePage from './pages/ProfilePage'
+import UpgradePage from './pages/UpgradePage'
 import AuthPage from './pages/AuthPage'
-import { getWorkouts, getRaces } from './api'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, LogOut } from 'lucide-react'
+import { getWorkouts, getRaces, getMe } from './api'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
@@ -37,6 +38,17 @@ export default function App() {
       setLoading(false)
     }
   }, [])
+
+  // Refresh user plan from server on mount (catches webhook upgrades)
+  useEffect(() => {
+    if (user) {
+      getMe().then(me => {
+        const updated = { ...user, plan: me.plan }
+        setUser(updated)
+        localStorage.setItem('strelo_user', JSON.stringify(updated))
+      }).catch(() => {})
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (user) fetchAll()
@@ -84,6 +96,7 @@ export default function App() {
       case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
       case 'profile':   return <ProfilePage />
+      case 'upgrade':   return <UpgradePage user={user} />
       default:          return null
     }
   }
@@ -121,6 +134,20 @@ export default function App() {
                 )}
               </button>
             ))}
+
+            {/* Upgrade button (only for free users) */}
+            {user.plan !== 'pro' && (
+              <button
+                onClick={() => setPage('upgrade')}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold transition-all ${
+                  page === 'upgrade'
+                    ? 'bg-amber-400/20 text-amber-300'
+                    : 'text-amber-400/80 hover:text-amber-300 hover:bg-amber-400/10'
+                }`}>
+                <Sparkles size={14} strokeWidth={2} />
+                <span className="hidden md:block">Pro</span>
+              </button>
+            )}
 
             {/* Logout */}
             <button

@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base
 import models  # noqa: F401 — registers models with Base
-from routers import workouts, races, athlete, ai_coach, auth
+from routers import workouts, races, athlete, ai_coach, auth, billing
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +32,7 @@ app.include_router(workouts.router)
 app.include_router(races.router)
 app.include_router(athlete.router)
 app.include_router(ai_coach.router)
+app.include_router(billing.router)
 
 
 @app.get("/health")

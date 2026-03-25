@@ -29,6 +29,7 @@ class MeResponse(BaseModel):
     id: int
     email: str
     name: str
+    plan: str = "free"
 
     model_config = {"from_attributes": True}
 
@@ -57,7 +58,7 @@ def register(payload: RegisterRequest, db: Session = Depends(get_db)):
     db.commit()
 
     token = create_access_token(user.id)
-    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name}}
+    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name, "plan": user.plan}}
 
 
 @router.post("/login", response_model=AuthResponse)
@@ -67,7 +68,7 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     token = create_access_token(user.id)
-    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name}}
+    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name, "plan": user.plan}}
 
 
 @router.get("/me", response_model=MeResponse)

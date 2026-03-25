@@ -70,3 +70,10 @@ export const updateAthlete = (data) =>
 // --- AI ---
 export const suggestWeek = () =>
   api.post('/ai/suggest-week').then(r => r.data)
+
+// --- Billing ---
+export const createCheckout = (plan = 'monthly') =>
+  api.post('/billing/checkout', null, { params: { plan } }).then(r => r.data)
+
+export const getBillingStatus = () =>
+  api.get('/billing/status').then(r => r.data)
