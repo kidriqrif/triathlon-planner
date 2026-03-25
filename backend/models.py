@@ -68,3 +68,13 @@ class Athlete(Base):
     name = Column(String, nullable=False, default="Athlete")
     fitness_level = Column(String, nullable=False, default="intermediate")
     weekly_hours_target = Column(Float, default=8.0)
+
+    # Extended profile
+    age = Column(Integer, nullable=True)
+    weight_kg = Column(Float, nullable=True)
+    swim_pace_100m = Column(String, nullable=True)   # e.g. "1:45"
+    bike_ftp_watts = Column(Integer, nullable=True)   # functional threshold power
+    run_pace_km = Column(String, nullable=True)        # e.g. "5:30" per km
+    preferred_days = Column(String, nullable=True)     # e.g. "Mon,Tue,Thu,Sat,Sun"
+    injuries_notes = Column(Text, nullable=True)
+    goal_description = Column(Text, nullable=True)

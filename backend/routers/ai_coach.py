@@ -149,8 +149,32 @@ def suggest_week(db: Session = Depends(get_db)):
             "suggest a structured training week. Respond ONLY in valid JSON (no markdown, no code fences)."
         )
 
-        user_prompt = f"""Athlete: {athlete.fitness_level}, targeting {race_distance} on {race_date_str} ({days_to_race} days away).
-Current phase: {phase}. Weekly hours target: {athlete.weekly_hours_target}h.
+        # Build athlete profile summary
+        profile_parts = [f"Fitness level: {athlete.fitness_level}"]
+        profile_parts.append(f"Weekly hours target: {athlete.weekly_hours_target}h")
+        if athlete.age:
+            profile_parts.append(f"Age: {athlete.age}")
+        if athlete.weight_kg:
+            profile_parts.append(f"Weight: {athlete.weight_kg} kg")
+        if athlete.swim_pace_100m:
+            profile_parts.append(f"Swim pace: {athlete.swim_pace_100m} per 100m")
+        if athlete.bike_ftp_watts:
+            profile_parts.append(f"Bike FTP: {athlete.bike_ftp_watts} W")
+        if athlete.run_pace_km:
+            profile_parts.append(f"Run pace: {athlete.run_pace_km} per km")
+        if athlete.preferred_days:
+            profile_parts.append(f"Available training days: {athlete.preferred_days}")
+        if athlete.injuries_notes:
+            profile_parts.append(f"Injuries / limitations: {athlete.injuries_notes}")
+        if athlete.goal_description:
+            profile_parts.append(f"Goal: {athlete.goal_description}")
+        athlete_profile = "\n".join(profile_parts)
+
+        user_prompt = f"""Athlete profile:
+{athlete_profile}
+
+Race target: {race_distance} on {race_date_str} ({days_to_race} days away).
+Current phase: {phase}.
 
 Last 4 weeks of training:
 {training_summary}

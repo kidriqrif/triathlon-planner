@@ -8,6 +8,8 @@ const FITNESS_LEVELS = [
   { key: 'advanced',     label: 'Advanced',      desc: '3+ years, competitive goals',     Icon: Flame  },
 ]
 
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
 
 export default function ProfilePage() {
@@ -21,16 +23,45 @@ export default function ProfilePage() {
         name: a.name,
         fitness_level: a.fitness_level,
         weekly_hours_target: a.weekly_hours_target,
+        age: a.age ?? '',
+        weight_kg: a.weight_kg ?? '',
+        swim_pace_100m: a.swim_pace_100m ?? '',
+        bike_ftp_watts: a.bike_ftp_watts ?? '',
+        run_pace_km: a.run_pace_km ?? '',
+        preferred_days: a.preferred_days ?? '',
+        injuries_notes: a.injuries_notes ?? '',
+        goal_description: a.goal_description ?? '',
       }))
       .catch((err) => setError(`Load failed: ${err?.message || err}`))
   }, [])
 
   const set = (f) => (e) => setForm(p => ({ ...p, [f]: e.target.value }))
 
+  const toggleDay = (day) => {
+    setForm(f => {
+      const current = f.preferred_days ? f.preferred_days.split(',') : []
+      const next = current.includes(day) ? current.filter(d => d !== day) : [...current, day]
+      // Keep days in week order
+      const ordered = DAYS.filter(d => next.includes(d))
+      return { ...f, preferred_days: ordered.join(',') }
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await updateAthlete({ ...form, weekly_hours_target: parseFloat(form.weekly_hours_target) })
+      await updateAthlete({
+        ...form,
+        weekly_hours_target: parseFloat(form.weekly_hours_target),
+        age: form.age !== '' ? parseInt(form.age) : null,
+        weight_kg: form.weight_kg !== '' ? parseFloat(form.weight_kg) : null,
+        bike_ftp_watts: form.bike_ftp_watts !== '' ? parseInt(form.bike_ftp_watts) : null,
+        swim_pace_100m: form.swim_pace_100m || null,
+        run_pace_km: form.run_pace_km || null,
+        preferred_days: form.preferred_days || null,
+        injuries_notes: form.injuries_notes || null,
+        goal_description: form.goal_description || null,
+      })
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch {
@@ -66,6 +97,8 @@ export default function ProfilePage() {
     )
   }
 
+  const selectedDays = form.preferred_days ? form.preferred_days.split(',') : []
+
   return (
     <div className="space-y-5 max-w-lg">
       {/* Header */}
@@ -75,11 +108,26 @@ export default function ProfilePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Name */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
-          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Name</label>
-          <input value={form.name} onChange={set('name')} required placeholder="Your name"
-            className={inputCls} />
+        {/* Name + basics */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Basics</p>
+          <div>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Name</label>
+            <input value={form.name} onChange={set('name')} required placeholder="Your name"
+              className={inputCls} />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Age</label>
+              <input type="number" min="10" max="99" value={form.age} onChange={set('age')}
+                placeholder="—" className={inputCls} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Weight (kg)</label>
+              <input type="number" min="30" max="200" step="0.5" value={form.weight_kg} onChange={set('weight_kg')}
+                placeholder="—" className={inputCls} />
+            </div>
+          </div>
         </div>
 
         {/* Fitness level */}
@@ -109,6 +157,31 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* Current paces / thresholds */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
+          <div>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Benchmarks</p>
+            <p className="text-xs text-slate-400 mt-0.5">Helps the AI set accurate intensities — fill in what you know</p>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Swim /100m</label>
+              <input value={form.swim_pace_100m} onChange={set('swim_pace_100m')}
+                placeholder="1:45" className={inputCls} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Bike FTP (W)</label>
+              <input type="number" min="50" max="500" value={form.bike_ftp_watts} onChange={set('bike_ftp_watts')}
+                placeholder="220" className={inputCls} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Run /km</label>
+              <input value={form.run_pace_km} onChange={set('run_pace_km')}
+                placeholder="5:30" className={inputCls} />
+            </div>
+          </div>
+        </div>
+
         {/* Weekly hours */}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
@@ -131,9 +204,46 @@ export default function ProfilePage() {
             <span>15h — serious</span>
             <span>30h — pro</span>
           </div>
+        </div>
+
+        {/* Preferred training days */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
+            Available Training Days
+          </label>
+          <div className="flex gap-2">
+            {DAYS.map(day => (
+              <button key={day} type="button" onClick={() => toggleDay(day)}
+                className={`flex-1 py-2 rounded-xl text-xs font-bold border-2 transition-all ${
+                  selectedDays.includes(day)
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                }`}>
+                {day}
+              </button>
+            ))}
+          </div>
           <p className="text-xs text-slate-400 mt-2">
-            The AI coach uses this to set total weekly load. Include all sports.
+            The AI will only schedule workouts on selected days
           </p>
+        </div>
+
+        {/* Goal */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Goal</label>
+          <textarea value={form.goal_description} onChange={set('goal_description')} rows={2}
+            placeholder="e.g. Sub-6hr Olympic tri, finish first Ironman, qualify for Worlds..."
+            className={inputCls + ' resize-none'} />
+        </div>
+
+        {/* Injuries */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+            Injuries / Limitations
+          </label>
+          <textarea value={form.injuries_notes} onChange={set('injuries_notes')} rows={2}
+            placeholder="e.g. Recovering from knee surgery, limited pool access on weekdays..."
+            className={inputCls + ' resize-none'} />
         </div>
 
         {/* Save */}

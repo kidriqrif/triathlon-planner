@@ -69,12 +69,28 @@ class AthleteBase(BaseModel):
     name: str = "Athlete"
     fitness_level: str = "intermediate"
     weekly_hours_target: float = 8.0
+    age: Optional[int] = None
+    weight_kg: Optional[float] = None
+    swim_pace_100m: Optional[str] = None
+    bike_ftp_watts: Optional[int] = None
+    run_pace_km: Optional[str] = None
+    preferred_days: Optional[str] = None
+    injuries_notes: Optional[str] = None
+    goal_description: Optional[str] = None
 
 
 class AthleteUpdate(BaseModel):
     name: Optional[str] = None
     fitness_level: Optional[str] = None
     weekly_hours_target: Optional[float] = None
+    age: Optional[int] = None
+    weight_kg: Optional[float] = None
+    swim_pace_100m: Optional[str] = None
+    bike_ftp_watts: Optional[int] = None
+    run_pace_km: Optional[str] = None
+    preferred_days: Optional[str] = None
+    injuries_notes: Optional[str] = None
+    goal_description: Optional[str] = None
 
 
 class AthleteOut(AthleteBase):
