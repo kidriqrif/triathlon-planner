@@ -6,7 +6,7 @@ const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 pl-10 te
 
 export default function AuthPage({ onAuth }) {
   const [mode, setMode] = useState('login') // 'login' | 'register'
-  const [form, setForm] = useState({ email: '', password: '', name: '' })
+  const [form, setForm] = useState({ email: '', password: '', confirmPassword: '', name: '' })
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -17,9 +17,15 @@ export default function AuthPage({ onAuth }) {
     setError(null)
     setLoading(true)
 
+    if (mode === 'register' && form.password !== form.confirmPassword) {
+      setError('Passwords do not match')
+      setLoading(false)
+      return
+    }
+
     try {
       const res = mode === 'register'
-        ? await register(form)
+        ? await register({ email: form.email, password: form.password, name: form.name })
         : await login({ email: form.email, password: form.password })
 
       localStorage.setItem('strelo_token', res.token)
@@ -119,6 +125,21 @@ export default function AuthPage({ onAuth }) {
                 className={inputCls}
               />
             </div>
+
+            {mode === 'register' && (
+              <div className="relative">
+                <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="password"
+                  value={form.confirmPassword}
+                  onChange={set('confirmPassword')}
+                  required
+                  minLength={6}
+                  placeholder="Confirm password"
+                  className={inputCls}
+                />
+              </div>
+            )}
 
             <button
               type="submit"
