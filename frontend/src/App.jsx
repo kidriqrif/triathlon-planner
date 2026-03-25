@@ -5,7 +5,7 @@ import LogPage from './pages/LogPage'
 import RacesPage from './pages/RacesPage'
 import ProfilePage from './pages/ProfilePage'
 import { getWorkouts, getRaces } from './api'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Activity } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
@@ -67,14 +67,15 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 shadow-xl">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* Brand */}
-          <button onClick={() => setPage('dashboard')} className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
-              <Activity size={17} strokeWidth={1.5} className="text-indigo-400" />
+          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+              </svg>
             </div>
-            <div className="hidden sm:block">
-              <span className="font-black text-white text-lg tracking-tight">Stre</span>
-              <span className="font-black text-indigo-400 text-lg tracking-tight">lo</span>
-            </div>
+            <span className="hidden sm:block font-black text-white text-lg tracking-tight">Strelo</span>
           </button>
 
           {/* Nav */}
