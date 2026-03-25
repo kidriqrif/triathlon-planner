@@ -167,13 +167,13 @@ export default function LandingPage({ onGetStarted, onSignIn }) {
               </div>
               <div className="mt-2 flex items-baseline gap-3">
                 <div>
-                  <p className="text-4xl font-black text-slate-800">$9</p>
+                  <p className="text-4xl font-black text-slate-800">$12.99</p>
                   <p className="text-slate-400 text-sm">/month</p>
                 </div>
                 <div className="text-slate-200">|</div>
                 <div>
-                  <p className="text-2xl font-black text-slate-800">$79</p>
-                  <p className="text-slate-400 text-sm">/year <span className="text-emerald-500 font-bold">Save 27%</span></p>
+                  <p className="text-2xl font-black text-slate-800">$123.99</p>
+                  <p className="text-slate-400 text-sm">/year <span className="text-emerald-500 font-bold">Save 20%</span></p>
                 </div>
               </div>
               <ul className="mt-6 space-y-3">

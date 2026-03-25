@@ -100,7 +100,7 @@ export default function App() {
       )
     }
     switch (page) {
-      case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} />
+      case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={setPage} />
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
       case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />

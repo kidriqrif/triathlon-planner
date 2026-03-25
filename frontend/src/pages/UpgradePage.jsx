@@ -94,13 +94,13 @@ export default function UpgradePage({ user, onPlanChange }) {
 
             <div className="mt-2 flex items-baseline gap-3">
               <div>
-                <p className="text-3xl font-black text-slate-800">$9</p>
+                <p className="text-3xl font-black text-slate-800">$12.99</p>
                 <p className="text-slate-400 text-sm">/month</p>
               </div>
               <div className="text-slate-300">|</div>
               <div>
-                <p className="text-2xl font-black text-slate-800">$79</p>
-                <p className="text-slate-400 text-sm">/year <span className="text-emerald-500 font-bold">Save 27%</span></p>
+                <p className="text-2xl font-black text-slate-800">$123.99</p>
+                <p className="text-slate-400 text-sm">/year <span className="text-emerald-500 font-bold">Save 20%</span></p>
               </div>
             </div>
 
@@ -118,13 +118,13 @@ export default function UpgradePage({ user, onPlanChange }) {
                 onClick={() => handleUpgrade('monthly')}
                 disabled={!!loading}
                 className="w-full py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 transition-all shadow-sm disabled:opacity-60">
-                {loading === 'monthly' ? 'Redirecting...' : 'Get Monthly — $9/mo'}
+                {loading === 'monthly' ? 'Redirecting...' : 'Get Monthly — $12.99/mo'}
               </button>
               <button
                 onClick={() => handleUpgrade('yearly')}
                 disabled={!!loading}
                 className="w-full py-2.5 rounded-xl text-sm font-bold text-indigo-600 border-2 border-indigo-200 hover:border-indigo-400 transition-all disabled:opacity-60">
-                {loading === 'yearly' ? 'Redirecting...' : 'Get Yearly — $79/yr'}
+                {loading === 'yearly' ? 'Redirecting...' : 'Get Yearly — $123.99/yr'}
               </button>
             </div>
           </div>
