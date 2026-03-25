@@ -5,13 +5,14 @@ import LogPage from './pages/LogPage'
 import RacesPage from './pages/RacesPage'
 import ProfilePage from './pages/ProfilePage'
 import { getWorkouts, getRaces } from './api'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Activity } from 'lucide-react'
 
 const NAV = [
-  { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-  { id: 'plan',      label: 'Calendar',  icon: '📅' },
-  { id: 'log',       label: 'Log',       icon: '📋' },
-  { id: 'races',     label: 'Races',     icon: '🏁' },
-  { id: 'profile',   label: 'Profile',   icon: '👤' },
+  { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
+  { id: 'plan',      label: 'Calendar',  Icon: CalendarDays    },
+  { id: 'log',       label: 'Log',       Icon: ClipboardList   },
+  { id: 'races',     label: 'Races',     Icon: Flag            },
+  { id: 'profile',   label: 'Profile',   Icon: User            },
 ]
 
 export default function App() {
@@ -39,7 +40,12 @@ export default function App() {
       return (
         <div className="flex items-center justify-center h-64">
           <div className="text-center space-y-3">
-            <div className="text-5xl animate-bounce">🏊‍♂️</div>
+            <div className="flex justify-center">
+              <svg className="animate-spin h-9 w-9 text-indigo-400" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+              </svg>
+            </div>
             <p className="text-slate-400 text-sm font-medium">Loading your training data…</p>
           </div>
         </div>
@@ -62,10 +68,8 @@ export default function App() {
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* Brand */}
           <button onClick={() => setPage('dashboard')} className="flex items-center gap-3 group">
-            <div className="flex -space-x-1">
-              <span className="text-xl z-30">🏊</span>
-              <span className="text-xl z-20">🚴</span>
-              <span className="text-xl z-10">🏃</span>
+            <div className="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+              <Activity size={17} strokeWidth={1.5} className="text-indigo-400" />
             </div>
             <div className="hidden sm:block">
               <span className="font-black text-white text-lg tracking-tight">Stre</span>
@@ -75,14 +79,14 @@ export default function App() {
 
           {/* Nav */}
           <nav className="flex items-center gap-1">
-            {NAV.map(({ id, label, icon }) => (
+            {NAV.map(({ id, label, Icon }) => (
               <button key={id} onClick={() => setPage(id)}
                 className={`relative flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
                   page === id
                     ? 'bg-white/15 text-white shadow-inner'
                     : 'text-white/50 hover:text-white hover:bg-white/8'
                 }`}>
-                <span className="text-base">{icon}</span>
+                <Icon size={16} strokeWidth={1.5} />
                 <span className="hidden md:block">{label}</span>
                 {page === id && (
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-400 rounded-full" />

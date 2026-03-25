@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { suggestWeek, createWorkout } from '../api'
 import { addDays, nextMonday, format } from 'date-fns'
+import { Bot, Waves, Bike, Footprints } from 'lucide-react'
 
 const SPORT_COLORS = {
   swim: 'border-blue-300 bg-blue-50',
@@ -82,7 +83,8 @@ export default function AICoach({ onWorkoutsAdded }) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <span>🤖</span> AI Coach
+            <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
+            AI Coach
           </h2>
           <p className="text-sm text-gray-500 mt-0.5">Get a personalised training week based on your history</p>
         </div>
@@ -159,7 +161,11 @@ export default function AICoach({ onWorkoutsAdded }) {
 
       {!plan && !loading && !error && (
         <div className="text-center py-10 text-gray-400">
-          <div className="text-5xl mb-3">🏊‍♂️🚴‍♀️🏃‍♂️</div>
+          <div className="flex justify-center gap-3 mb-3 text-slate-200">
+            <Waves size={28} strokeWidth={1.5} />
+            <Bike size={28} strokeWidth={1.5} />
+            <Footprints size={28} strokeWidth={1.5} />
+          </div>
           <p className="text-sm">Click the button above to get AI-generated training suggestions</p>
         </div>
       )}

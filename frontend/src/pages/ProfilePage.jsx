@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { getAthlete, updateAthlete } from '../api'
+import { Sprout, Zap, Flame, AlertTriangle, User } from 'lucide-react'
 
 const FITNESS_LEVELS = [
-  { key: 'beginner',     label: 'Beginner',     desc: 'New to triathlon / first season', icon: '🌱' },
-  { key: 'intermediate', label: 'Intermediate',  desc: '1–3 years racing experience',     icon: '⚡' },
-  { key: 'advanced',     label: 'Advanced',      desc: '3+ years, competitive goals',     icon: '🔥' },
+  { key: 'beginner',     label: 'Beginner',     desc: 'New to triathlon / first season', Icon: Sprout },
+  { key: 'intermediate', label: 'Intermediate',  desc: '1–3 years racing experience',     Icon: Zap    },
+  { key: 'advanced',     label: 'Advanced',      desc: '3+ years, competitive goals',     Icon: Flame  },
 ]
 
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
@@ -41,7 +42,9 @@ export default function ProfilePage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center space-y-3">
-          <div className="text-4xl">⚠️</div>
+          <div className="flex justify-center">
+            <AlertTriangle size={36} strokeWidth={1.5} className="text-slate-300" />
+          </div>
           <p className="text-slate-600 font-semibold">{error}</p>
           <button onClick={() => { setError(null); window.location.reload() }}
             className="text-indigo-600 text-sm underline">Retry</button>
@@ -54,7 +57,9 @@ export default function ProfilePage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center space-y-3">
-          <div className="text-4xl animate-pulse">👤</div>
+          <div className="flex justify-center">
+            <User size={36} strokeWidth={1.5} className="text-slate-200 animate-pulse" />
+          </div>
           <p className="text-slate-400 text-sm">Loading profile…</p>
         </div>
       </div>
@@ -81,7 +86,7 @@ export default function ProfilePage() {
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Fitness Level</label>
           <div className="space-y-2">
-            {FITNESS_LEVELS.map(({ key, label, desc, icon }) => (
+            {FITNESS_LEVELS.map(({ key, label, desc, Icon }) => (
               <button key={key} type="button"
                 onClick={() => setForm(f => ({ ...f, fitness_level: key }))}
                 className={`w-full flex items-center gap-4 p-3.5 rounded-2xl border-2 text-left transition-all ${
@@ -89,7 +94,7 @@ export default function ProfilePage() {
                     ? 'bg-indigo-50 border-indigo-400 shadow-sm'
                     : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                 }`}>
-                <span className="text-2xl">{icon}</span>
+                <Icon size={22} strokeWidth={1.5} className={form.fitness_level === key ? 'text-indigo-500' : 'text-slate-400'} />
                 <div>
                   <p className={`text-sm font-bold ${form.fitness_level === key ? 'text-indigo-700' : 'text-slate-700'}`}>
                     {label}

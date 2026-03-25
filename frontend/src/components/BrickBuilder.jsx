@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { Waves, Bike, Footprints, Timer } from 'lucide-react'
 
 const BRICK_SPORTS = {
-  swim:       { icon: '🏊', label: 'Swim',       bg: 'bg-blue-50',    border: 'border-blue-300',    header: 'bg-blue-100',    distUnit: 'm',  distStep: 50,  distPlaceholder: '400'  },
-  bike:       { icon: '🚴', label: 'Bike',       bg: 'bg-orange-50',  border: 'border-orange-300',  header: 'bg-orange-100',  distUnit: 'km', distStep: 1,   distPlaceholder: '20'   },
-  run:        { icon: '🏃', label: 'Run',        bg: 'bg-green-50',   border: 'border-green-300',   header: 'bg-green-100',   distUnit: 'km', distStep: 0.5, distPlaceholder: '5'    },
-  walk:       { icon: '🚶', label: 'Walk',       bg: 'bg-slate-50',   border: 'border-slate-300',   header: 'bg-slate-100',   distUnit: 'km', distStep: 0.1, distPlaceholder: '1'    },
-  transition: { icon: '⏱', label: 'Transition', bg: 'bg-yellow-50',  border: 'border-yellow-300',  header: 'bg-yellow-100',  distUnit: null, distStep: null,distPlaceholder: null   },
+  swim:       { Icon: Waves,      label: 'Swim',       bg: 'bg-blue-50',    border: 'border-blue-300',    header: 'bg-blue-100',    distUnit: 'm',  distStep: 50,  distPlaceholder: '400'  },
+  bike:       { Icon: Bike,       label: 'Bike',       bg: 'bg-orange-50',  border: 'border-orange-300',  header: 'bg-orange-100',  distUnit: 'km', distStep: 1,   distPlaceholder: '20'   },
+  run:        { Icon: Footprints, label: 'Run',        bg: 'bg-green-50',   border: 'border-green-300',   header: 'bg-green-100',   distUnit: 'km', distStep: 0.5, distPlaceholder: '5'    },
+  walk:       { Icon: Footprints, label: 'Walk',       bg: 'bg-slate-50',   border: 'border-slate-300',   header: 'bg-slate-100',   distUnit: 'km', distStep: 0.1, distPlaceholder: '1'    },
+  transition: { Icon: Timer,      label: 'Transition', bg: 'bg-yellow-50',  border: 'border-yellow-300',  header: 'bg-yellow-100',  distUnit: null, distStep: null,distPlaceholder: null   },
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -17,9 +18,9 @@ function makeSegment(sport) {
 function segmentLabel(seg) {
   const meta = BRICK_SPORTS[seg.sport]
   const parts = []
-  if (seg.distance)    parts.push(`${seg.distance}${meta.distUnit}`)
+  if (seg.distance)     parts.push(`${seg.distance}${meta.distUnit}`)
   if (seg.duration_min) parts.push(`${seg.duration_min}min`)
-  return `${meta.icon} ${parts.length ? parts.join('/') : meta.label}`
+  return `${meta.label}${parts.length ? ': ' + parts.join('/') : ''}`
 }
 
 export function serializeBrick(segments) {
@@ -59,8 +60,8 @@ function SegmentCard({ seg, index, total, onChange, onDelete, onMove }) {
     <div className={`rounded-2xl border-2 ${meta.border} ${meta.bg} w-36 flex-shrink-0 overflow-hidden shadow-sm flex flex-col`}>
       {/* header */}
       <div className={`${meta.header} border-b-2 ${meta.border} px-3 py-2 flex items-center justify-between`}>
-        <span className="text-xs font-bold text-gray-700 flex items-center gap-1">
-          {meta.icon} {meta.label}
+        <span className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+          <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
         </span>
         <button type="button" onClick={onDelete}
           className="w-5 h-5 rounded-full bg-white/60 hover:bg-red-100 text-gray-400 hover:text-red-500 text-sm leading-none flex items-center justify-center transition-colors">
@@ -130,7 +131,7 @@ export default function BrickBuilder({ value, onChange }) {
         {Object.entries(BRICK_SPORTS).map(([sport, meta]) => (
           <button key={sport} type="button" onClick={() => add(sport)}
             className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
-            {meta.icon} {meta.label}
+            <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}
       </div>
@@ -161,7 +162,6 @@ export default function BrickBuilder({ value, onChange }) {
         </div>
       ) : (
         <div className="border-2 border-dashed border-gray-200 rounded-2xl py-8 text-center text-sm text-gray-400">
-          <p className="text-2xl mb-2">🔄</p>
           Add sport segments above — any order, any number
         </div>
       )}
@@ -171,12 +171,16 @@ export default function BrickBuilder({ value, onChange }) {
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-1">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sequence</p>
           <p className="text-sm text-gray-700 leading-relaxed flex flex-wrap gap-x-1 gap-y-0.5">
-            {segments.map((seg, i) => (
-              <span key={seg.id} className="flex items-center gap-1">
-                {i > 0 && <span className="text-gray-300">→</span>}
-                <span>{segmentLabel(seg)}</span>
-              </span>
-            ))}
+            {segments.map((seg, i) => {
+              const meta = BRICK_SPORTS[seg.sport]
+              return (
+                <span key={seg.id} className="flex items-center gap-1">
+                  {i > 0 && <span className="text-gray-300">→</span>}
+                  <meta.Icon size={11} strokeWidth={1.5} className="text-gray-400" />
+                  <span>{segmentLabel(seg)}</span>
+                </span>
+              )
+            })}
           </p>
           {totalMin > 0 && <p className="text-xs text-gray-400">~{totalMin} min total</p>}
         </div>

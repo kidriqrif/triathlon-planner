@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import WorkoutBuilder, { serializeBlocks, parseBlocks } from './WorkoutBuilder'
 import BrickBuilder, { serializeBrick, parseBrick } from './BrickBuilder'
+import { Waves, Bike, Footprints, Layers, Dumbbell } from 'lucide-react'
 
 const SPORT_CONFIG = {
-  swim:  { icon: '🏊', label: 'Swim',  color: 'bg-blue-500',   types: ['easy','tempo','interval','long','recovery'] },
-  bike:  { icon: '🚴', label: 'Bike',  color: 'bg-orange-500', types: ['easy','tempo','interval','long','recovery'] },
-  run:   { icon: '🏃', label: 'Run',   color: 'bg-green-500',  types: ['easy','tempo','interval','long','recovery'] },
-  brick: { icon: '🔄', label: 'Brick', color: 'bg-violet-500', types: ['easy','race-sim','long','recovery'] },
-  gym:   { icon: '🏋️', label: 'Gym',   color: 'bg-rose-500',   types: ['strength','mobility','hiit','circuit','yoga'] },
+  swim:  { Icon: Waves,      label: 'Swim',  color: 'bg-blue-500',   types: ['easy','tempo','interval','long','recovery'] },
+  bike:  { Icon: Bike,       label: 'Bike',  color: 'bg-orange-500', types: ['easy','tempo','interval','long','recovery'] },
+  run:   { Icon: Footprints, label: 'Run',   color: 'bg-green-500',  types: ['easy','tempo','interval','long','recovery'] },
+  brick: { Icon: Layers,     label: 'Brick', color: 'bg-violet-500', types: ['easy','race-sim','long','recovery'] },
+  gym:   { Icon: Dumbbell,   label: 'Gym',   color: 'bg-rose-500',   types: ['strength','mobility','hiit','circuit','yoga'] },
 }
 
 const TYPE_LABELS = {
@@ -97,7 +98,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
         {/* Sport-coloured header */}
         <div className={`${sportMeta.color} rounded-t-3xl px-6 py-4 flex items-center justify-between`}>
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{sportMeta.icon}</span>
+            <sportMeta.Icon size={28} strokeWidth={1.5} className="text-white" />
             <div>
               <p className="text-white font-black text-lg leading-none">
                 {workout ? 'Edit Workout' : 'New Workout'}
@@ -125,12 +126,12 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
             <div className="grid grid-cols-5 gap-2">
               {Object.entries(SPORT_CONFIG).map(([key, meta]) => (
                 <button key={key} type="button" onClick={() => handleSportChange(key)}
-                  className={`flex flex-col items-center gap-1 py-2.5 rounded-2xl border-2 text-xs font-bold transition-all ${
+                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl border-2 text-xs font-bold transition-all ${
                     form.sport === key
                       ? `${meta.color} text-white border-transparent shadow-md`
                       : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'
                   }`}>
-                  <span className="text-xl">{meta.icon}</span>
+                  <meta.Icon size={18} strokeWidth={1.5} />
                   <span>{meta.label}</span>
                 </button>
               ))}

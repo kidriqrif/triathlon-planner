@@ -2,6 +2,15 @@ import React, { useState } from 'react'
 import Calendar from '../components/Calendar'
 import WorkoutForm from '../components/WorkoutForm'
 import { createWorkout, updateWorkout, deleteWorkout } from '../api'
+import { Waves, Bike, Footprints, Layers, Dumbbell } from 'lucide-react'
+
+const LEGEND = [
+  { color: 'bg-blue-500',   label: 'Swim',  Icon: Waves      },
+  { color: 'bg-orange-500', label: 'Bike',  Icon: Bike       },
+  { color: 'bg-green-500',  label: 'Run',   Icon: Footprints },
+  { color: 'bg-violet-500', label: 'Brick', Icon: Layers     },
+  { color: 'bg-rose-500',   label: 'Gym',   Icon: Dumbbell   },
+]
 
 export default function PlanPage({ workouts, onRefresh }) {
   const [formState, setFormState] = useState(null) // null | { workout, defaultDate }
@@ -42,15 +51,11 @@ export default function PlanPage({ workouts, onRefresh }) {
       </div>
 
       <div className="flex flex-wrap gap-3 mb-4">
-        {[
-          { color: 'bg-blue-500',   label: 'Swim',  icon: '🏊' },
-          { color: 'bg-orange-500', label: 'Bike',  icon: '🚴' },
-          { color: 'bg-green-500',  label: 'Run',   icon: '🏃' },
-          { color: 'bg-violet-500', label: 'Brick', icon: '🔄' },
-          { color: 'bg-rose-500',   label: 'Gym',   icon: '🏋️' },
-        ].map(({ color, label, icon }) => (
+        {LEGEND.map(({ color, label, Icon }) => (
           <span key={label} className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-            <span className={`w-3 h-3 rounded-full ${color}`} /> {icon} {label}
+            <span className={`w-3 h-3 rounded-full ${color}`} />
+            <Icon size={12} strokeWidth={1.5} />
+            {label}
           </span>
         ))}
         <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-400">

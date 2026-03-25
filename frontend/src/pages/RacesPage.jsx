@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { createRace, updateRace, deleteRace } from '../api'
+import { Activity, Footprints, Bike, Waves, Medal, Flag } from 'lucide-react'
 
 // ─── Race category config ────────────────────────────────────────────────────
 
 const RACE_CATEGORIES = {
   triathlon: {
-    label: 'Triathlon', icon: '🏊🚴🏃',
+    label: 'Triathlon', Icon: Activity,
     gradient: 'from-indigo-500 to-violet-600',
     badge: 'bg-indigo-100 text-indigo-700 border-indigo-200',
     types: {
@@ -16,7 +17,7 @@ const RACE_CATEGORIES = {
     },
   },
   running: {
-    label: 'Running', icon: '🏃',
+    label: 'Running', Icon: Footprints,
     gradient: 'from-green-400 to-emerald-600',
     badge: 'bg-green-100 text-green-700 border-green-200',
     types: {
@@ -31,7 +32,7 @@ const RACE_CATEGORIES = {
     },
   },
   cycling: {
-    label: 'Cycling', icon: '🚴',
+    label: 'Cycling', Icon: Bike,
     gradient: 'from-orange-400 to-amber-500',
     badge: 'bg-orange-100 text-orange-700 border-orange-200',
     types: {
@@ -45,7 +46,7 @@ const RACE_CATEGORIES = {
     },
   },
   swimming: {
-    label: 'Swimming', icon: '🏊',
+    label: 'Swimming', Icon: Waves,
     gradient: 'from-blue-400 to-cyan-500',
     badge: 'bg-blue-100 text-blue-700 border-blue-200',
     types: {
@@ -60,7 +61,7 @@ const RACE_CATEGORIES = {
     },
   },
   other: {
-    label: 'Other', icon: '🏅',
+    label: 'Other', Icon: Medal,
     gradient: 'from-violet-400 to-purple-600',
     badge: 'bg-violet-100 text-violet-700 border-violet-200',
     types: {
@@ -129,7 +130,10 @@ function RaceForm({ race, onSave, onClose }) {
         <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-3xl px-6 py-5 flex items-center justify-between`}>
           <div>
             <p className="text-white font-black text-xl">{race ? 'Edit Race' : 'Add Race'}</p>
-            <p className="text-white/70 text-sm mt-0.5">{catMeta.icon} {catMeta.label}</p>
+            <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
+              <catMeta.Icon size={13} strokeWidth={1.5} />
+              <span>{catMeta.label}</span>
+            </div>
           </div>
           <button onClick={onClose}
             className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xl leading-none transition-colors">
@@ -159,12 +163,12 @@ function RaceForm({ race, onSave, onClose }) {
             <div className="grid grid-cols-5 gap-1.5">
               {Object.entries(RACE_CATEGORIES).map(([key, meta]) => (
                 <button key={key} type="button" onClick={() => handleCategoryChange(key)}
-                  className={`flex flex-col items-center gap-1 py-2.5 rounded-2xl text-xs font-bold border-2 transition-all ${
+                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl text-xs font-bold border-2 transition-all ${
                     category === key
                       ? `bg-gradient-to-b ${meta.gradient} text-white border-transparent shadow-md`
                       : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'
                   }`}>
-                  <span className="text-base">{meta.icon.slice(0, 2)}</span>
+                  <meta.Icon size={16} strokeWidth={1.5} />
                   <span className="leading-tight text-center">{meta.label}</span>
                 </button>
               ))}
@@ -220,7 +224,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
 
   const countdownText = daysToRace > 0
     ? `${daysToRace} days to go`
-    : daysToRace === 0 ? '🎉 Race day!' : `${Math.abs(daysToRace)} days ago`
+    : daysToRace === 0 ? 'Race day' : `${Math.abs(daysToRace)} days ago`
 
   const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-indigo-600'
 
@@ -233,8 +237,8 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
 
       <div className="p-5 flex items-center gap-4">
         {/* Icon */}
-        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${meta.gradient} flex items-center justify-center text-xl shrink-0`}>
-          <span>{meta.icon.slice(0, 2)}</span>
+        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${meta.gradient} flex items-center justify-center shrink-0`}>
+          <meta.Icon size={22} strokeWidth={1.5} className="text-white" />
         </div>
 
         {/* Info */}
@@ -331,7 +335,10 @@ export default function RacesPage({ races, onRefresh }) {
                     ? 'bg-slate-800 text-white border-slate-800'
                     : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
                 }`}>
-                {key === 'all' ? '🏁 All' : `${meta.icon.slice(0,2)} ${meta.label}`}
+                {key === 'all'
+                  ? <><Flag size={12} strokeWidth={1.5} /> All</>
+                  : <><meta.Icon size={12} strokeWidth={1.5} /> {meta.label}</>
+                }
               </button>
             )
           })}
@@ -341,7 +348,9 @@ export default function RacesPage({ races, onRefresh }) {
       {/* Race list */}
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-slate-400">
-          <div className="text-6xl mb-4">🏁</div>
+          <div className="flex justify-center mb-4">
+            <Flag size={48} strokeWidth={1} className="text-slate-200" />
+          </div>
           <p className="text-lg font-semibold text-slate-500">No races yet</p>
           <p className="text-sm mt-1">Add your goal race to unlock your countdown and training phases</p>
         </div>

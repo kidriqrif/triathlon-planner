@@ -1,5 +1,6 @@
 import React from 'react'
 import { differenceInDays } from 'date-fns'
+import { Activity, Footprints, Bike, Waves, Medal, Flag, Trophy } from 'lucide-react'
 
 const PHASES = {
   Base:  { color: '#6366f1', bg: 'from-indigo-500 to-violet-600',   badge: 'bg-indigo-100 text-indigo-700 border-indigo-200', desc: 'Foundation — build consistency' },
@@ -44,7 +45,11 @@ function Ring({ daysToRace, phase }) {
 }
 
 const CATEGORY_ICONS = {
-  triathlon: '🏊🚴🏃', running: '🏃', cycling: '🚴', swimming: '🏊', other: '🏅'
+  triathlon: Activity,
+  running:   Footprints,
+  cycling:   Bike,
+  swimming:  Waves,
+  other:     Medal,
 }
 
 function getCategoryFromDistance(distance) {
@@ -59,7 +64,9 @@ export default function RaceCountdown({ races }) {
   if (!activeRace) {
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-2xl">🏁</div>
+        <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center">
+          <Flag size={22} strokeWidth={1.5} className="text-slate-400" />
+        </div>
         <div>
           <p className="font-semibold text-slate-600">No goal race set</p>
           <p className="text-slate-400 text-sm mt-0.5">Add a race in the Races tab to unlock your countdown</p>
@@ -74,12 +81,12 @@ export default function RaceCountdown({ races }) {
   const phase = getPhase(daysToRace)
   const phaseConfig = PHASES[phase]
   const category = getCategoryFromDistance(activeRace.distance)
-  const icon = CATEGORY_ICONS[category] || '🏁'
+  const CategoryIcon = CATEGORY_ICONS[category] || Flag
 
   if (daysToRace < 0) {
     return (
       <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl shadow-lg p-6 flex items-center gap-4">
-        <span className="text-4xl">🎉</span>
+        <Trophy size={36} strokeWidth={1.5} className="text-white/90 shrink-0" />
         <div>
           <p className="font-black text-white text-xl">{activeRace.name}</p>
           <p className="text-white/70 text-sm">{Math.abs(daysToRace)} days ago — you did it!</p>
@@ -99,7 +106,10 @@ export default function RaceCountdown({ races }) {
             </span>
           </div>
           <p className="text-white font-black text-xl leading-tight mt-2 truncate">{activeRace.name}</p>
-          <p className="text-white/70 text-sm mt-0.5">{icon} · {activeRace.date}</p>
+          <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
+            <CategoryIcon size={13} strokeWidth={1.5} />
+            <span>{activeRace.date}</span>
+          </div>
           <p className="text-white/60 text-xs mt-2 italic">{phaseConfig.desc}</p>
         </div>
       </div>

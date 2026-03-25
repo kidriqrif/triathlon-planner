@@ -3,13 +3,14 @@ import WorkoutForm from '../components/WorkoutForm'
 import { readableSummary } from '../components/WorkoutBuilder'
 import { brickReadableSummary } from '../components/BrickBuilder'
 import { createWorkout, updateWorkout, deleteWorkout } from '../api'
+import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList } from 'lucide-react'
 
 const SPORT_CONFIG = {
-  swim:  { icon: '🏊', label: 'Swim',  border: 'border-l-blue-400',   badge: 'bg-blue-50 text-blue-700 border-blue-200'   },
-  bike:  { icon: '🚴', label: 'Bike',  border: 'border-l-orange-400', badge: 'bg-orange-50 text-orange-700 border-orange-200' },
-  run:   { icon: '🏃', label: 'Run',   border: 'border-l-green-400',  badge: 'bg-green-50 text-green-700 border-green-200'  },
-  brick: { icon: '🔄', label: 'Brick', border: 'border-l-violet-400', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
-  gym:   { icon: '🏋️', label: 'Gym',   border: 'border-l-rose-400',   badge: 'bg-rose-50 text-rose-700 border-rose-200'    },
+  swim:  { Icon: Waves,      label: 'Swim',  border: 'border-l-blue-400',   badge: 'bg-blue-50 text-blue-700 border-blue-200'       },
+  bike:  { Icon: Bike,       label: 'Bike',  border: 'border-l-orange-400', badge: 'bg-orange-50 text-orange-700 border-orange-200' },
+  run:   { Icon: Footprints, label: 'Run',   border: 'border-l-green-400',  badge: 'bg-green-50 text-green-700 border-green-200'    },
+  brick: { Icon: Layers,     label: 'Brick', border: 'border-l-violet-400', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
+  gym:   { Icon: Dumbbell,   label: 'Gym',   border: 'border-l-rose-400',   badge: 'bg-rose-50 text-rose-700 border-rose-200'       },
 }
 
 const STATUS_CONFIG = {
@@ -79,7 +80,9 @@ export default function LogPage({ workouts, onRefresh }) {
       {/* List */}
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-slate-400">
-          <div className="text-6xl mb-4">📋</div>
+          <div className="flex justify-center mb-4">
+            <ClipboardList size={48} strokeWidth={1} className="text-slate-200" />
+          </div>
           <p className="text-lg font-semibold text-slate-500">No workouts here yet</p>
           <p className="text-sm mt-1">Start logging to track your training</p>
         </div>
@@ -113,7 +116,7 @@ export default function LogPage({ workouts, onRefresh }) {
 
                   {/* Sport badge */}
                   <span className={`shrink-0 flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-xl border ${sport.badge}`}>
-                    <span>{sport.icon}</span> {sport.label}
+                    <sport.Icon size={12} strokeWidth={1.5} /> {sport.label}
                   </span>
 
                   {/* Description */}

@@ -2,13 +2,14 @@ import React from 'react'
 import RaceCountdown from '../components/RaceCountdown'
 import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
+import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp } from 'lucide-react'
 
 const SPORT_META = {
-  swim:  { icon: '🏊', color: 'text-blue-600',   bg: 'bg-blue-50',   border: 'border-blue-200',   label: 'Swim' },
-  bike:  { icon: '🚴', color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', label: 'Bike' },
-  run:   { icon: '🏃', color: 'text-green-600',  bg: 'bg-green-50',  border: 'border-green-200',  label: 'Run'  },
-  gym:   { icon: '🏋️', color: 'text-rose-600',   bg: 'bg-rose-50',   border: 'border-rose-200',   label: 'Gym'  },
-  brick: { icon: '🔄', color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-200', label: 'Brick'},
+  swim:  { Icon: Waves,      color: 'text-blue-600',   bg: 'bg-blue-50',   border: 'border-blue-200',   label: 'Swim'  },
+  bike:  { Icon: Bike,       color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', label: 'Bike'  },
+  run:   { Icon: Footprints, color: 'text-green-600',  bg: 'bg-green-50',  border: 'border-green-200',  label: 'Run'   },
+  gym:   { Icon: Dumbbell,   color: 'text-rose-600',   bg: 'bg-rose-50',   border: 'border-rose-200',   label: 'Gym'   },
+  brick: { Icon: Layers,     color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-200', label: 'Brick' },
 }
 
 function StatCard({ label, sub, value, valueColor = 'text-slate-800', icon, gradient }) {
@@ -16,7 +17,7 @@ function StatCard({ label, sub, value, valueColor = 'text-slate-800', icon, grad
     <div className={`rounded-2xl p-5 shadow-sm border flex flex-col gap-1 ${gradient || 'bg-white border-slate-100'}`}>
       <div className="flex items-center justify-between">
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{label}</p>
-        {icon && <span className="text-lg">{icon}</span>}
+        {icon}
       </div>
       <p className={`text-3xl font-black mt-1 ${gradient ? 'text-white' : valueColor}`}>{value}</p>
       <p className={`text-sm ${gradient ? 'text-white/70' : 'text-slate-400'}`}>{sub}</p>
@@ -52,7 +53,7 @@ function SportBreakdown({ workouts }) {
           const d = totals[sport]
           return (
             <div key={sport} className={`rounded-xl p-3 border ${meta.bg} ${meta.border} flex items-center gap-3`}>
-              <span className="text-2xl">{meta.icon}</span>
+              <meta.Icon size={22} strokeWidth={1.5} className={meta.color} />
               <div>
                 <p className={`text-sm font-bold ${meta.color}`}>{meta.label}</p>
                 <p className="text-xs text-slate-500">{d.sessions} session{d.sessions !== 1 ? 's' : ''} · {Math.round(d.minutes)}min</p>
@@ -95,12 +96,16 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded }) {
       <RaceCountdown races={races} />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <StatCard label="This Week" sub="sessions done" value={weekDone.length} icon="✅" />
+        <StatCard label="This Week" sub="sessions done" value={weekDone.length}
+          icon={<CheckCircle size={17} strokeWidth={1.5} className="text-slate-300" />} />
         <StatCard label="This Week" sub="training hours" value={`${weekHours.toFixed(1)}h`}
-          valueColor="text-indigo-600" icon="⏱" />
+          valueColor="text-indigo-600"
+          icon={<Clock size={17} strokeWidth={1.5} className="text-slate-300" />} />
         <StatCard label="Streak" sub="consecutive days" value={`${streak}d`}
-          valueColor="text-orange-500" icon="🔥" />
-        <StatCard label="All Time" sub="hours logged" value={`${Math.round(totalHours)}h`} icon="📈" />
+          valueColor="text-orange-500"
+          icon={<Flame size={17} strokeWidth={1.5} className="text-slate-300" />} />
+        <StatCard label="All Time" sub="hours logged" value={`${Math.round(totalHours)}h`}
+          icon={<TrendingUp size={17} strokeWidth={1.5} className="text-slate-300" />} />
       </div>
 
       <SportBreakdown workouts={workouts} />

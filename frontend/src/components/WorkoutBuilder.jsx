@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
+import { TrendingUp, Zap, Minus, Wind, TrendingDown } from 'lucide-react'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const BLOCK_META = {
-  warmup:   { label: 'Warm-up',   icon: '🌅', bg: 'bg-amber-50',  border: 'border-amber-300',  header: 'bg-amber-100  border-amber-300',  hasReps: false },
-  interval: { label: 'Interval',  icon: '⚡', bg: 'bg-red-50',    border: 'border-red-300',    header: 'bg-red-100    border-red-300',    hasReps: true  },
-  steady:   { label: 'Steady',    icon: '📏', bg: 'bg-blue-50',   border: 'border-blue-300',   header: 'bg-blue-100   border-blue-300',   hasReps: false },
-  recovery: { label: 'Recovery',  icon: '💧', bg: 'bg-sky-50',    border: 'border-sky-300',    header: 'bg-sky-100    border-sky-300',    hasReps: false },
-  cooldown: { label: 'Cool-down', icon: '🌊', bg: 'bg-green-50',  border: 'border-green-300',  header: 'bg-green-100  border-green-300',  hasReps: false },
+  warmup:   { label: 'Warm-up',   Icon: TrendingUp,   bg: 'bg-amber-50',  border: 'border-amber-300',  header: 'bg-amber-100  border-amber-300',  hasReps: false },
+  interval: { label: 'Interval',  Icon: Zap,          bg: 'bg-red-50',    border: 'border-red-300',    header: 'bg-red-100    border-red-300',    hasReps: true  },
+  steady:   { label: 'Steady',    Icon: Minus,        bg: 'bg-blue-50',   border: 'border-blue-300',   header: 'bg-blue-100   border-blue-300',   hasReps: false },
+  recovery: { label: 'Recovery',  Icon: Wind,         bg: 'bg-sky-50',    border: 'border-sky-300',    header: 'bg-sky-100    border-sky-300',    hasReps: false },
+  cooldown: { label: 'Cool-down', Icon: TrendingDown, bg: 'bg-green-50',  border: 'border-green-300',  header: 'bg-green-100  border-green-300',  hasReps: false },
 }
 
 const TARGET_TYPES = {
-  zone:  { label: 'Zone',        icon: '📊', placeholder: '',         suffix: ''      },
-  hr:    { label: 'Heart rate',  icon: '❤️', placeholder: '140–155',  suffix: 'bpm'   },
-  pace:  { label: 'Pace',        icon: '⏱',  placeholder: '4:30',     suffix: '/km'   },
-  power: { label: 'Power',       icon: '⚡', placeholder: '240–260',  suffix: 'W'     },
-  rpe:   { label: 'RPE',         icon: '💪', placeholder: '7',        suffix: '/ 10'  },
-  feel:  { label: 'Feel / cue',  icon: '🎯', placeholder: 'e.g. comfortably hard', suffix: '' },
+  zone:  { label: 'Zone',        placeholder: '',         suffix: ''      },
+  hr:    { label: 'Heart rate',  placeholder: '140–155',  suffix: 'bpm'   },
+  pace:  { label: 'Pace',        placeholder: '4:30',     suffix: '/km'   },
+  power: { label: 'Power',       placeholder: '240–260',  suffix: 'W'     },
+  rpe:   { label: 'RPE',         placeholder: '7',        suffix: '/ 10'  },
+  feel:  { label: 'Feel / cue',  placeholder: 'e.g. comfortably hard', suffix: '' },
 }
 
 const ZONES = ['Z1', 'Z2', 'Z3', 'Z4', 'Z5']
@@ -165,7 +166,7 @@ function TargetField({ block, onChange }) {
         {/* type selector */}
         <select value={type} onChange={setType} className={selectCls}>
           {Object.entries(TARGET_TYPES).map(([k, v]) => (
-            <option key={k} value={k}>{v.icon} {v.label}</option>
+            <option key={k} value={k}>{v.label}</option>
           ))}
         </select>
 
@@ -208,7 +209,7 @@ function BlockCard({ block, onChange, onDelete }) {
       {/* header */}
       <div className={`flex items-center justify-between px-3 py-2 border-b-2 ${meta.header}`}>
         <span className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
-          {meta.icon} {meta.label}
+          <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
         </span>
         <button type="button" onClick={onDelete}
           className="w-5 h-5 rounded-full bg-white/60 hover:bg-red-100 text-gray-400 hover:text-red-500 transition-colors text-sm leading-none flex items-center justify-center">
@@ -270,7 +271,7 @@ export default function WorkoutBuilder({ value, onChange }) {
         {Object.entries(BLOCK_META).map(([type, meta]) => (
           <button key={type} type="button" onClick={() => addBlock(type)}
             className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
-            {meta.icon} {meta.label}
+            <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}
       </div>
@@ -291,7 +292,6 @@ export default function WorkoutBuilder({ value, onChange }) {
         </div>
       ) : (
         <div className="border-2 border-dashed border-gray-200 rounded-2xl py-8 text-center text-sm text-gray-400">
-          <p className="text-2xl mb-2">⚡</p>
           Add blocks above to build your interval workout
         </div>
       )}
@@ -304,9 +304,10 @@ export default function WorkoutBuilder({ value, onChange }) {
             {blocks.map((b, i) => {
               const meta = BLOCK_META[b.type]
               return (
-                <span key={b.id}>
-                  {i > 0 && <span className="text-gray-300 mx-1.5">→</span>}
-                  <span>{meta.icon} {blockSummary(b)}</span>
+                <span key={b.id} className="inline-flex items-center gap-1">
+                  {i > 0 && <span className="text-gray-300 mx-1">→</span>}
+                  <meta.Icon size={11} strokeWidth={1.5} className="text-gray-400" />
+                  <span>{blockSummary(b)}</span>
                 </span>
               )
             })}
