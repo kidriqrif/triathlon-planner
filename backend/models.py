@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, Date, Boolean, Text, Enum
+from sqlalchemy import Column, Integer, String, Float, Date, Boolean, Text, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 from database import Base
+from datetime import datetime, timezone
 import enum
 
 
@@ -37,10 +39,25 @@ class FitnessLevelEnum(str, enum.Enum):
     advanced = "advanced"
 
 
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, nullable=False, index=True)
+    password_hash = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    workouts = relationship("Workout", back_populates="owner")
+    races = relationship("Race", back_populates="owner")
+    athlete = relationship("Athlete", back_populates="owner", uselist=False)
+
+
 class Workout(Base):
     __tablename__ = "workouts"
 
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     date = Column(Date, nullable=False)
     sport = Column(String, nullable=False)
     workout_type = Column(String, nullable=False, default="easy")
@@ -50,21 +67,27 @@ class Workout(Base):
     rpe = Column(Integer, nullable=True)
     notes = Column(Text, nullable=True)
 
+    owner = relationship("User", back_populates="workouts")
+
 
 class Race(Base):
     __tablename__ = "races"
 
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     name = Column(String, nullable=False)
     date = Column(Date, nullable=False)
     distance = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
+
+    owner = relationship("User", back_populates="races")
 
 
 class Athlete(Base):
     __tablename__ = "athletes"
 
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True, nullable=False, index=True)
     name = Column(String, nullable=False, default="Athlete")
     fitness_level = Column(String, nullable=False, default="intermediate")
     weekly_hours_target = Column(Float, default=8.0)
@@ -72,9 +95,11 @@ class Athlete(Base):
     # Extended profile
     age = Column(Integer, nullable=True)
     weight_kg = Column(Float, nullable=True)
-    swim_pace_100m = Column(String, nullable=True)   # e.g. "1:45"
-    bike_ftp_watts = Column(Integer, nullable=True)   # functional threshold power
-    run_pace_km = Column(String, nullable=True)        # e.g. "5:30" per km
-    preferred_days = Column(String, nullable=True)     # e.g. "Mon,Tue,Thu,Sat,Sun"
+    swim_pace_100m = Column(String, nullable=True)
+    bike_ftp_watts = Column(Integer, nullable=True)
+    run_pace_km = Column(String, nullable=True)
+    preferred_days = Column(String, nullable=True)
     injuries_notes = Column(Text, nullable=True)
     goal_description = Column(Text, nullable=True)
+
+    owner = relationship("User", back_populates="athlete")

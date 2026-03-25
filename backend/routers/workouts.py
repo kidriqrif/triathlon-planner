@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
 from typing import List, Optional
 from datetime import date
 
 from database import get_db
+from auth_utils import get_current_user
 import models
 import schemas
 
@@ -16,8 +16,9 @@ def list_workouts(
     start: Optional[date] = None,
     end: Optional[date] = None,
     db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
 ):
-    query = db.query(models.Workout)
+    query = db.query(models.Workout).filter(models.Workout.user_id == current_user.id)
     if start:
         query = query.filter(models.Workout.date >= start)
     if end:
@@ -26,8 +27,12 @@ def list_workouts(
 
 
 @router.post("", response_model=schemas.WorkoutOut, status_code=201)
-def create_workout(payload: schemas.WorkoutCreate, db: Session = Depends(get_db)):
-    workout = models.Workout(**payload.model_dump())
+def create_workout(
+    payload: schemas.WorkoutCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    workout = models.Workout(**payload.model_dump(), user_id=current_user.id)
     db.add(workout)
     db.commit()
     db.refresh(workout)
@@ -36,9 +41,15 @@ def create_workout(payload: schemas.WorkoutCreate, db: Session = Depends(get_db)
 
 @router.put("/{workout_id}", response_model=schemas.WorkoutOut)
 def update_workout(
-    workout_id: int, payload: schemas.WorkoutUpdate, db: Session = Depends(get_db)
+    workout_id: int,
+    payload: schemas.WorkoutUpdate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
 ):
-    workout = db.get(models.Workout, workout_id)
+    workout = db.query(models.Workout).filter(
+        models.Workout.id == workout_id,
+        models.Workout.user_id == current_user.id,
+    ).first()
     if not workout:
         raise HTTPException(status_code=404, detail="Workout not found")
     for field, value in payload.model_dump(exclude_unset=True).items():
@@ -49,8 +60,15 @@ def update_workout(
 
 
 @router.delete("/{workout_id}", status_code=204)
-def delete_workout(workout_id: int, db: Session = Depends(get_db)):
-    workout = db.get(models.Workout, workout_id)
+def delete_workout(
+    workout_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    workout = db.query(models.Workout).filter(
+        models.Workout.id == workout_id,
+        models.Workout.user_id == current_user.id,
+    ).first()
     if not workout:
         raise HTTPException(status_code=404, detail="Workout not found")
     db.delete(workout)

@@ -4,8 +4,9 @@ import PlanPage from './pages/PlanPage'
 import LogPage from './pages/LogPage'
 import RacesPage from './pages/RacesPage'
 import ProfilePage from './pages/ProfilePage'
+import AuthPage from './pages/AuthPage'
 import { getWorkouts, getRaces } from './api'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, LogOut } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
@@ -16,6 +17,10 @@ const NAV = [
 ]
 
 export default function App() {
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('strelo_user')
+    return stored ? JSON.parse(stored) : null
+  })
   const [page, setPage] = useState('dashboard')
   const [workouts, setWorkouts] = useState([])
   const [races, setRaces] = useState([])
@@ -33,7 +38,29 @@ export default function App() {
     }
   }, [])
 
-  useEffect(() => { fetchAll() }, [fetchAll])
+  useEffect(() => {
+    if (user) fetchAll()
+    else setLoading(false)
+  }, [user, fetchAll])
+
+  const handleAuth = (userData) => {
+    setUser(userData)
+    setLoading(true)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('strelo_token')
+    localStorage.removeItem('strelo_user')
+    setUser(null)
+    setWorkouts([])
+    setRaces([])
+    setPage('dashboard')
+  }
+
+  // Not authenticated — show auth page
+  if (!user) {
+    return <AuthPage onAuth={handleAuth} />
+  }
 
   const renderPage = () => {
     if (loading) {
@@ -46,7 +73,7 @@ export default function App() {
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
             </div>
-            <p className="text-slate-400 text-sm font-medium">Loading your training data…</p>
+            <p className="text-slate-400 text-sm font-medium">Loading your training data...</p>
           </div>
         </div>
       )
@@ -94,6 +121,14 @@ export default function App() {
                 )}
               </button>
             ))}
+
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              className="ml-2 flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
+              <LogOut size={16} strokeWidth={1.5} />
+            </button>
           </nav>
         </div>
       </header>

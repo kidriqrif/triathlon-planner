@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from database import get_db
+from auth_utils import get_current_user
 import models
 
 router = APIRouter(prefix="/ai", tags=["ai"])
@@ -97,15 +98,18 @@ MOCK_RESPONSE = {
 
 
 @router.post("/suggest-week")
-def suggest_week(db: Session = Depends(get_db)):
-    # Gather context
-    athlete = db.query(models.Athlete).first()
+def suggest_week(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    # Gather context scoped to the current user
+    athlete = db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).first()
     if not athlete:
-        athlete = models.Athlete()
+        athlete = models.Athlete(user_id=current_user.id)
 
     active_race = (
         db.query(models.Race)
-        .filter(models.Race.is_active == True)
+        .filter(models.Race.user_id == current_user.id, models.Race.is_active == True)
         .order_by(models.Race.date)
         .first()
     )
@@ -114,7 +118,11 @@ def suggest_week(db: Session = Depends(get_db)):
     four_weeks_ago = today - timedelta(weeks=4)
     recent_workouts = (
         db.query(models.Workout)
-        .filter(models.Workout.date >= four_weeks_ago, models.Workout.date <= today)
+        .filter(
+            models.Workout.user_id == current_user.id,
+            models.Workout.date >= four_weeks_ago,
+            models.Workout.date <= today,
+        )
         .order_by(models.Workout.date)
         .all()
     )

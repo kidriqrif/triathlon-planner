@@ -2,6 +2,38 @@ import axios from 'axios'
 
 const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000' })
 
+// Attach JWT token to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('strelo_token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
+// Auto-logout on 401
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('strelo_token')
+      localStorage.removeItem('strelo_user')
+      window.location.reload()
+    }
+    return Promise.reject(err)
+  }
+)
+
+// --- Auth ---
+export const register = (data) =>
+  api.post('/auth/register', data).then(r => r.data)
+
+export const login = (data) =>
+  api.post('/auth/login', data).then(r => r.data)
+
+export const getMe = () =>
+  api.get('/auth/me').then(r => r.data)
+
 // --- Workouts ---
 export const getWorkouts = (start, end) =>
   api.get('/workouts', { params: { start, end } }).then(r => r.data)
