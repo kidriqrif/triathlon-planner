@@ -11,9 +11,9 @@ import models
 
 router = APIRouter(prefix="/billing", tags=["billing"])
 
-LEMON_API_KEY = os.getenv("LEMONSQUEEZY_API_KEY", "")
-LEMON_WEBHOOK_SECRET = os.getenv("LEMONSQUEEZY_WEBHOOK_SECRET", "")
-STORE_ID = os.getenv("LEMONSQUEEZY_STORE_ID", "")
+LEMON_API_KEY = os.getenv("LEMONSQUEEZY_API_KEY", "").strip().replace("\n", "").replace("\r", "")
+LEMON_WEBHOOK_SECRET = os.getenv("LEMONSQUEEZY_WEBHOOK_SECRET", "").strip()
+STORE_ID = os.getenv("LEMONSQUEEZY_STORE_ID", "").strip()
 
 VARIANT_IDS = {
     "monthly": "1446036",
