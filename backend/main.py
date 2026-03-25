@@ -10,7 +10,7 @@ from routers import workouts, races, athlete, ai_coach
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Triathlon Planner API", version="1.0.0")
+app = FastAPI(title="Strelo API", version="1.0.0")
 
 import os
 

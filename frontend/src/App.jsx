@@ -68,8 +68,8 @@ export default function App() {
               <span className="text-xl z-10">🏃</span>
             </div>
             <div className="hidden sm:block">
-              <span className="font-black text-white text-lg tracking-tight">Tri</span>
-              <span className="font-black text-indigo-400 text-lg tracking-tight">Planner</span>
+              <span className="font-black text-white text-lg tracking-tight">Stre</span>
+              <span className="font-black text-indigo-400 text-lg tracking-tight">lo</span>
             </div>
           </button>
 
