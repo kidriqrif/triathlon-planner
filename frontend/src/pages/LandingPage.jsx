@@ -49,7 +49,7 @@ const PRO_FEATURES = [
   'Priority support',
 ]
 
-export default function LandingPage({ onGetStarted, onSignIn }) {
+export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Nav */}
@@ -220,7 +220,11 @@ export default function LandingPage({ onGetStarted, onSignIn }) {
             </div>
             <span className="font-bold text-white/50 text-sm">Strelo</span>
           </div>
-          <p className="text-white/30 text-xs">&copy; 2026 Strelo. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <button onClick={() => onNavigate('privacy')} className="text-white/30 text-xs hover:text-white/60 transition-colors">Privacy</button>
+            <button onClick={() => onNavigate('terms')} className="text-white/30 text-xs hover:text-white/60 transition-colors">Terms</button>
+            <span className="text-white/30 text-xs">&copy; 2026 Strelo</span>
+          </div>
         </div>
       </footer>
     </div>

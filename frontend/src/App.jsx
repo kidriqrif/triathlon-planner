@@ -7,6 +7,8 @@ import ProfilePage from './pages/ProfilePage'
 import UpgradePage from './pages/UpgradePage'
 import AuthPage from './pages/AuthPage'
 import LandingPage from './pages/LandingPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
 
@@ -70,15 +72,16 @@ export default function App() {
     setPage('dashboard')
   }
 
-  // Not authenticated — show landing or auth page
+  // Not authenticated — show landing, auth, or legal pages
   if (!user) {
-    if (page === 'auth') {
-      return <AuthPage onAuth={handleAuth} />
-    }
+    if (page === 'auth') return <AuthPage onAuth={handleAuth} />
+    if (page === 'privacy') return <PrivacyPage onBack={() => setPage('landing')} />
+    if (page === 'terms') return <TermsPage onBack={() => setPage('landing')} />
     return (
       <LandingPage
         onGetStarted={() => setPage('auth')}
         onSignIn={() => setPage('auth')}
+        onNavigate={setPage}
       />
     )
   }
