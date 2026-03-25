@@ -134,19 +134,19 @@ def suggest_week(db: Session = Depends(get_db)):
         race_date_str = str(active_race.date)
         race_info = f"{active_race.name} ({race_distance}) on {race_date_str} — {days_to_race} days away"
 
-    api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key:
         return MOCK_RESPONSE
 
     try:
-        import anthropic
+        from groq import Groq
 
-        client = anthropic.Anthropic(api_key=api_key)
+        client = Groq(api_key=api_key)
 
         system_prompt = (
             "You are an expert triathlon coach. "
             "Given the athlete's recent training history and upcoming race, "
-            "suggest a structured training week. Respond ONLY in valid JSON format."
+            "suggest a structured training week. Respond ONLY in valid JSON (no markdown, no code fences)."
         )
 
         user_prompt = f"""Athlete: {athlete.fitness_level}, targeting {race_distance} on {race_date_str} ({days_to_race} days away).
@@ -175,21 +175,31 @@ Use sport values: swim, bike, run, brick.
 Use workout_type values: easy, tempo, interval, long, recovery.
 Include 5-7 workouts spread across the week."""
 
-        message = client.messages.create(
-            model="claude-sonnet-4-6",
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
             max_tokens=1500,
-            messages=[{"role": "user", "content": user_prompt}],
-            system=system_prompt,
+            temperature=0.7,
         )
 
-        text = message.content[0].text.strip()
+        text = response.choices[0].message.content.strip()
+
         # Strip markdown code fences if present
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):
                 text = text[4:]
+            text = text.strip()
+
         return json.loads(text)
 
+    except json.JSONDecodeError:
+        raise HTTPException(
+            status_code=500, detail="AI returned invalid JSON. Please try again."
+        )
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"AI suggestion failed: {str(e)}"
