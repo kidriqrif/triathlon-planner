@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Premium polish ────────────────────────────────────────────────────────── */
+
+/* Crisp, anti-aliased text */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Custom scrollbar — thin, blends with the UI */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Page content fade-in on tab switch */
+main > div {
+  animation: page-in 0.3s ease-out;
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle press feedback on buttons */
+main button:not(:disabled):active {
+  transform: scale(0.975);
+  transition: transform 0.08s ease;
+}
+
+/* Selection colour */
+::selection {
+  background: rgba(99, 102, 241, 0.2);
+}
+
 /* ── Protect react-big-calendar from Tailwind's base reset ── */
 .rbc-calendar *,
 .rbc-calendar *::before,
