@@ -10,6 +10,20 @@ from routers import workouts, races, athlete, ai_coach, auth, billing
 
 Base.metadata.create_all(bind=engine)
 
+# Migrate: add new columns if missing (safe to run repeatedly)
+from sqlalchemy import inspect, text
+with engine.connect() as conn:
+    user_cols = {c["name"] for c in inspect(engine).get_columns("users")}
+    new_user_cols = {
+        "plan": "VARCHAR NOT NULL DEFAULT 'free'",
+        "lemon_customer_id": "VARCHAR",
+        "lemon_subscription_id": "VARCHAR",
+    }
+    for col, dtype in new_user_cols.items():
+        if col not in user_cols:
+            conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {dtype}"))
+    conn.commit()
+
 app = FastAPI(title="Strelo API", version="1.0.0")
 
 import os
