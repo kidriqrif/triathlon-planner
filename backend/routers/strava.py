@@ -93,11 +93,14 @@ def strava_callback(
     if not user:
         return RedirectResponse(f"{FRONTEND_URL}?strava=error")
 
-    user.strava_athlete_id = str(data["athlete"]["id"])
-    user.strava_access_token = data["access_token"]
-    user.strava_refresh_token = data["refresh_token"]
-    user.strava_token_expires = data["expires_at"]
-    db.commit()
+    try:
+        user.strava_athlete_id = str(data["athlete"]["id"])
+        user.strava_access_token = data["access_token"]
+        user.strava_refresh_token = data["refresh_token"]
+        user.strava_token_expires = data["expires_at"]
+        db.commit()
+    except (KeyError, TypeError):
+        return RedirectResponse(f"{FRONTEND_URL}?strava=error")
 
     return RedirectResponse(f"{FRONTEND_URL}?strava=connected")
 

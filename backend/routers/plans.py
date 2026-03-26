@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -177,7 +178,7 @@ def list_plans():
 @router.post("/{plan_id}/import")
 def import_plan(
     plan_id: str,
-    start_date: str = None,
+    start_date: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):

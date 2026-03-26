@@ -79,7 +79,10 @@ def create_checkout(
             detail=f"LemonSqueezy error {response.status_code}: {response.text[:200]}",
         )
 
-    checkout_url = response.json()["data"]["attributes"]["url"]
+    try:
+        checkout_url = response.json()["data"]["attributes"]["url"]
+    except (KeyError, TypeError):
+        raise HTTPException(status_code=502, detail="Unexpected checkout response format")
     return {"checkout_url": checkout_url}
 
 

@@ -229,9 +229,11 @@ Include 5-7 workouts spread across the week."""
 
         # Strip markdown code fences if present
         if text.startswith("```"):
-            text = text.split("```")[1]
-            if text.startswith("json"):
-                text = text[4:]
+            parts = text.split("```")
+            if len(parts) >= 2:
+                text = parts[1]
+                if text.startswith("json"):
+                    text = text[4:]
             text = text.strip()
 
         return json.loads(text)
