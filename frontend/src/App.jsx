@@ -9,6 +9,7 @@ import AuthPage from './pages/AuthPage'
 import LandingPage from './pages/LandingPage'
 import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
+import OnboardingPage from './pages/OnboardingPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
 
@@ -42,11 +43,11 @@ export default function App() {
     }
   }, [])
 
-  // Refresh user plan from server on mount (catches webhook upgrades)
+  // Refresh user data from server on mount (catches webhook upgrades + onboarding status)
   useEffect(() => {
     if (user) {
       getMe().then(me => {
-        const updated = { ...user, plan: me.plan }
+        const updated = { ...user, plan: me.plan, onboarded: me.onboarded }
         setUser(updated)
         localStorage.setItem('strelo_user', JSON.stringify(updated))
       }).catch(() => {})
@@ -82,6 +83,21 @@ export default function App() {
         onGetStarted={() => setPage('auth')}
         onSignIn={() => setPage('auth')}
         onNavigate={setPage}
+      />
+    )
+  }
+
+  // Authenticated but not onboarded — show onboarding
+  if (user && !user.onboarded) {
+    return (
+      <OnboardingPage
+        user={user}
+        onComplete={() => {
+          const updated = { ...user, onboarded: true }
+          setUser(updated)
+          localStorage.setItem('strelo_user', JSON.stringify(updated))
+          fetchAll()
+        }}
       />
     )
   }

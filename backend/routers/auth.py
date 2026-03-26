@@ -12,6 +12,16 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 limiter = Limiter(key_func=get_remote_address)
 
 
+def _user_dict(user: models.User) -> dict:
+    return {
+        "id": user.id,
+        "email": user.email,
+        "name": user.name,
+        "plan": user.plan,
+        "onboarded": user.onboarded,
+    }
+
+
 class RegisterRequest(BaseModel):
     email: str
     password: str
@@ -33,6 +43,7 @@ class MeResponse(BaseModel):
     email: str
     name: str
     plan: str = "free"
+    onboarded: bool = False
 
     model_config = {"from_attributes": True}
 
@@ -62,7 +73,7 @@ def register(request: Request, payload: RegisterRequest, db: Session = Depends(g
     db.commit()
 
     token = create_access_token(user.id)
-    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name, "plan": user.plan}}
+    return {"token": token, "user": _user_dict(user)}
 
 
 @router.post("/login", response_model=AuthResponse)
@@ -73,9 +84,19 @@ def login(request: Request, payload: LoginRequest, db: Session = Depends(get_db)
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     token = create_access_token(user.id)
-    return {"token": token, "user": {"id": user.id, "email": user.email, "name": user.name, "plan": user.plan}}
+    return {"token": token, "user": _user_dict(user)}
 
 
 @router.get("/me", response_model=MeResponse)
 def me(current_user: models.User = Depends(get_current_user)):
     return current_user
+
+
+@router.post("/onboarded")
+def mark_onboarded(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    current_user.onboarded = True
+    db.commit()
+    return {"ok": True}

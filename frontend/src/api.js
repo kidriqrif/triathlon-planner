@@ -34,6 +34,9 @@ export const login = (data) =>
 export const getMe = () =>
   api.get('/auth/me').then(r => r.data)
 
+export const markOnboarded = () =>
+  api.post('/auth/onboarded').then(r => r.data)
+
 // --- Workouts ---
 export const getWorkouts = (start, end) =>
   api.get('/workouts', { params: { start, end } }).then(r => r.data)

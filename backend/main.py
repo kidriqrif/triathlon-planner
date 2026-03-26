@@ -20,6 +20,7 @@ with engine.connect() as conn:
     user_cols = {c["name"] for c in inspect(engine).get_columns("users")}
     new_user_cols = {
         "plan": "VARCHAR NOT NULL DEFAULT 'free'",
+        "onboarded": "BOOLEAN NOT NULL DEFAULT FALSE",
         "lemon_customer_id": "VARCHAR",
         "lemon_subscription_id": "VARCHAR",
     }
