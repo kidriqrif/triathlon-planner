@@ -10,7 +10,7 @@ from slowapi.errors import RateLimitExceeded
 
 from database import engine, Base
 import models  # noqa: F401 — registers models with Base
-from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export
+from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export, support
 
 Base.metadata.create_all(bind=engine)
 
@@ -71,6 +71,7 @@ app.include_router(ai_coach.router)
 app.include_router(billing.router)
 app.include_router(strava.router)
 app.include_router(export.router)
+app.include_router(support.router)
 
 
 @app.get("/health")

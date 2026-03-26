@@ -115,6 +115,10 @@ export const exportFitUrl = (workoutId) => {
   return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
 }
 
+// --- Support Chat ---
+export const sendSupportChat = (messages) =>
+  api.post('/support/chat', { messages }).then(r => r.data)
+
 export const exportCsvUrl = () => {
   const token = localStorage.getItem('strelo_token')
   return `${api.defaults.baseURL}/export/csv?token=${token}`

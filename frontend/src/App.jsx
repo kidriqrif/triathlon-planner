@@ -13,6 +13,7 @@ import OnboardingPage from './pages/OnboardingPage'
 import SettingsPage from './pages/SettingsPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
+import SupportChat from './components/SupportChat'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings } from 'lucide-react'
 
 const NAV = [
@@ -208,6 +209,8 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-4 py-7">
         {renderPage()}
       </main>
+
+      <SupportChat />
     </div>
   )
 }
