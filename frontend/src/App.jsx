@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useI18n } from './i18n/I18nContext'
+import { LANGUAGES } from './i18n/translations'
 import Dashboard from './pages/Dashboard'
 import PlanPage from './pages/PlanPage'
 import LogPage from './pages/LogPage'
@@ -21,19 +23,20 @@ import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun, BookMarked, Library, NotebookPen, Scale } from 'lucide-react'
 
-const NAV = [
-  { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
-  { id: 'plan',      label: 'Calendar',  Icon: CalendarDays    },
-  { id: 'log',       label: 'Log',       Icon: ClipboardList   },
-  { id: 'races',     label: 'Races',     Icon: Flag            },
-  { id: 'plans',     label: 'Plans',     Icon: Library          },
-  { id: 'journal',   label: 'Journal',   Icon: NotebookPen     },
-  { id: 'body',      label: 'Body Log',  Icon: Scale           },
-  { id: 'saved',     label: 'Saved',     Icon: BookMarked      },
-  { id: 'profile',   label: 'Profile',   Icon: User            },
+const NAV_ITEMS = [
+  { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
+  { id: 'plan',      tKey: 'calendar',  Icon: CalendarDays    },
+  { id: 'log',       tKey: 'log',       Icon: ClipboardList   },
+  { id: 'races',     tKey: 'races',     Icon: Flag            },
+  { id: 'plans',     tKey: 'plans',     Icon: Library          },
+  { id: 'journal',   tKey: 'journal',   Icon: NotebookPen     },
+  { id: 'body',      tKey: 'bodyLog',   Icon: Scale           },
+  { id: 'saved',     tKey: 'saved',     Icon: BookMarked      },
+  { id: 'profile',   tKey: 'profile',   Icon: User            },
 ]
 
 export default function App() {
+  const { t, lang, setLang } = useI18n()
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem('strelo_user')
     return stored ? JSON.parse(stored) : null
@@ -177,7 +180,7 @@ export default function App() {
           <div className="relative w-72 bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col">
             {/* Sidebar header */}
             <div className="px-5 h-14 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
-              <span className="font-bold text-slate-900 dark:text-white text-sm">Menu</span>
+              <span className="font-bold text-slate-900 dark:text-white text-sm">{t('menu')}</span>
               <button onClick={() => setSidebarOpen(false)}
                 className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
                 <X size={18} strokeWidth={2} />
@@ -186,7 +189,7 @@ export default function App() {
 
             {/* Nav links */}
             <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
-              {NAV.map(({ id, label, Icon }) => (
+              {NAV_ITEMS.map(({ id, tKey, Icon }) => (
                 <button key={id} onClick={() => navigate(id)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     page === id
@@ -194,7 +197,7 @@ export default function App() {
                       : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}>
                   <Icon size={16} strokeWidth={1.5} />
-                  {label}
+                  {t(tKey)}
                 </button>
               ))}
 
@@ -206,18 +209,35 @@ export default function App() {
                       : 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800'
                   }`}>
                   <Sparkles size={16} strokeWidth={1.5} />
-                  Upgrade to Pro
+                  {t('upgradeToPro')}
                 </button>
               )}
             </nav>
 
             {/* Bottom section */}
             <div className="border-t border-slate-100 dark:border-slate-800 p-3 space-y-0.5">
+              {/* Language picker */}
+              <div className="px-3 py-2">
+                <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-1.5">{t('language')}</p>
+                <div className="flex gap-1">
+                  {Object.entries(LANGUAGES).map(([code, { flag }]) => (
+                    <button key={code} onClick={() => setLang(code)}
+                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                        lang === code
+                          ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
+                          : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}>
+                      {flag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Dark mode toggle */}
               <button onClick={() => setDark(d => !d)}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
                 {dark ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-                {dark ? 'Light mode' : 'Dark mode'}
+                {dark ? t('lightMode') : t('darkMode')}
               </button>
 
               <button onClick={() => navigate('settings')}
@@ -227,13 +247,13 @@ export default function App() {
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}>
                 <Settings size={16} strokeWidth={1.5} />
-                Settings
+                {t('settings')}
               </button>
 
               <button onClick={handleLogout}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-red-500 transition-colors">
                 <LogOut size={16} strokeWidth={1.5} />
-                Sign out
+                {t('signOut')}
               </button>
 
               {/* User info */}

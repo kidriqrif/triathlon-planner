@@ -36,12 +36,17 @@ export default function PlanPage({ workouts, onRefresh }) {
     onRefresh()
   }
 
+  const handleMoveWorkout = async (workoutId, newDate) => {
+    await updateWorkout(workoutId, { date: newDate })
+    onRefresh()
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-2xl font-black text-slate-800">Training Calendar</h1>
-          <p className="text-slate-400 text-sm mt-0.5">Click a date to add · click an event to edit</p>
+          <p className="text-slate-400 text-sm mt-0.5">Click to add · click event to edit · drag to move</p>
         </div>
         <button
           onClick={() => openNew(new Date().toISOString().split('T')[0])}
@@ -67,6 +72,7 @@ export default function PlanPage({ workouts, onRefresh }) {
         workouts={workouts}
         onSelectSlot={openNew}
         onSelectEvent={openEdit}
+        onMoveWorkout={handleMoveWorkout}
       />
 
       {formState !== null && (

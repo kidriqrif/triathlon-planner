@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react'
 import { Calendar as BigCalendar, dateFnsLocalizer } from 'react-big-calendar'
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 
 const locales = { 'en-US': enUS }
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales })
+const DnDCalendar = withDragAndDrop(BigCalendar)
 
 const SPORT_COLORS = {
   swim:  '#3b82f6',
@@ -37,12 +40,12 @@ function eventStyleGetter(event) {
       textDecoration: isSkipped ? 'line-through' : 'none',
       borderRadius: '6px',
       fontSize: '0.75rem',
-      cursor: 'pointer',
+      cursor: 'grab',
     },
   }
 }
 
-export default function Calendar({ workouts, onSelectSlot, onSelectEvent }) {
+export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMoveWorkout }) {
   const [view, setView] = useState('month')
   const [date, setDate] = useState(new Date())
 
@@ -57,9 +60,16 @@ export default function Calendar({ workouts, onSelectSlot, onSelectEvent }) {
     onSelectEvent(event.resource)
   }, [onSelectEvent])
 
+  const handleEventDrop = useCallback(({ event, start }) => {
+    if (onMoveWorkout) {
+      const newDate = format(start, 'yyyy-MM-dd')
+      onMoveWorkout(event.resource.id, newDate)
+    }
+  }, [onMoveWorkout])
+
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
-      <BigCalendar
+      <DnDCalendar
         localizer={localizer}
         events={events}
         startAccessor="start"
@@ -72,9 +82,12 @@ export default function Calendar({ workouts, onSelectSlot, onSelectEvent }) {
         selectable
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
+        onEventDrop={handleEventDrop}
         eventPropGetter={eventStyleGetter}
         views={['month', 'week']}
         popup
+        draggableAccessor={() => true}
+        resizable={false}
       />
     </div>
   )
