@@ -113,19 +113,16 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       {user?.plan === 'pro' ? (
         <AICoach onWorkoutsAdded={onWorkoutsAdded} />
       ) : (
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 text-center">
+        <div className="bg-white rounded-2xl border border-dashed border-slate-200 p-6 text-center">
           <div className="flex justify-center mb-3">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
-              <Lock size={22} strokeWidth={1.5} className="text-amber-500" />
-            </div>
+            <Lock size={20} strokeWidth={1.5} className="text-slate-300" />
           </div>
-          <h3 className="font-bold text-slate-800">StreloIQ</h3>
-          <p className="text-sm text-slate-400 mt-1 mb-4">
-            Intelligent training plans personalised to your fitness, goals, and history. Upgrade to Pro to unlock.
+          <h3 className="font-bold text-slate-800 text-sm">StreloIQ</h3>
+          <p className="text-xs text-slate-400 mt-1 mb-4">
+            Generates your training week based on your fitness, race target, and history.
           </p>
           <button onClick={() => onNavigate('upgrade')}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all shadow-sm">
-            <Sparkles size={14} strokeWidth={2} />
+            className="text-xs font-semibold text-slate-900 border border-slate-200 px-4 py-2 rounded-lg hover:border-slate-300 transition-colors">
             Upgrade to Pro
           </button>
         </div>

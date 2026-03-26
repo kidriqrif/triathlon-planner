@@ -248,12 +248,12 @@ export default function ProfilePage() {
 
         {/* Save */}
         <button type="submit"
-          className={`w-full py-3 rounded-2xl font-bold text-white transition-all shadow-sm ${
+          className={`w-full py-3 rounded-xl font-semibold text-white transition-colors ${
             saved
               ? 'bg-emerald-500'
-              : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90'
+              : 'bg-slate-900 hover:bg-slate-800'
           }`}>
-          {saved ? '✓ Profile Saved!' : 'Save Profile'}
+          {saved ? 'Saved' : 'Save Profile'}
         </button>
       </form>
     </div>

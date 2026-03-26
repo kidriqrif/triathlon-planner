@@ -1,234 +1,208 @@
 import React, { useEffect } from 'react'
-import { CalendarDays, Bot, BarChart3, Flag, Zap, Shield, Check, ArrowRight, ChevronRight } from 'lucide-react'
-
-const FEATURES = [
-  {
-    Icon: CalendarDays,
-    title: 'Smart Calendar',
-    desc: 'Visualise your swim, bike, and run sessions on a drag-and-drop weekly calendar.',
-  },
-  {
-    Icon: Bot,
-    title: 'StreloIQ',
-    desc: 'Your intelligent training engine generates personalised weekly plans based on your fitness and goals.',
-  },
-  {
-    Icon: BarChart3,
-    title: 'Dashboard Analytics',
-    desc: 'Track volume, RPE trends, sport balance, and weekly progress at a glance.',
-  },
-  {
-    Icon: Flag,
-    title: 'Race Countdown',
-    desc: 'Set your target race and watch Strelo periodise your training around it.',
-  },
-  {
-    Icon: Zap,
-    title: 'Workout Builder',
-    desc: 'Build structured intervals and brick sessions with a visual drag-and-drop builder.',
-  },
-  {
-    Icon: Shield,
-    title: 'Injury Aware',
-    desc: 'Log limitations and injuries — the AI adapts your plan to keep you safe.',
-  },
-]
-
-const FREE_FEATURES = [
-  'Log workouts & races',
-  'Calendar view',
-  'Dashboard stats',
-  'Basic athlete profile',
-]
-
-const PRO_FEATURES = [
-  'Everything in Free',
-  'StreloIQ — personalised weekly plans',
-  'Advanced analytics & trends',
-  'Unlimited race tracking',
-  'Priority support',
-]
+import { Check, ArrowRight, Waves, Bike, Footprints } from 'lucide-react'
 
 export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
-  // Wake up the backend while user reads the landing page
   useEffect(() => {
     fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/health').catch(() => {})
   }, [])
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-white">
       {/* Nav */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-slate-100">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25 flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100">
+        <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="font-black text-slate-800 text-lg tracking-tight">Strelo</span>
+            <span className="font-extrabold text-slate-900 tracking-tight">Strelo</span>
           </div>
-          <div className="flex items-center gap-3">
-            <button onClick={onSignIn}
-              className="text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors">
-              Sign In
+          <div className="flex items-center gap-4">
+            <button onClick={onSignIn} className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
+              Log in
             </button>
             <button onClick={onGetStarted}
-              className="text-sm font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-2 rounded-xl hover:opacity-90 transition-all shadow-sm">
-              Get Started Free
+              className="text-sm font-semibold text-white bg-slate-900 px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+              Sign up free
             </button>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="max-w-5xl mx-auto px-4 pt-20 pb-24 text-center">
-        <div className="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-xs font-bold px-3 py-1.5 rounded-full mb-6">
-          <Zap size={12} strokeWidth={2.5} />
-          Powered by StreloIQ
-        </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight">
-          Train smarter for<br />
-          <span className="bg-gradient-to-r from-indigo-500 to-violet-600 bg-clip-text text-transparent">
-            your next triathlon
-          </span>
-        </h1>
-        <p className="text-slate-500 text-lg mt-5 max-w-xl mx-auto leading-relaxed">
-          Strelo combines StreloIQ with a beautiful training planner to help you
-          swim, bike, and run your way to race day — prepared and confident.
-        </p>
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <button onClick={onGetStarted}
-            className="text-sm font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-3 rounded-2xl hover:opacity-90 transition-all shadow-lg shadow-indigo-500/25 flex items-center gap-2">
-            Start Free <ArrowRight size={16} strokeWidth={2} />
-          </button>
-          <button onClick={onSignIn}
-            className="text-sm font-bold text-slate-600 bg-white border border-slate-200 px-6 py-3 rounded-2xl hover:border-slate-300 transition-all flex items-center gap-2">
-            Sign In <ChevronRight size={16} strokeWidth={2} />
-          </button>
-        </div>
-        <p className="text-xs text-slate-400 mt-4">No credit card required</p>
-      </section>
-
-      {/* Features */}
-      <section className="bg-white border-y border-slate-100 py-20">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-14">
-            <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2">Features</p>
-            <h2 className="text-3xl font-black text-slate-800">Everything you need to race-ready</h2>
+      {/* Hero — left-aligned, conversational */}
+      <section className="max-w-5xl mx-auto px-5 pt-20 sm:pt-28 pb-20">
+        <div className="max-w-2xl">
+          <div className="flex items-center gap-2 text-sm text-slate-400 mb-5">
+            <Waves size={15} className="text-blue-400" />
+            <Bike size={15} className="text-orange-400" />
+            <Footprints size={15} className="text-emerald-400" />
+            <span className="ml-1">For triathletes who want structure</span>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map(({ Icon, title, desc }) => (
-              <div key={title} className="bg-slate-50 rounded-2xl p-6 hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
-                  <Icon size={20} strokeWidth={1.5} className="text-indigo-600" />
-                </div>
-                <h3 className="font-bold text-slate-800 mb-1">{title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
-              </div>
-            ))}
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+            Stop training random.<br />
+            Start training with a plan.
+          </h1>
+          <p className="text-lg text-slate-500 mt-5 leading-relaxed max-w-lg">
+            Strelo gives you a training calendar, workout logs, race countdown,
+            and an engine that builds your week for you. Built for triathletes
+            who are tired of spreadsheets.
+          </p>
+          <div className="flex flex-wrap items-center gap-3 mt-8">
+            <button onClick={onGetStarted}
+              className="text-sm font-semibold text-white bg-slate-900 px-5 py-3 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-2">
+              Create free account <ArrowRight size={15} />
+            </button>
+            <span className="text-xs text-slate-400">No credit card. No spam. Just training.</span>
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-14">
-            <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2">Pricing</p>
-            <h2 className="text-3xl font-black text-slate-800">Simple, transparent pricing</h2>
-            <p className="text-slate-500 text-sm mt-2">Start free. Upgrade when you're ready for StreloIQ.</p>
+      {/* What you get — simple two-column, not a grid of cards */}
+      <section className="border-t border-slate-100 bg-slate-50/50">
+        <div className="max-w-5xl mx-auto px-5 py-20">
+          <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">What you get</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-12">
+            The stuff you actually need. Nothing you don't.
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-10">
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">Training calendar</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                See your whole week at a glance. Drag workouts around. Click to log.
+                Colour-coded by swim, bike, and run so you spot imbalances instantly.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">StreloIQ weekly plans</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Tell it your race, your fitness, your available days. It generates
+                a structured week with the right mix of easy, tempo, long, and recovery.
+                <span className="text-slate-400"> Pro only.</span>
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">Race countdown & periodisation</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Set your target race. Strelo figures out if you're in base, build, peak,
+                or taper and adjusts suggestions accordingly.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">Strava sync</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Connect Strava and your completed activities import automatically.
+                No double logging. Your planned vs actual is always up to date.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">Structured workouts → device</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Export planned sessions as .FIT files. Upload to your Garmin,
+                COROS, or Wahoo. Follow the workout on your wrist.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 mb-1">Dashboard that tells you something</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Weekly volume, sport breakdown, RPE trends, completion rate.
+                Not 40 charts — just the ones that matter.
+              </p>
+            </div>
           </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        </div>
+      </section>
+
+      {/* Pricing — clean, no "Most Popular" badge */}
+      <section className="border-t border-slate-100">
+        <div className="max-w-5xl mx-auto px-5 py-20">
+          <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Pricing</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
+            Free to start. Upgrade if you want the engine.
+          </h2>
+          <p className="text-slate-500 text-sm mb-12 max-w-lg">
+            Most features are free forever. Pro unlocks StreloIQ — the part that
+            actually writes your training plan for you.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl">
             {/* Free */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-7">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Free</p>
-              <p className="text-4xl font-black text-slate-800 mt-2">$0</p>
-              <p className="text-slate-400 text-sm">Forever</p>
-              <ul className="mt-6 space-y-3">
-                {FREE_FEATURES.map(f => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-600">
-                    <Check size={16} strokeWidth={2.5} className="text-slate-400 shrink-0" />
-                    {f}
+            <div className="border border-slate-200 rounded-xl p-6">
+              <p className="text-sm font-bold text-slate-900">Free</p>
+              <p className="text-3xl font-extrabold text-slate-900 mt-1">$0</p>
+              <p className="text-sm text-slate-400 mb-5">No limits, no expiry</p>
+              <ul className="space-y-2.5 text-sm text-slate-600">
+                {['Log workouts & races', 'Training calendar', 'Dashboard & stats', 'Strava sync', 'FIT file export'].map(f => (
+                  <li key={f} className="flex items-start gap-2">
+                    <Check size={15} strokeWidth={2.5} className="text-slate-400 mt-0.5 shrink-0" />{f}
                   </li>
                 ))}
               </ul>
               <button onClick={onGetStarted}
-                className="w-full mt-7 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-200 text-slate-600 hover:border-slate-300 transition-all">
-                Get Started
+                className="w-full mt-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:border-slate-300 transition-colors">
+                Get started
               </button>
             </div>
 
             {/* Pro */}
-            <div className="bg-white rounded-2xl border-2 border-indigo-400 shadow-sm p-7 relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                Most Popular
+            <div className="border-2 border-slate-900 rounded-xl p-6">
+              <p className="text-sm font-bold text-slate-900">Pro</p>
+              <div className="flex items-baseline gap-2 mt-1">
+                <p className="text-3xl font-extrabold text-slate-900">$12.99</p>
+                <p className="text-sm text-slate-400">/mo</p>
               </div>
-              <div className="flex items-center gap-2">
-                <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest">Pro</p>
-                <Zap size={14} strokeWidth={2.5} className="text-indigo-500" />
-              </div>
-              <div className="mt-2 flex items-baseline gap-3">
-                <div>
-                  <p className="text-4xl font-black text-slate-800">$12.99</p>
-                  <p className="text-slate-400 text-sm">/month</p>
-                </div>
-                <div className="text-slate-200">|</div>
-                <div>
-                  <p className="text-2xl font-black text-slate-800">$123.99</p>
-                  <p className="text-slate-400 text-sm">/year <span className="text-emerald-500 font-bold">Save 20%</span></p>
-                </div>
-              </div>
-              <ul className="mt-6 space-y-3">
-                {PRO_FEATURES.map(f => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-600">
-                    <Check size={16} strokeWidth={2.5} className="text-indigo-500 shrink-0" />
-                    {f}
+              <p className="text-sm text-slate-400 mb-5">or $123.99/yr <span className="text-emerald-600 font-semibold">(save 20%)</span></p>
+              <ul className="space-y-2.5 text-sm text-slate-600">
+                {['Everything in Free', 'StreloIQ weekly plans', 'Advanced analytics', 'Unlimited race tracking', 'Priority support'].map(f => (
+                  <li key={f} className="flex items-start gap-2">
+                    <Check size={15} strokeWidth={2.5} className="text-slate-900 mt-0.5 shrink-0" />{f}
                   </li>
                 ))}
               </ul>
               <button onClick={onGetStarted}
-                className="w-full mt-7 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 transition-all shadow-sm">
-                Start Free, Upgrade Later
+                className="w-full mt-6 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                Start free, upgrade later
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 py-20">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-black text-white">Ready to train smarter?</h2>
-          <p className="text-white/50 mt-3 max-w-md mx-auto">
-            Join athletes using Strelo to plan, track, and optimise their triathlon training.
-          </p>
+      {/* Bottom CTA — not a giant gradient block */}
+      <section className="border-t border-slate-100 bg-slate-50/50">
+        <div className="max-w-5xl mx-auto px-5 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <h2 className="text-xl font-extrabold text-slate-900">Race day won't wait.</h2>
+            <p className="text-sm text-slate-500 mt-1">Set up your plan in under a minute.</p>
+          </div>
           <button onClick={onGetStarted}
-            className="mt-8 text-sm font-bold text-indigo-600 bg-white px-6 py-3 rounded-2xl hover:bg-slate-50 transition-all shadow-lg flex items-center gap-2 mx-auto">
-            Get Started Free <ArrowRight size={16} strokeWidth={2} />
+            className="text-sm font-semibold text-white bg-slate-900 px-5 py-3 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-2 shrink-0">
+            Create free account <ArrowRight size={15} />
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 border-t border-white/5 py-8">
-        <div className="max-w-5xl mx-auto px-4 flex items-center justify-between">
+      <footer className="border-t border-slate-100 py-8">
+        <div className="max-w-5xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-              <svg width="12" height="12" viewBox="0 0 18 18" fill="none">
+            <div className="w-6 h-6 rounded bg-slate-900 flex items-center justify-center">
+              <svg width="11" height="11" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="font-bold text-white/50 text-sm">Strelo</span>
+            <span className="text-sm text-slate-400">Strelo</span>
           </div>
-          <div className="flex items-center gap-4">
-            <button onClick={() => onNavigate('privacy')} className="text-white/30 text-xs hover:text-white/60 transition-colors">Privacy</button>
-            <button onClick={() => onNavigate('terms')} className="text-white/30 text-xs hover:text-white/60 transition-colors">Terms</button>
-            <span className="text-white/30 text-xs">&copy; 2026 Strelo</span>
+          <div className="flex items-center gap-5 text-xs text-slate-400">
+            <button onClick={() => onNavigate('privacy')} className="hover:text-slate-600 transition-colors">Privacy</button>
+            <button onClick={() => onNavigate('terms')} className="hover:text-slate-600 transition-colors">Terms</button>
+            <span>&copy; 2026</span>
           </div>
         </div>
       </footer>

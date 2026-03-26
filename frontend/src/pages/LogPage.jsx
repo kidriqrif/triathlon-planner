@@ -66,7 +66,7 @@ export default function LogPage({ workouts, onRefresh }) {
             </a>
           )}
           <button onClick={() => setFormState({ workout: null, defaultDate: null })}
-            className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all shadow-sm">
+            className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
             + Log Workout
           </button>
         </div>

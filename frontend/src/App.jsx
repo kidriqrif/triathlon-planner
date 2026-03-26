@@ -139,18 +139,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 shadow-xl">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-slate-900">
+        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Brand */}
-          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25 flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="hidden sm:block font-black text-white text-lg tracking-tight">Strelo</span>
+            <span className="hidden sm:block font-extrabold text-white text-base tracking-tight">Strelo</span>
           </button>
 
           {/* Nav */}
@@ -165,7 +165,7 @@ export default function App() {
                 <Icon size={16} strokeWidth={1.5} />
                 <span className="hidden lg:block">{label}</span>
                 {page === id && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-400 rounded-full" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-white/60 rounded-full" />
                 )}
               </button>
             ))}
@@ -174,12 +174,12 @@ export default function App() {
             {user.plan !== 'pro' && (
               <button
                 onClick={() => setPage('upgrade')}
-                className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
                   page === 'upgrade'
-                    ? 'bg-amber-400/20 text-amber-300'
-                    : 'text-amber-400/80 hover:text-amber-300 hover:bg-amber-400/10'
+                    ? 'bg-white/15 text-white'
+                    : 'text-amber-400/90 hover:text-amber-300 border border-amber-400/30 hover:border-amber-400/50'
                 }`}>
-                <Sparkles size={14} strokeWidth={2} />
+                <Sparkles size={12} strokeWidth={2} />
                 <span className="hidden lg:block">Pro</span>
               </button>
             )}

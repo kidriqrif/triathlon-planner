@@ -68,21 +68,20 @@ export default function AuthPage({ onAuth, resetToken }) {
   const switchMode = (m) => { setMode(m); setError(null); setSuccess(null) }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Brand */}
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25 flex items-center justify-center">
-              <svg width="28" height="28" viewBox="0 0 18 18" fill="none">
+          <div className="flex justify-center mb-3">
+            <div className="w-11 h-11 rounded-xl bg-slate-900 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
           </div>
-          <h1 className="text-2xl font-black text-slate-800">Strelo</h1>
-          <p className="text-slate-400 text-sm mt-1">Smart triathlon training</p>
+          <h1 className="text-xl font-extrabold text-slate-900">Strelo</h1>
         </div>
 
         {/* Card */}
@@ -171,7 +170,7 @@ export default function AuthPage({ onAuth, resetToken }) {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full py-3 rounded-2xl font-bold text-white bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-60">
+              className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
               {loading ? (
                 <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

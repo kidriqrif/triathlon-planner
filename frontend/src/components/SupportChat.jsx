@@ -42,7 +42,7 @@ export default function SupportChat() {
       {open && (
         <div className="fixed bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col z-50 overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-3 flex items-center justify-between shrink-0">
+          <div className="bg-slate-900 px-4 py-3 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
               <Bot size={18} strokeWidth={1.5} className="text-white/80" />
               <span className="text-sm font-bold text-white">Strelo Support</span>
@@ -110,7 +110,7 @@ export default function SupportChat() {
       {/* Floating bubble */}
       <button
         onClick={() => setOpen(o => !o)}
-        className="fixed bottom-5 right-4 sm:right-6 w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30 flex items-center justify-center hover:scale-105 transition-transform z-50">
+        className="fixed bottom-5 right-4 sm:right-6 w-11 h-11 rounded-full bg-slate-900 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 transition-colors z-50">
         {open ? <X size={20} strokeWidth={2} /> : <MessageCircle size={20} strokeWidth={2} />}
       </button>
     </>
