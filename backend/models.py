@@ -50,6 +50,10 @@ class User(Base):
     onboarded = Column(Boolean, nullable=False, default=False)
     lemon_customer_id = Column(String, nullable=True)
     lemon_subscription_id = Column(String, nullable=True)
+    strava_athlete_id = Column(String, nullable=True)
+    strava_access_token = Column(String, nullable=True)
+    strava_refresh_token = Column(String, nullable=True)
+    strava_token_expires = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     workouts = relationship("Workout", back_populates="owner")

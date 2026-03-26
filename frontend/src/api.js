@@ -95,3 +95,22 @@ export const createCheckout = (plan = 'monthly') =>
 
 export const getBillingStatus = () =>
   api.get('/billing/status').then(r => r.data)
+
+// --- Strava ---
+export const getStravaConnectUrl = () =>
+  api.get('/strava/connect').then(r => r.data)
+
+export const getStravaStatus = () =>
+  api.get('/strava/status').then(r => r.data)
+
+export const disconnectStrava = () =>
+  api.post('/strava/disconnect').then(r => r.data)
+
+export const syncStrava = () =>
+  api.post('/strava/sync').then(r => r.data)
+
+// --- Export ---
+export const exportFitUrl = (workoutId) => {
+  const token = localStorage.getItem('strelo_token')
+  return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
+}

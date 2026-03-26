@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { updateName, changePassword, deleteAccount } from '../api'
-import { User, Lock, Trash2, AlertCircle, CheckCircle } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { updateName, changePassword, deleteAccount, getStravaConnectUrl, getStravaStatus, disconnectStrava, syncStrava } from '../api'
+import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw } from 'lucide-react'
 
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
 
@@ -38,6 +38,42 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
   const [confirmPw, setConfirmPw] = useState('')
   const [pwMsg, setPwMsg] = useState(null)
   const [pwSaving, setPwSaving] = useState(false)
+
+  // Strava
+  const [stravaConnected, setStravaConnected] = useState(false)
+  const [stravaSyncing, setStravaSyncing] = useState(false)
+  const [stravaMsg, setStravaMsg] = useState(null)
+
+  useEffect(() => {
+    getStravaStatus().then(s => setStravaConnected(s.connected)).catch(() => {})
+  }, [])
+
+  const handleStravaConnect = async () => {
+    try {
+      const { url } = await getStravaConnectUrl()
+      window.location.href = url
+    } catch { setStravaMsg({ type: 'error', message: 'Failed to start Strava connection' }) }
+  }
+
+  const handleStravaDisconnect = async () => {
+    try {
+      await disconnectStrava()
+      setStravaConnected(false)
+      setStravaMsg({ type: 'success', message: 'Strava disconnected' })
+    } catch { setStravaMsg({ type: 'error', message: 'Failed to disconnect' }) }
+  }
+
+  const handleStravaSync = async () => {
+    setStravaSyncing(true)
+    setStravaMsg(null)
+    try {
+      const res = await syncStrava()
+      setStravaMsg({ type: 'success', message: `Imported ${res.imported} activities from Strava` })
+    } catch (err) {
+      setStravaMsg({ type: 'error', message: err.response?.data?.detail || 'Sync failed' })
+    }
+    setStravaSyncing(false)
+  }
 
   // Delete
   const [deletePw, setDeletePw] = useState('')
@@ -148,6 +184,46 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
       </Section>
 
       {/* Delete Account */}
+      {/* Strava */}
+      <Section title="Connected Apps">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#FC4C02">
+                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-bold text-slate-800">Strava</p>
+              <p className="text-xs text-slate-400">
+                {stravaConnected ? 'Connected — auto-import activities' : 'Import completed workouts'}
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            {stravaConnected ? (
+              <>
+                <button onClick={handleStravaSync} disabled={stravaSyncing}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-indigo-600 border border-indigo-200 hover:border-indigo-400 transition-all disabled:opacity-40">
+                  <RefreshCw size={13} strokeWidth={2} className={stravaSyncing ? 'animate-spin' : ''} />
+                  {stravaSyncing ? 'Syncing...' : 'Sync Now'}
+                </button>
+                <button onClick={handleStravaDisconnect}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-red-500 border border-red-200 hover:border-red-400 transition-all">
+                  <Unlink size={13} strokeWidth={2} /> Disconnect
+                </button>
+              </>
+            ) : (
+              <button onClick={handleStravaConnect}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-[#FC4C02] hover:opacity-90 transition-all">
+                <Link size={13} strokeWidth={2} /> Connect Strava
+              </button>
+            )}
+          </div>
+        </div>
+        {stravaMsg && <Alert {...stravaMsg} />}
+      </Section>
+
       <Section title="Danger Zone">
         {!showDelete ? (
           <button onClick={() => setShowDelete(true)}

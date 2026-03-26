@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import WorkoutForm from '../components/WorkoutForm'
 import { readableSummary } from '../components/WorkoutBuilder'
 import { brickReadableSummary } from '../components/BrickBuilder'
-import { createWorkout, updateWorkout, deleteWorkout } from '../api'
-import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList } from 'lucide-react'
+import { createWorkout, updateWorkout, deleteWorkout, exportFitUrl } from '../api'
+import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList, Download } from 'lucide-react'
 
 const SPORT_CONFIG = {
   swim:  { Icon: Waves,      label: 'Swim',  border: 'border-l-blue-400',   badge: 'bg-blue-50 text-blue-700 border-blue-200'       },
@@ -135,6 +135,18 @@ export default function LogPage({ workouts, onRefresh }) {
                     {w.distance_km  && <p>{w.distance_km} km</p>}
                     {w.rpe          && <p>RPE {w.rpe}</p>}
                   </div>
+
+                  {/* FIT export */}
+                  {w.status === 'planned' && (
+                    <a
+                      href={exportFitUrl(w.id)}
+                      onClick={e => e.stopPropagation()}
+                      title="Download .FIT file"
+                      className="p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-all shrink-0"
+                    >
+                      <Download size={14} strokeWidth={2} />
+                    </a>
+                  )}
 
                   {/* Arrow hint */}
                   <span className="text-slate-300 group-hover:text-slate-400 text-sm shrink-0 transition-colors">›</span>

@@ -10,7 +10,7 @@ from slowapi.errors import RateLimitExceeded
 
 from database import engine, Base
 import models  # noqa: F401 — registers models with Base
-from routers import workouts, races, athlete, ai_coach, auth, billing
+from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,6 +23,10 @@ with engine.connect() as conn:
         "onboarded": "BOOLEAN NOT NULL DEFAULT FALSE",
         "lemon_customer_id": "VARCHAR",
         "lemon_subscription_id": "VARCHAR",
+        "strava_athlete_id": "VARCHAR",
+        "strava_access_token": "VARCHAR",
+        "strava_refresh_token": "VARCHAR",
+        "strava_token_expires": "INTEGER",
     }
     for col, dtype in new_user_cols.items():
         if col not in user_cols:
@@ -65,6 +69,8 @@ app.include_router(races.router)
 app.include_router(athlete.router)
 app.include_router(ai_coach.router)
 app.include_router(billing.router)
+app.include_router(strava.router)
+app.include_router(export.router)
 
 
 @app.get("/health")

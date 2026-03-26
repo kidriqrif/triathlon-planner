@@ -75,8 +75,17 @@ export default function App() {
     setPage('dashboard')
   }
 
-  // Check for password reset token in URL
-  const resetToken = new URLSearchParams(window.location.search).get('reset')
+  // Check URL params
+  const params = new URLSearchParams(window.location.search)
+  const resetToken = params.get('reset')
+
+  // Strava callback — redirect to settings
+  useEffect(() => {
+    if (params.get('strava') && user) {
+      setPage('settings')
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Not authenticated — show landing, auth, or legal pages
   if (!user) {
