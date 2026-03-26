@@ -1,5 +1,7 @@
 import csv
 import io
+import secrets
+import time
 import jwt
 import os
 from datetime import datetime, timezone
@@ -14,11 +16,15 @@ from fit_tool.profile.messages.workout_step_message import WorkoutStepMessage
 from fit_tool.profile.profile_type import Sport, Intensity, WorkoutStepDuration, WorkoutStepTarget, FileType, Manufacturer
 
 from database import get_db
+from auth_utils import get_current_user
 import models
 
 JWT_SECRET = os.getenv("JWT_SECRET", "dev-secret-change-in-production")
 
 router = APIRouter(prefix="/export", tags=["export"])
+
+# In-memory store for download tokens (short-lived, cleaned on use)
+_download_tokens = {}
 
 SPORT_MAP = {
     "swim": Sport.SWIMMING,
@@ -36,6 +42,39 @@ WORKOUT_TYPE_LABELS = {
 }
 
 
+def _clean_expired_tokens():
+    """Remove expired download tokens."""
+    now = time.time()
+    expired = [k for k, v in _download_tokens.items() if v["expires"] < now]
+    for k in expired:
+        del _download_tokens[k]
+
+
+@router.post("/download-token")
+def create_download_token(
+    current_user: models.User = Depends(get_current_user),
+):
+    """Generate a one-time download token valid for 60 seconds."""
+    _clean_expired_tokens()
+    token = secrets.token_urlsafe(32)
+    _download_tokens[token] = {
+        "user_id": current_user.id,
+        "expires": time.time() + 60,
+    }
+    return {"token": token}
+
+
+def _validate_download_token(token: str) -> int:
+    """Validate and consume a download token. Returns user_id."""
+    _clean_expired_tokens()
+    entry = _download_tokens.pop(token, None)
+    if not entry:
+        raise HTTPException(status_code=401, detail="Invalid or expired download token")
+    if entry["expires"] < time.time():
+        raise HTTPException(status_code=401, detail="Download token expired")
+    return entry["user_id"]
+
+
 @router.get("/fit/{workout_id}")
 def export_workout_fit(
     workout_id: int,
@@ -43,11 +82,7 @@ def export_workout_fit(
     db: Session = Depends(get_db),
 ):
     """Export a single workout as a .FIT file for Garmin/COROS/Wahoo."""
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        user_id = int(payload["sub"])
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    user_id = _validate_download_token(token)
 
     workout = db.query(models.Workout).filter(
         models.Workout.id == workout_id,
@@ -75,7 +110,7 @@ def export_workout_fit(
     wo_msg = WorkoutMessage()
     wo_msg.sport = sport
     wo_msg.num_valid_steps = 1
-    wo_msg.wkt_name = workout_name[:24]  # FIT field limit
+    wo_msg.wkt_name = workout_name[:24]
     builder.add(wo_msg)
 
     # Single workout step based on duration
@@ -86,7 +121,7 @@ def export_workout_fit(
 
     if workout.duration_min and workout.duration_min > 0:
         step.duration_type = WorkoutStepDuration.TIME
-        step.duration_value = workout.duration_min * 60 * 1000  # milliseconds
+        step.duration_value = workout.duration_min * 60 * 1000
     else:
         step.duration_type = WorkoutStepDuration.OPEN
 
@@ -112,11 +147,7 @@ def export_workouts_csv(
     db: Session = Depends(get_db),
 ):
     """Export all user workouts as CSV."""
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        user_id = int(payload["sub"])
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    user_id = _validate_download_token(token)
 
     workouts = db.query(models.Workout).filter(
         models.Workout.user_id == user_id,

@@ -110,9 +110,12 @@ export const syncStrava = () =>
   api.post('/strava/sync').then(r => r.data)
 
 // --- Export ---
-export const exportFitUrl = (workoutId) => {
-  const token = localStorage.getItem('strelo_token')
-  return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
+export const getDownloadToken = () =>
+  api.post('/export/download-token').then(r => r.data.token)
+
+export const exportFit = async (workoutId) => {
+  const token = await getDownloadToken()
+  window.location.href = `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
 }
 
 // --- Plans ---
@@ -145,7 +148,7 @@ export const deleteBodyLog = (id) => api.delete(`/bodylog/${id}`)
 export const sendSupportChat = (messages) =>
   api.post('/support/chat', { messages }).then(r => r.data)
 
-export const exportCsvUrl = () => {
-  const token = localStorage.getItem('strelo_token')
-  return `${api.defaults.baseURL}/export/csv?token=${token}`
+export const exportCsv = async () => {
+  const token = await getDownloadToken()
+  window.location.href = `${api.defaults.baseURL}/export/csv?token=${token}`
 }

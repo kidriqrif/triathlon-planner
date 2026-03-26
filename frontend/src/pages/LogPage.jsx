@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import WorkoutForm from '../components/WorkoutForm'
 import { readableSummary } from '../components/WorkoutBuilder'
 import { brickReadableSummary } from '../components/BrickBuilder'
-import { createWorkout, updateWorkout, deleteWorkout, exportFitUrl, exportCsvUrl } from '../api'
+import { createWorkout, updateWorkout, deleteWorkout, exportFit, exportCsv } from '../api'
 import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList, Download, FileDown } from 'lucide-react'
 
 const SPORT_CONFIG = {
@@ -60,11 +60,11 @@ export default function LogPage({ workouts, onRefresh, user }) {
         </div>
         <div className="flex items-center gap-2">
           {isPro && workouts.length > 0 && (
-            <a href={exportCsvUrl()} title="Export all as CSV"
+            <button onClick={() => exportCsv()} title="Export all as CSV"
               className="flex items-center gap-1.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-all">
               <FileDown size={15} strokeWidth={2} />
               <span className="hidden sm:inline">CSV</span>
-            </a>
+            </button>
           )}
           <button onClick={() => setFormState({ workout: null, defaultDate: null })}
             className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
@@ -148,14 +148,13 @@ export default function LogPage({ workouts, onRefresh, user }) {
 
                   {/* FIT export — Pro only */}
                   {isPro && w.status === 'planned' && (
-                    <a
-                      href={exportFitUrl(w.id)}
-                      onClick={e => e.stopPropagation()}
+                    <button
+                      onClick={e => { e.stopPropagation(); exportFit(w.id) }}
                       title="Download .FIT file"
-                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-all shrink-0"
+                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-all shrink-0"
                     >
                       <Download size={14} strokeWidth={2} />
-                    </a>
+                    </button>
                   )}
 
                   {/* Arrow hint */}
