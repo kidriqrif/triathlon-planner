@@ -137,64 +137,62 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header — functional toolbar style */}
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 h-11 flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-slate-900">
+        <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
           {/* Brand */}
-          <button onClick={() => setPage('dashboard')} className="flex items-center gap-1.5">
-            <div className="w-5 h-5 rounded bg-slate-900 flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" strokeLinecap="round"/>
+          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="hidden sm:block font-bold text-slate-900 text-sm">Strelo</span>
+            <span className="hidden sm:block font-bold text-white text-sm">Strelo</span>
           </button>
 
-          {/* Nav — tab style */}
-          <nav className="flex items-center gap-0 h-full">
+          {/* Nav */}
+          <nav className="flex items-center gap-0.5 sm:gap-1">
             {NAV.map(({ id, label, Icon }) => (
               <button key={id} onClick={() => setPage(id)}
-                className={`flex items-center gap-1.5 px-3 h-full text-xs font-medium border-b-2 transition-colors ${
+                className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   page === id
-                    ? 'border-slate-900 text-slate-900'
-                    : 'border-transparent text-slate-400 hover:text-slate-600'
+                    ? 'bg-white/15 text-white'
+                    : 'text-white/40 hover:text-white/80'
                 }`}>
                 <Icon size={14} strokeWidth={1.5} />
-                <span className="hidden md:block">{label}</span>
+                <span className="hidden lg:block">{label}</span>
               </button>
             ))}
-          </nav>
 
-          {/* Actions */}
-          <div className="flex items-center gap-1">
             {user.plan !== 'pro' && (
               <button onClick={() => setPage('upgrade')}
-                className={`text-xs font-medium px-2 py-1 rounded transition-colors ${
-                  page === 'upgrade' ? 'bg-slate-100 text-slate-900' : 'text-amber-600 hover:bg-amber-50'
+                className={`flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                  page === 'upgrade' ? 'bg-white/15 text-white' : 'text-amber-400/80 hover:text-amber-300'
                 }`}>
-                <Sparkles size={11} strokeWidth={2} className="inline mr-1" />
-                <span className="hidden sm:inline">Pro</span>
+                <Sparkles size={12} strokeWidth={2} />
+                <span className="hidden lg:block">Pro</span>
               </button>
             )}
+
             <button onClick={() => setPage('settings')} title="Settings"
-              className={`p-1.5 rounded transition-colors ${
-                page === 'settings' ? 'bg-slate-100 text-slate-900' : 'text-slate-400 hover:text-slate-600'
+              className={`ml-1 p-1.5 rounded-md transition-colors ${
+                page === 'settings' ? 'bg-white/15 text-white' : 'text-white/30 hover:text-white/70'
               }`}>
               <Settings size={14} strokeWidth={1.5} />
             </button>
             <button onClick={handleLogout} title="Sign out"
-              className="p-1.5 rounded text-slate-400 hover:text-slate-600 transition-colors">
+              className="p-1.5 rounded-md text-white/30 hover:text-white/70 transition-colors">
               <LogOut size={14} strokeWidth={1.5} />
             </button>
-          </div>
+          </nav>
         </div>
       </header>
 
-      {/* Content — tighter padding */}
-      <main className="max-w-6xl mx-auto px-4 py-5">
+      {/* Content */}
+      <main className="max-w-5xl mx-auto px-4 py-5">
         {renderPage()}
       </main>
 
