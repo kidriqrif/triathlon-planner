@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CalendarDays, Bot, BarChart3, Flag, Zap, Shield, Check, ArrowRight, ChevronRight } from 'lucide-react'
 
 const FEATURES = [
@@ -50,6 +50,11 @@ const PRO_FEATURES = [
 ]
 
 export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
+  // Wake up the backend while user reads the landing page
+  useEffect(() => {
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/health').catch(() => {})
+  }, [])
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Nav */}
