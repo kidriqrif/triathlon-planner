@@ -216,21 +216,16 @@ export default function App() {
 
             {/* Bottom section */}
             <div className="border-t border-slate-100 dark:border-slate-800 p-3 space-y-0.5">
-              {/* Language picker */}
+              {/* Language dropdown */}
               <div className="px-3 py-2">
-                <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-1.5">{t('language')}</p>
-                <div className="flex gap-1">
-                  {Object.entries(LANGUAGES).map(([code, { flag }]) => (
-                    <button key={code} onClick={() => setLang(code)}
-                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                        lang === code
-                          ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
-                          : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                      }`}>
-                      {flag}
-                    </button>
+                <select
+                  value={lang}
+                  onChange={e => setLang(e.target.value)}
+                  className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer">
+                  {Object.entries(LANGUAGES).map(([code, { label, flag }]) => (
+                    <option key={code} value={code}>{flag} — {label}</option>
                   ))}
-                </div>
+                </select>
               </div>
 
               {/* Dark mode toggle */}
