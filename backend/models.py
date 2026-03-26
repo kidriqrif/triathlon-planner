@@ -57,6 +57,16 @@ class User(Base):
     athlete = relationship("Athlete", back_populates="owner", uselist=False)
 
 
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    token = Column(String, unique=True, nullable=False, index=True)
+    expires_at = Column(DateTime, nullable=False)
+    used = Column(Boolean, default=False)
+
+
 class Workout(Base):
     __tablename__ = "workouts"
 

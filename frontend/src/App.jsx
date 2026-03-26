@@ -10,9 +10,10 @@ import LandingPage from './pages/LandingPage'
 import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import OnboardingPage from './pages/OnboardingPage'
+import SettingsPage from './pages/SettingsPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
@@ -74,8 +75,12 @@ export default function App() {
     setPage('dashboard')
   }
 
+  // Check for password reset token in URL
+  const resetToken = new URLSearchParams(window.location.search).get('reset')
+
   // Not authenticated — show landing, auth, or legal pages
   if (!user) {
+    if (resetToken) return <AuthPage onAuth={handleAuth} resetToken={resetToken} />
     if (page === 'auth') return <AuthPage onAuth={handleAuth} />
     if (page === 'privacy') return <PrivacyPage onBack={() => setPage('landing')} />
     if (page === 'terms') return <TermsPage onBack={() => setPage('landing')} />
@@ -112,6 +117,11 @@ export default function App() {
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
       case 'profile':   return <ProfilePage />
       case 'upgrade':   return <UpgradePage user={user} />
+      case 'settings':  return <SettingsPage user={user} onUserUpdate={(u) => {
+        const updated = { ...user, ...u }
+        setUser(updated)
+        localStorage.setItem('strelo_user', JSON.stringify(updated))
+      }} onLogout={handleLogout} />
       default:          return null
     }
   }
@@ -164,11 +174,21 @@ export default function App() {
               </button>
             )}
 
+            {/* Settings */}
+            <button
+              onClick={() => setPage('settings')}
+              title="Settings"
+              className={`ml-2 flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-all ${
+                page === 'settings' ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white hover:bg-white/8'
+              }`}>
+              <Settings size={16} strokeWidth={1.5} />
+            </button>
+
             {/* Logout */}
             <button
               onClick={handleLogout}
               title="Sign out"
-              className="ml-2 flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
+              className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
               <LogOut size={16} strokeWidth={1.5} />
             </button>
           </nav>

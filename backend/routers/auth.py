@@ -1,3 +1,7 @@
+import os
+import secrets
+import logging
+from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -10,6 +14,9 @@ from auth_utils import hash_password, verify_password, create_access_token, get_
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 limiter = Limiter(key_func=get_remote_address)
+logger = logging.getLogger("strelo.auth")
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 
 def _user_dict(user: models.User) -> dict:
@@ -48,6 +55,30 @@ class MeResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    password: str
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+
+class UpdateNameRequest(BaseModel):
+    name: str
+
+
+class DeleteAccountRequest(BaseModel):
+    password: str
+
+
+# ─── Register / Login ───
+
 @router.post("/register", response_model=AuthResponse, status_code=201)
 @limiter.limit("5/minute")
 def register(request: Request, payload: RegisterRequest, db: Session = Depends(get_db)):
@@ -67,7 +98,6 @@ def register(request: Request, payload: RegisterRequest, db: Session = Depends(g
     db.commit()
     db.refresh(user)
 
-    # Auto-create athlete profile
     athlete = models.Athlete(user_id=user.id, name=user.name)
     db.add(athlete)
     db.commit()
@@ -100,3 +130,103 @@ def mark_onboarded(
     current_user.onboarded = True
     db.commit()
     return {"ok": True}
+
+
+# ─── Password Reset ───
+
+@router.post("/forgot-password")
+@limiter.limit("3/minute")
+def forgot_password(request: Request, payload: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    """Generate a password reset token. Always returns success to prevent email enumeration."""
+    user = db.query(models.User).filter(models.User.email == payload.email.lower().strip()).first()
+    if user:
+        token = secrets.token_urlsafe(32)
+        reset = models.PasswordReset(
+            user_id=user.id,
+            token=token,
+            expires_at=datetime.now(timezone.utc) + timedelta(hours=1),
+        )
+        db.add(reset)
+        db.commit()
+
+        reset_url = f"{FRONTEND_URL}?reset={token}"
+        logger.info(f"Password reset for {user.email}: {reset_url}")
+        print(f"[RESET LINK] {user.email}: {reset_url}")
+
+    return {"message": "If an account with that email exists, a reset link has been sent."}
+
+
+@router.post("/reset-password")
+@limiter.limit("5/minute")
+def reset_password(request: Request, payload: ResetPasswordRequest, db: Session = Depends(get_db)):
+    if len(payload.password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    reset = db.query(models.PasswordReset).filter(
+        models.PasswordReset.token == payload.token,
+        models.PasswordReset.used == False,
+        models.PasswordReset.expires_at > datetime.now(timezone.utc),
+    ).first()
+
+    if not reset:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset link")
+
+    user = db.get(models.User, reset.user_id)
+    if not user:
+        raise HTTPException(status_code=400, detail="User not found")
+
+    user.password_hash = hash_password(payload.password)
+    reset.used = True
+    db.commit()
+
+    return {"message": "Password has been reset. You can now sign in."}
+
+
+# ─── Account Settings ───
+
+@router.put("/update-name")
+def update_name(
+    payload: UpdateNameRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    if not payload.name.strip():
+        raise HTTPException(status_code=400, detail="Name cannot be empty")
+    current_user.name = payload.name.strip()
+    db.commit()
+    return _user_dict(current_user)
+
+
+@router.put("/change-password")
+def change_password(
+    payload: ChangePasswordRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    if not verify_password(payload.current_password, current_user.password_hash):
+        raise HTTPException(status_code=401, detail="Current password is incorrect")
+    if len(payload.new_password) < 6:
+        raise HTTPException(status_code=400, detail="New password must be at least 6 characters")
+    current_user.password_hash = hash_password(payload.new_password)
+    db.commit()
+    return {"message": "Password updated"}
+
+
+@router.delete("/delete-account")
+def delete_account(
+    payload: DeleteAccountRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    if not verify_password(payload.password, current_user.password_hash):
+        raise HTTPException(status_code=401, detail="Password is incorrect")
+
+    # Delete all user data
+    db.query(models.Workout).filter(models.Workout.user_id == current_user.id).delete()
+    db.query(models.Race).filter(models.Race.user_id == current_user.id).delete()
+    db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).delete()
+    db.query(models.PasswordReset).filter(models.PasswordReset.user_id == current_user.id).delete()
+    db.delete(current_user)
+    db.commit()
+
+    return {"message": "Account deleted"}

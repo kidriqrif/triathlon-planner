@@ -37,6 +37,21 @@ export const getMe = () =>
 export const markOnboarded = () =>
   api.post('/auth/onboarded').then(r => r.data)
 
+export const forgotPassword = (email) =>
+  api.post('/auth/forgot-password', { email }).then(r => r.data)
+
+export const resetPassword = (token, password) =>
+  api.post('/auth/reset-password', { token, password }).then(r => r.data)
+
+export const updateName = (name) =>
+  api.put('/auth/update-name', { name }).then(r => r.data)
+
+export const changePassword = (current_password, new_password) =>
+  api.put('/auth/change-password', { current_password, new_password }).then(r => r.data)
+
+export const deleteAccount = (password) =>
+  api.delete('/auth/delete-account', { data: { password } }).then(r => r.data)
+
 // --- Workouts ---
 export const getWorkouts = (start, end) =>
   api.get('/workouts', { params: { start, end } }).then(r => r.data)
