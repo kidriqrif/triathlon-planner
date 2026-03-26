@@ -21,7 +21,7 @@ import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
@@ -162,9 +162,15 @@ export default function App() {
             <span className="font-bold text-slate-900 dark:text-white text-sm">Strelo</span>
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {/* Page label */}
             <span className="text-xs font-medium text-slate-400 dark:text-slate-500 hidden sm:block capitalize">{page}</span>
+            {/* Dark mode toggle */}
+            <button onClick={() => setDark(d => !d)}
+              className="p-2 rounded-md text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+              {dark ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
+            </button>
+            {/* Menu */}
             <button onClick={() => setSidebarOpen(true)}
               className="p-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Menu size={18} strokeWidth={2} />
