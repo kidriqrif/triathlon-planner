@@ -11,11 +11,12 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Auto-logout on 401
+// Auto-logout on 401 (skip for auth endpoints — login/register handle their own errors)
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    const url = err.config?.url || ''
+    if (err.response?.status === 401 && !url.startsWith('/auth/')) {
       localStorage.removeItem('strelo_token')
       localStorage.removeItem('strelo_user')
       window.location.reload()
