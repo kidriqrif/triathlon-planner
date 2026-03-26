@@ -1,4 +1,5 @@
 import React from 'react'
+import { useI18n } from '../i18n/I18nContext'
 import RaceCountdown from '../components/RaceCountdown'
 import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
@@ -46,6 +47,7 @@ function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-wh
 }
 
 function SportBreakdown({ workouts }) {
+  const { t } = useI18n()
   const thisMonday = (() => {
     const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); d.setHours(0,0,0,0); return d
   })()
@@ -66,7 +68,7 @@ function SportBreakdown({ workouts }) {
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-      <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">Sport breakdown</p>
+      <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">{t('sportBreakdown')}</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {sports.map(sport => {
           const meta = SPORT_META[sport] || SPORT_META.brick
@@ -87,6 +89,7 @@ function SportBreakdown({ workouts }) {
 }
 
 export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNavigate }) {
+  const { t } = useI18n()
   const completed = workouts.filter(w => w.status === 'completed')
 
   const totalHours = completed
@@ -116,15 +119,15 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       <RaceCountdown races={races} />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label="This week" sub="sessions done" value={weekDone.length}
+        <StatCard label={t('thisWeek')} sub={t('sessionsDone')} value={weekDone.length}
           icon={<CheckCircle size={15} strokeWidth={1.5} className="text-emerald-400" />} />
-        <StatCard label="This week" sub="training hours" value={`${weekHours.toFixed(1)}h`}
+        <StatCard label={t('thisWeek')} sub={t('trainingHours')} value={`${weekHours.toFixed(1)}h`}
           valueColor="text-blue-500"
           icon={<Clock size={15} strokeWidth={1.5} className="text-blue-400" />} />
-        <StatCard label="Streak" sub="consecutive days" value={`${streak}d`}
+        <StatCard label={t('streak')} sub={t('consecutiveDays')} value={`${streak}d`}
           valueColor="text-orange-500"
           icon={<Flame size={15} strokeWidth={1.5} className="text-orange-400" />} />
-        <StatCard label="All time" sub="hours logged" value={`${Math.round(totalHours)}h`}
+        <StatCard label={t('allTime')} sub={t('hoursLogged')} value={`${Math.round(totalHours)}h`}
           valueColor="text-violet-500"
           icon={<TrendingUp size={15} strokeWidth={1.5} className="text-violet-400" />} />
       </div>
@@ -140,8 +143,8 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
         </>
       ) : (
         <div className="space-y-2">
-          <ProLock label="Weekly volume trends" desc="See training load over time" onUpgrade={() => onNavigate('upgrade')} />
-          <ProLock label="StreloIQ" desc="Auto-generate your training week" onUpgrade={() => onNavigate('upgrade')} />
+          <ProLock label={t('weeklyVolumeTrends')} desc={t('seeTrainingLoad')} onUpgrade={() => onNavigate('upgrade')} />
+          <ProLock label={t('streloIQ')} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getTemplates, createTemplate, deleteTemplate, createWorkout } from '../api'
 import { Waves, Bike, Footprints, Layers, Dumbbell, BookMarked, Plus, Trash2, Play, AlertCircle } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 const SPORT_META = {
   swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10', label: 'Swim'  },
@@ -17,6 +18,7 @@ const TYPE_LABELS = {
 const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
 
 export default function SavedPage({ user, onRefresh }) {
+  const { t } = useI18n()
   const [templates, setTemplates] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [error, setError] = useState(null)
@@ -54,35 +56,35 @@ export default function SavedPage({ user, onRefresh }) {
     loadTemplates()
   }
 
-  const handleUseTemplate = async (t) => {
+  const handleUseTemplate = async (tpl) => {
     const today = new Date().toISOString().split('T')[0]
     await createWorkout({
       date: today,
-      sport: t.sport,
-      workout_type: t.workout_type,
+      sport: tpl.sport,
+      workout_type: tpl.workout_type,
       status: 'planned',
-      duration_min: t.duration_min,
-      distance_km: t.distance_km,
-      notes: t.notes,
+      duration_min: tpl.duration_min,
+      distance_km: tpl.distance_km,
+      notes: tpl.notes,
     })
     if (onRefresh) onRefresh()
-    alert(`Added "${t.name}" to today's plan`)
+    alert(`${t('addedToToday')}: ${tpl.name}`)
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-800 dark:text-white">Saved Workouts</h1>
+          <h1 className="text-xl font-bold text-slate-800 dark:text-white">{t('savedWorkouts')}</h1>
           <p className="text-sm text-slate-400 dark:text-slate-500 mt-0.5">
-            {templates.length}{!isPro && `/${limit}`} template{templates.length !== 1 ? 's' : ''}
-            {!isPro && ' — upgrade for unlimited'}
+            {templates.length}{!isPro && `/${limit}`} {templates.length !== 1 ? t('templates') : t('template')}
+            {!isPro && ` — ${t('upgradeUnlimited')}`}
           </p>
         </div>
         <button onClick={() => setShowForm(true)}
           disabled={!isPro && templates.length >= limit}
           className="bg-slate-900 dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-medium px-3 py-2 rounded-lg text-sm transition-colors disabled:opacity-40 flex items-center gap-1.5">
-          <Plus size={14} strokeWidth={2} /> New
+          <Plus size={14} strokeWidth={2} /> {t('new')}
         </button>
       </div>
 
@@ -95,38 +97,38 @@ export default function SavedPage({ user, onRefresh }) {
       {showForm && (
         <form onSubmit={handleSave} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
           <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            required placeholder="Template name (e.g. Tuesday Tempo Run)" className={inputCls} />
+            required placeholder={t('templateName')} className={inputCls} />
           <div className="grid grid-cols-2 gap-3">
             <select value={form.sport} onChange={e => setForm(f => ({ ...f, sport: e.target.value }))} className={inputCls}>
-              <option value="swim">Swim</option>
-              <option value="bike">Bike</option>
-              <option value="run">Run</option>
-              <option value="brick">Brick</option>
+              <option value="swim">{t('swim')}</option>
+              <option value="bike">{t('bike')}</option>
+              <option value="run">{t('run')}</option>
+              <option value="brick">{t('brick')}</option>
             </select>
             <select value={form.workout_type} onChange={e => setForm(f => ({ ...f, workout_type: e.target.value }))} className={inputCls}>
-              <option value="easy">Easy</option>
-              <option value="tempo">Tempo</option>
-              <option value="interval">Interval</option>
-              <option value="long">Long</option>
-              <option value="recovery">Recovery</option>
+              <option value="easy">{t('easy')}</option>
+              <option value="tempo">{t('tempo')}</option>
+              <option value="interval">{t('interval')}</option>
+              <option value="long">{t('long')}</option>
+              <option value="recovery">{t('recovery')}</option>
             </select>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <input type="number" value={form.duration_min} onChange={e => setForm(f => ({ ...f, duration_min: e.target.value }))}
-              placeholder="Duration (min)" className={inputCls} />
+              placeholder={t('durationMin')} className={inputCls} />
             <input type="number" step="0.1" value={form.distance_km} onChange={e => setForm(f => ({ ...f, distance_km: e.target.value }))}
-              placeholder="Distance (km)" className={inputCls} />
+              placeholder={t('distanceKm')} className={inputCls} />
           </div>
           <input value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
-            placeholder="Notes (optional)" className={inputCls} />
+            placeholder={t('notesOptional')} className={inputCls} />
           <div className="flex gap-2">
             <button type="submit"
               className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-medium px-4 py-2 rounded-lg text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors">
-              Save Template
+              {t('saveTemplate')}
             </button>
             <button type="button" onClick={() => { setShowForm(false); setError(null) }}
               className="text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors px-3">
-              Cancel
+              {t('cancel')}
             </button>
           </div>
         </form>
@@ -135,31 +137,31 @@ export default function SavedPage({ user, onRefresh }) {
       {templates.length === 0 && !showForm ? (
         <div className="text-center py-16">
           <BookMarked size={40} strokeWidth={1} className="mx-auto text-slate-200 dark:text-slate-700 mb-3" />
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No saved templates yet</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Save workouts you repeat often for quick planning</p>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{t('noSavedTemplates')}</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">{t('saveWorkoutsRepeat')}</p>
         </div>
       ) : (
         <div className="space-y-2">
-          {templates.map(t => {
-            const meta = SPORT_META[t.sport] || SPORT_META.run
+          {templates.map(tpl => {
+            const meta = SPORT_META[tpl.sport] || SPORT_META.run
             return (
-              <div key={t.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-3 flex items-center gap-3">
+              <div key={tpl.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-3 flex items-center gap-3">
                 <div className={`w-9 h-9 rounded-lg ${meta.bg} flex items-center justify-center shrink-0`}>
                   <meta.Icon size={16} strokeWidth={1.5} className={meta.color} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-800 dark:text-white truncate">{t.name}</p>
+                  <p className="text-sm font-medium text-slate-800 dark:text-white truncate">{tpl.name}</p>
                   <p className="text-xs text-slate-400 dark:text-slate-500">
-                    {meta.label} · {TYPE_LABELS[t.workout_type] || t.workout_type}
-                    {t.duration_min ? ` · ${t.duration_min}min` : ''}
-                    {t.distance_km ? ` · ${t.distance_km}km` : ''}
+                    {meta.label} · {TYPE_LABELS[tpl.workout_type] || tpl.workout_type}
+                    {tpl.duration_min ? ` · ${tpl.duration_min}min` : ''}
+                    {tpl.distance_km ? ` · ${tpl.distance_km}km` : ''}
                   </p>
                 </div>
-                <button onClick={() => handleUseTemplate(t)} title="Add to today"
+                <button onClick={() => handleUseTemplate(tpl)} title="Add to today"
                   className="p-2 rounded-lg text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950 transition-colors">
                   <Play size={14} strokeWidth={2} />
                 </button>
-                <button onClick={() => handleDelete(t.id)} title="Delete"
+                <button onClick={() => handleDelete(tpl.id)} title="Delete"
                   className="p-2 rounded-lg text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950 transition-colors">
                   <Trash2 size={14} strokeWidth={2} />
                 </button>

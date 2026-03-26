@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createRace, updateRace, deleteRace } from '../api'
 import { Activity, Footprints, Bike, Waves, Medal, Flag } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 // ─── Race category config ────────────────────────────────────────────────────
 
@@ -100,6 +101,7 @@ function raceCategoryMeta(distance) {
 // ─── Race Form ────────────────────────────────────────────────────────────────
 
 function RaceForm({ race, onSave, onClose }) {
+  const { t } = useI18n()
   const parsed = parseDistance(race?.distance)
   const [category, setCategory] = useState(parsed.category)
   const [form, setForm] = useState({
@@ -129,7 +131,7 @@ function RaceForm({ race, onSave, onClose }) {
         {/* Gradient header */}
         <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-3xl px-6 py-5 flex items-center justify-between`}>
           <div>
-            <p className="text-white font-black text-xl">{race ? 'Edit Race' : 'Add Race'}</p>
+            <p className="text-white font-black text-xl">{race ? t('editRace') : t('addRaceTitle')}</p>
             <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
               <catMeta.Icon size={13} strokeWidth={1.5} />
               <span>{catMeta.label}</span>
@@ -144,7 +146,7 @@ function RaceForm({ race, onSave, onClose }) {
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Race name */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Name</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceName')}</label>
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required
               placeholder="e.g. City Olympic Tri 2025"
               className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
@@ -152,14 +154,14 @@ function RaceForm({ race, onSave, onClose }) {
 
           {/* Date */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Date</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceDate')}</label>
             <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required
               className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
           </div>
 
           {/* Category tabs */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Sport</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">{t('sport')}</label>
             <div className="grid grid-cols-5 gap-1.5">
               {Object.entries(RACE_CATEGORIES).map(([key, meta]) => (
                 <button key={key} type="button" onClick={() => handleCategoryChange(key)}
@@ -177,7 +179,7 @@ function RaceForm({ race, onSave, onClose }) {
 
           {/* Event type */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Event</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">{t('event')}</label>
             <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
               {types.map(([key, label]) => (
                 <button key={key} type="button"
@@ -202,12 +204,12 @@ function RaceForm({ race, onSave, onClose }) {
               <div className={`w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-indigo-500' : 'bg-slate-200'}`} />
               <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${form.is_active ? 'translate-x-5' : ''}`} />
             </div>
-            <span className="text-sm font-semibold text-slate-700">Set as goal / active race</span>
+            <span className="text-sm font-semibold text-slate-700">{t('setAsGoal')}</span>
           </label>
 
           <button type="submit"
             className={`w-full bg-gradient-to-r ${catMeta.gradient} text-white font-bold py-3 rounded-2xl shadow-sm hover:opacity-90 transition-opacity`}>
-            {race ? 'Save Changes' : 'Add Race'}
+            {race ? t('saveChanges') : t('addRaceTitle')}
           </button>
         </form>
       </div>
@@ -218,13 +220,14 @@ function RaceForm({ race, onSave, onClose }) {
 // ─── Race Card ────────────────────────────────────────────────────────────────
 
 function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
+  const { t } = useI18n()
   const daysToRace = Math.ceil((new Date(race.date + 'T12:00:00') - new Date()) / 86400000)
   const meta = raceCategoryMeta(race.distance)
   const typeLabel = raceTypeLabel(race.distance)
 
   const countdownText = daysToRace > 0
-    ? `${daysToRace} days to go`
-    : daysToRace === 0 ? 'Race day' : `${Math.abs(daysToRace)} days ago`
+    ? `${daysToRace} ${t('daysToGo')}`
+    : daysToRace === 0 ? t('raceDay') : `${Math.abs(daysToRace)} ${t('daysAgo')}`
 
   const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-indigo-600'
 
@@ -247,7 +250,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
             <p className="font-black text-slate-800 text-base">{race.name}</p>
             {race.is_active && (
               <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${meta.badge}`}>
-                Goal Race
+                {t('goalRace')}
               </span>
             )}
           </div>
@@ -263,15 +266,15 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
                 ? 'border-slate-200 text-slate-500 hover:bg-slate-50'
                 : 'border-indigo-200 text-indigo-600 hover:bg-indigo-50'
             }`}>
-            {race.is_active ? 'Deactivate' : 'Set Goal'}
+            {race.is_active ? t('deactivate') : t('setGoal')}
           </button>
           <button onClick={() => onEdit(race)}
             className="text-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 font-semibold transition-colors">
-            Edit
+            {t('edit')}
           </button>
           <button onClick={() => onDelete(race.id)}
             className="text-xs px-3 py-1.5 rounded-xl border border-red-100 text-red-400 hover:bg-red-50 font-semibold transition-colors">
-            Delete
+            {t('delete')}
           </button>
         </div>
       </div>
@@ -282,6 +285,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function RacesPage({ races, onRefresh }) {
+  const { t } = useI18n()
   const [formState, setFormState] = useState(null)
   const [filterCat, setFilterCat] = useState('all')
 
@@ -293,7 +297,7 @@ export default function RacesPage({ races, onRefresh }) {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this race?')) return
+    if (!confirm(t('deleteRaceConfirm'))) return
     await deleteRace(id)
     onRefresh()
   }
@@ -314,12 +318,12 @@ export default function RacesPage({ races, onRefresh }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-800">Races</h1>
-          <p className="text-slate-400 text-sm mt-0.5">{races.length} race{races.length !== 1 ? 's' : ''} planned</p>
+          <h1 className="text-2xl font-black text-slate-800">{t('races')}</h1>
+          <p className="text-slate-400 text-sm mt-0.5">{races.length} {t('racesPlanned')}</p>
         </div>
         <button onClick={() => setFormState({ race: null })}
           className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
-          + Add Race
+          {t('addRace')}
         </button>
       </div>
 
@@ -336,7 +340,7 @@ export default function RacesPage({ races, onRefresh }) {
                     : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
                 }`}>
                 {key === 'all'
-                  ? <><Flag size={12} strokeWidth={1.5} /> All</>
+                  ? <><Flag size={12} strokeWidth={1.5} /> {t('filterAll')}</>
                   : <><meta.Icon size={12} strokeWidth={1.5} /> {meta.label}</>
                 }
               </button>
@@ -351,8 +355,8 @@ export default function RacesPage({ races, onRefresh }) {
           <div className="flex justify-center mb-4">
             <Flag size={48} strokeWidth={1} className="text-slate-200" />
           </div>
-          <p className="text-lg font-semibold text-slate-500">No races yet</p>
-          <p className="text-sm mt-1">Add your goal race to unlock your countdown and training phases</p>
+          <p className="text-lg font-semibold text-slate-500">{t('noRacesYet')}</p>
+          <p className="text-sm mt-1">{t('noRacesDesc')}</p>
         </div>
       ) : (
         <div className="space-y-3">

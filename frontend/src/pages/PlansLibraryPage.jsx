@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getPlans, importPlan } from '../api'
 import { Waves, Bike, Footprints, Calendar, CheckCircle, AlertCircle } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 const DISTANCE_META = {
   sprint:  { label: 'Sprint', desc: '750m / 20km / 5km', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10' },
@@ -12,6 +13,7 @@ const DISTANCE_META = {
 const LEVEL_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' }
 
 export default function PlansLibraryPage({ onRefresh }) {
+  const { t } = useI18n()
   const [plans, setPlans] = useState([])
   const [importing, setImporting] = useState(null)
   const [result, setResult] = useState(null)
@@ -31,7 +33,7 @@ export default function PlansLibraryPage({ onRefresh }) {
       setResult(res)
       if (onRefresh) onRefresh()
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to import plan')
+      setError(err.response?.data?.detail || t('failedToImportPlan'))
     }
     setImporting(null)
   }
@@ -39,9 +41,9 @@ export default function PlansLibraryPage({ onRefresh }) {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-bold text-slate-800 dark:text-white">Training Plans</h1>
+        <h1 className="text-xl font-bold text-slate-800 dark:text-white">{t('trainingPlans')}</h1>
         <p className="text-sm text-slate-400 dark:text-slate-500 mt-0.5">
-          Pick a plan. It fills your calendar with structured workouts from day one.
+          {t('pickAPlan')}
         </p>
       </div>
 
@@ -86,7 +88,7 @@ export default function PlansLibraryPage({ onRefresh }) {
                         className="text-xs border border-slate-200 dark:border-slate-700 rounded-md px-2 py-1 bg-white dark:bg-slate-800 dark:text-white"
                         placeholder="Start date"
                       />
-                      <span className="text-xs text-slate-400">or defaults to next Monday</span>
+                      <span className="text-xs text-slate-400">{t('defaultsToNextMonday')}</span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +96,7 @@ export default function PlansLibraryPage({ onRefresh }) {
                   onClick={() => handleImport(plan.id)}
                   disabled={importing === plan.id}
                   className="shrink-0 bg-slate-900 dark:bg-white dark:text-slate-900 text-white text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors disabled:opacity-40">
-                  {importing === plan.id ? 'Importing...' : 'Import Plan'}
+                  {importing === plan.id ? t('importing') : t('importPlan')}
                 </button>
               </div>
             </div>

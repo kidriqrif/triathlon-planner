@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { updateName, changePassword, deleteAccount, getStravaConnectUrl, getStravaStatus, disconnectStrava, syncStrava } from '../api'
 import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
 
@@ -27,6 +28,7 @@ function Alert({ type, message }) {
 }
 
 export default function SettingsPage({ user, onUserUpdate, onLogout }) {
+  const { t } = useI18n()
   // Name
   const [name, setName] = useState(user.name)
   const [nameMsg, setNameMsg] = useState(null)
@@ -52,15 +54,15 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
     try {
       const { url } = await getStravaConnectUrl()
       window.location.href = url
-    } catch { setStravaMsg({ type: 'error', message: 'Failed to start Strava connection' }) }
+    } catch { setStravaMsg({ type: 'error', message: t('failedStravaConnect') }) }
   }
 
   const handleStravaDisconnect = async () => {
     try {
       await disconnectStrava()
       setStravaConnected(false)
-      setStravaMsg({ type: 'success', message: 'Strava disconnected' })
-    } catch { setStravaMsg({ type: 'error', message: 'Failed to disconnect' }) }
+      setStravaMsg({ type: 'success', message: t('stravaDisconnected') })
+    } catch { setStravaMsg({ type: 'error', message: t('failedDisconnect') }) }
   }
 
   const handleStravaSync = async () => {
@@ -70,7 +72,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
       const res = await syncStrava()
       setStravaMsg({ type: 'success', message: `Imported ${res.imported} activities from Strava` })
     } catch (err) {
-      setStravaMsg({ type: 'error', message: err.response?.data?.detail || 'Sync failed' })
+      setStravaMsg({ type: 'error', message: err.response?.data?.detail || t('syncFailed') })
     }
     setStravaSyncing(false)
   }
@@ -87,7 +89,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
     try {
       const updated = await updateName(name)
       onUserUpdate(updated)
-      setNameMsg({ type: 'success', message: 'Name updated' })
+      setNameMsg({ type: 'success', message: t('nameUpdated') })
     } catch (err) {
       setNameMsg({ type: 'error', message: err.response?.data?.detail || 'Failed to update' })
     }
@@ -98,13 +100,13 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
     e.preventDefault()
     setPwMsg(null)
     if (newPw !== confirmPw) {
-      setPwMsg({ type: 'error', message: 'Passwords do not match' })
+      setPwMsg({ type: 'error', message: t('passwordsNoMatch') })
       return
     }
     setPwSaving(true)
     try {
       await changePassword(currentPw, newPw)
-      setPwMsg({ type: 'success', message: 'Password updated' })
+      setPwMsg({ type: 'success', message: t('passwordUpdated') })
       setCurrentPw('')
       setNewPw('')
       setConfirmPw('')
@@ -128,16 +130,16 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
 
   return (
     <div className="space-y-5 max-w-lg mx-auto">
-      <h1 className="text-2xl font-black text-slate-800">Account Settings</h1>
+      <h1 className="text-2xl font-black text-slate-800">{t('accountSettings')}</h1>
 
       {/* Name */}
-      <Section title="Profile">
+      <Section title={t('profile')}>
         <div>
-          <label className="text-xs font-semibold text-slate-500 mb-1 block">Email</label>
+          <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('email')}</label>
           <p className="text-sm text-slate-600">{user.email}</p>
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500 mb-1 block">Name</label>
+          <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('name')}</label>
           <div className="flex gap-2">
             <div className="relative flex-1">
               <User size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -146,46 +148,46 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
             </div>
             <button onClick={handleNameSave} disabled={nameSaving || name === user.name}
               className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-600 transition-colors disabled:opacity-40">
-              {nameSaving ? '...' : 'Save'}
+              {nameSaving ? '...' : t('save')}
             </button>
           </div>
         </div>
         {nameMsg && <Alert {...nameMsg} />}
         <div>
-          <label className="text-xs font-semibold text-slate-500">Plan</label>
+          <label className="text-xs font-semibold text-slate-500">{t('plan')}</label>
           <p className="text-sm text-slate-600 capitalize">{user.plan}</p>
         </div>
       </Section>
 
       {/* Password */}
-      <Section title="Change Password">
+      <Section title={t('changePassword')}>
         <form onSubmit={handlePasswordChange} className="space-y-3">
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={currentPw} onChange={e => setCurrentPw(e.target.value)}
-              required placeholder="Current password" className={inputCls} />
+              required placeholder={t('currentPassword')} className={inputCls} />
           </div>
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={newPw} onChange={e => setNewPw(e.target.value)}
-              required minLength={6} placeholder="New password" className={inputCls} />
+              required minLength={6} placeholder={t('newPassword')} className={inputCls} />
           </div>
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)}
-              required minLength={6} placeholder="Confirm new password" className={inputCls} />
+              required minLength={6} placeholder={t('confirmNewPassword')} className={inputCls} />
           </div>
           {pwMsg && <Alert {...pwMsg} />}
           <button type="submit" disabled={pwSaving}
             className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-600 transition-colors disabled:opacity-40">
-            {pwSaving ? 'Updating...' : 'Update Password'}
+            {pwSaving ? t('updating') : t('updatePassword')}
           </button>
         </form>
       </Section>
 
       {/* Delete Account */}
       {/* Strava */}
-      <Section title="Connected Apps">
+      <Section title={t('connectedApps')}>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
@@ -194,9 +196,9 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-800">Strava</p>
+              <p className="text-sm font-bold text-slate-800">{t('strava')}</p>
               <p className="text-xs text-slate-400">
-                {stravaConnected ? 'Connected — auto-import activities' : 'Import completed workouts'}
+                {stravaConnected ? t('stravaConnectedDesc') : t('importWorkouts')}
               </p>
             </div>
           </div>
@@ -206,17 +208,17 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
                 <button onClick={handleStravaSync} disabled={stravaSyncing}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-indigo-600 border border-indigo-200 hover:border-indigo-400 transition-all disabled:opacity-40">
                   <RefreshCw size={13} strokeWidth={2} className={stravaSyncing ? 'animate-spin' : ''} />
-                  {stravaSyncing ? 'Syncing...' : 'Sync'}
+                  {stravaSyncing ? t('syncing') : t('sync')}
                 </button>
                 <button onClick={handleStravaDisconnect}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-red-500 border border-red-200 hover:border-red-400 transition-all">
-                  <Unlink size={13} strokeWidth={2} /> Disconnect
+                  <Unlink size={13} strokeWidth={2} /> {t('disconnect')}
                 </button>
               </>
             ) : (
               <button onClick={handleStravaConnect}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-[#FC4C02] hover:opacity-90 transition-all">
-                <Link size={13} strokeWidth={2} /> Connect Strava
+                <Link size={13} strokeWidth={2} /> {t('connectStrava')}
               </button>
             )}
           </div>
@@ -224,33 +226,33 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
         {stravaMsg && <Alert {...stravaMsg} />}
       </Section>
 
-      <Section title="Danger Zone">
+      <Section title={t('dangerZone')}>
         {!showDelete ? (
           <button onClick={() => setShowDelete(true)}
             className="flex items-center gap-2 text-sm font-semibold text-red-500 hover:text-red-600 transition-colors">
             <Trash2 size={16} strokeWidth={1.5} />
-            Delete my account
+            {t('deleteAccount')}
           </button>
         ) : (
           <div className="space-y-3 bg-red-50 rounded-xl p-4">
             <p className="text-sm text-red-600 font-semibold">
-              This will permanently delete your account and all training data. This cannot be undone.
+              {t('deleteConfirmText')}
             </p>
             <div className="relative">
               <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400" />
               <input type="password" value={deletePw} onChange={e => setDeletePw(e.target.value)}
-                placeholder="Enter your password to confirm"
+                placeholder={t('enterPasswordConfirm')}
                 className="w-full border border-red-200 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition-all bg-white" />
             </div>
             {deleteMsg && <Alert {...deleteMsg} />}
             <div className="flex gap-2">
               <button onClick={handleDelete} disabled={deleting || !deletePw}
                 className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-red-500 hover:bg-red-600 transition-colors disabled:opacity-40">
-                {deleting ? 'Deleting...' : 'Delete Account'}
+                {deleting ? t('deleting') : t('deleteAccountBtn')}
               </button>
               <button onClick={() => { setShowDelete(false); setDeletePw(''); setDeleteMsg(null) }}
                 className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
-                Cancel
+                {t('cancel')}
               </button>
             </div>
           </div>

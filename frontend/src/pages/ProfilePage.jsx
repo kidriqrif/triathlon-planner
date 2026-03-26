@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getAthlete, updateAthlete } from '../api'
 import ZonesCalculator from '../components/ZonesCalculator'
 import { Sprout, Zap, Flame, AlertTriangle, User } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 const FITNESS_LEVELS = [
   { key: 'beginner',     label: 'Beginner',     desc: 'New to triathlon / first season', Icon: Sprout },
@@ -14,6 +15,7 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
 
 export default function ProfilePage() {
+  const { t } = useI18n()
   const [form, setForm]     = useState(null)
   const [saved, setSaved]   = useState(false)
   const [error, setError]   = useState(null)
@@ -66,7 +68,7 @@ export default function ProfilePage() {
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch {
-      setError('Failed to save. Please try again.')
+      setError(t('failedSave'))
     }
   }
 
@@ -79,7 +81,7 @@ export default function ProfilePage() {
           </div>
           <p className="text-slate-600 font-semibold">{error}</p>
           <button onClick={() => { setError(null); window.location.reload() }}
-            className="text-indigo-600 text-sm underline">Retry</button>
+            className="text-indigo-600 text-sm underline">{t('retry')}</button>
         </div>
       </div>
     )
@@ -92,7 +94,7 @@ export default function ProfilePage() {
           <div className="flex justify-center">
             <User size={36} strokeWidth={1.5} className="text-slate-200 animate-pulse" />
           </div>
-          <p className="text-slate-400 text-sm">Loading profile…</p>
+          <p className="text-slate-400 text-sm">{t('loadingProfile')}</p>
         </div>
       </div>
     )
@@ -104,27 +106,27 @@ export default function ProfilePage() {
     <div className="space-y-5 max-w-lg">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800">Athlete Profile</h1>
-        <p className="text-slate-400 text-sm mt-0.5">Your details are used by StreloIQ to personalise training plans</p>
+        <h1 className="text-2xl font-black text-slate-800">{t('athleteProfile')}</h1>
+        <p className="text-slate-400 text-sm mt-0.5">{t('profileDesc')}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Name + basics */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Basics</p>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('basics')}</p>
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Name</label>
-            <input value={form.name} onChange={set('name')} required placeholder="Your name"
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('name')}</label>
+            <input value={form.name} onChange={set('name')} required placeholder={t('yourName')}
               className={inputCls} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Age</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('age')}</label>
               <input type="number" min="10" max="99" value={form.age} onChange={set('age')}
                 placeholder="—" className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Weight (kg)</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('weightKg')}</label>
               <input type="number" min="30" max="200" step="0.5" value={form.weight_kg} onChange={set('weight_kg')}
                 placeholder="—" className={inputCls} />
             </div>
@@ -133,7 +135,7 @@ export default function ProfilePage() {
 
         {/* Fitness level */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
-          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Fitness Level</label>
+          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">{t('fitnessLevel')}</label>
           <div className="space-y-2">
             {FITNESS_LEVELS.map(({ key, label, desc, Icon }) => (
               <button key={key} type="button"
@@ -146,9 +148,9 @@ export default function ProfilePage() {
                 <Icon size={22} strokeWidth={1.5} className={form.fitness_level === key ? 'text-indigo-500' : 'text-slate-400'} />
                 <div>
                   <p className={`text-sm font-bold ${form.fitness_level === key ? 'text-indigo-700' : 'text-slate-700'}`}>
-                    {label}
+                    {t(key)}
                   </p>
-                  <p className="text-xs text-slate-400 mt-0.5">{desc}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{t(`${key}Desc`)}</p>
                 </div>
                 {form.fitness_level === key && (
                   <span className="ml-auto text-indigo-500 font-black">✓</span>
@@ -161,22 +163,22 @@ export default function ProfilePage() {
         {/* Current paces / thresholds */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
           <div>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Benchmarks</p>
-            <p className="text-xs text-slate-400 mt-0.5">Helps the AI set accurate intensities — fill in what you know</p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('currentBenchmarks')}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{t('benchmarksDesc')}</p>
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Swim /100m</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('swimPace')}</label>
               <input value={form.swim_pace_100m} onChange={set('swim_pace_100m')}
                 placeholder="1:45" className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Bike FTP (W)</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('bikeFtp')}</label>
               <input type="number" min="50" max="500" value={form.bike_ftp_watts} onChange={set('bike_ftp_watts')}
                 placeholder="220" className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Run /km</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('runPace')}</label>
               <input value={form.run_pace_km} onChange={set('run_pace_km')}
                 placeholder="5:30" className={inputCls} />
             </div>
@@ -186,7 +188,7 @@ export default function ProfilePage() {
         {/* Weekly hours */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
-            Weekly Hours Target
+            {t('weeklyHoursTarget')}
           </label>
           <div className="flex items-center gap-4">
             <input type="range" min="2" max="30" step="0.5"
@@ -201,16 +203,16 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="flex justify-between text-xs text-slate-400 mt-1 px-0.5">
-            <span>2h — casual</span>
-            <span>15h — serious</span>
-            <span>30h — pro</span>
+            <span>{t('casualHours')}</span>
+            <span>{t('seriousHours')}</span>
+            <span>{t('proHours')}</span>
           </div>
         </div>
 
         {/* Preferred training days */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-            Available Training Days
+            {t('availableTrainingDays')}
           </label>
           <div className="flex gap-2">
             {DAYS.map(day => (
@@ -225,13 +227,13 @@ export default function ProfilePage() {
             ))}
           </div>
           <p className="text-xs text-slate-400 mt-2">
-            The AI will only schedule workouts on selected days
+            {t('trainingDaysDesc')}
           </p>
         </div>
 
         {/* Goal */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
-          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Goal</label>
+          <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceGoal')}</label>
           <textarea value={form.goal_description} onChange={set('goal_description')} rows={2}
             placeholder="e.g. Sub-6hr Olympic tri, finish first Ironman, qualify for Worlds..."
             className={inputCls + ' resize-none'} />
@@ -240,7 +242,7 @@ export default function ProfilePage() {
         {/* Injuries */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-            Injuries / Limitations
+            {t('injuriesLimitations')}
           </label>
           <textarea value={form.injuries_notes} onChange={set('injuries_notes')} rows={2}
             placeholder="e.g. Recovering from knee surgery, limited pool access on weekdays..."
@@ -254,7 +256,7 @@ export default function ProfilePage() {
               ? 'bg-emerald-500'
               : 'bg-slate-900 hover:bg-slate-800'
           }`}>
-          {saved ? 'Saved' : 'Save Profile'}
+          {saved ? t('saved') : t('saveProfile')}
         </button>
       </form>
 

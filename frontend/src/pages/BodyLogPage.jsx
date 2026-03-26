@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import useDark from '../utils/useDark'
+import { useI18n } from '../i18n/I18nContext'
 
 const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white'
 
@@ -17,6 +18,7 @@ function todayStr() {
 
 export default function BodyLogPage() {
   const dark = useDark()
+  const { t } = useI18n()
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -66,7 +68,7 @@ export default function BodyLogPage() {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this entry?')) return
+    if (!confirm(t('deleteEntryConfirm'))) return
     try {
       await deleteBodyLog(id)
       await fetchLogs()
@@ -87,8 +89,8 @@ export default function BodyLogPage() {
     <div className="space-y-5">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800 dark:text-white">Body Log</h1>
-        <p className="text-slate-400 text-sm mt-0.5">Track weight, resting heart rate, and sleep over time</p>
+        <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('bodyLog')}</h1>
+        <p className="text-slate-400 text-sm mt-0.5">{t('trackBodyMetrics')}</p>
       </div>
 
       {/* Input form */}
@@ -96,12 +98,12 @@ export default function BodyLogPage() {
         className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
         <div className="flex items-center gap-2 mb-1">
           <Plus size={16} strokeWidth={2} className="text-indigo-500" />
-          <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">New Entry</p>
+          <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('newEntry')}</p>
         </div>
 
         {/* Date */}
         <div>
-          <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Date</label>
+          <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">{t('date')}</label>
           <input type="date" value={form.date} onChange={set('date')} required
             className={inputCls} />
         </div>
@@ -110,14 +112,14 @@ export default function BodyLogPage() {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
-              <Scale size={12} className="inline mr-1" />Weight (kg)
+              <Scale size={12} className="inline mr-1" />{t('weightKg')}
             </label>
             <input type="number" min="20" max="300" step="0.1" value={form.weight_kg} onChange={set('weight_kg')}
               placeholder="—" className={inputCls} />
           </div>
           <div>
             <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
-              <Heart size={12} className="inline mr-1" />Resting HR
+              <Heart size={12} className="inline mr-1" />{t('restingHr')}
             </label>
             <input type="number" min="20" max="200" value={form.resting_hr} onChange={set('resting_hr')}
               placeholder="—" className={inputCls} />
@@ -128,13 +130,13 @@ export default function BodyLogPage() {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
-              <Moon size={12} className="inline mr-1" />Sleep (hours)
+              <Moon size={12} className="inline mr-1" />{t('sleepHours')}
             </label>
             <input type="number" min="0" max="24" step="0.25" value={form.sleep_hours} onChange={set('sleep_hours')}
               placeholder="—" className={inputCls} />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Sleep Quality</label>
+            <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">{t('sleepQuality')}</label>
             <div className="flex gap-1.5">
               {[1, 2, 3, 4, 5].map(q => (
                 <button key={q} type="button"
@@ -150,29 +152,29 @@ export default function BodyLogPage() {
               ))}
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              {form.sleep_quality ? QUALITY_LABELS[parseInt(form.sleep_quality)] : '1 = poor, 5 = great'}
+              {form.sleep_quality ? QUALITY_LABELS[parseInt(form.sleep_quality)] : t('sleepQualityHint')}
             </p>
           </div>
         </div>
 
         {/* Notes */}
         <div>
-          <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Notes</label>
+          <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">{t('notes')}</label>
           <textarea value={form.notes} onChange={set('notes')} rows={2}
-            placeholder="How are you feeling today?"
+            placeholder={t('howAreYouFeeling')}
             className={inputCls + ' resize-none'} />
         </div>
 
         <button type="submit" disabled={saving}
           className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 transition-colors disabled:opacity-50">
-          {saving ? 'Saving...' : 'Log Entry'}
+          {saving ? t('saving') : t('logEntry')}
         </button>
       </form>
 
       {/* Weight chart */}
       {chartData.length >= 2 && (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Weight Trend</h2>
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">{t('weightTrend')}</h2>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartData} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={dark ? '#334155' : '#e2e8f0'} />
@@ -197,33 +199,33 @@ export default function BodyLogPage() {
       {/* Log entries table */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white">Recent Entries</h2>
-          <p className="text-xs text-slate-400 mt-0.5">Last 90 days</p>
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white">{t('recentEntries')}</h2>
+          <p className="text-xs text-slate-400 mt-0.5">{t('last90Days')}</p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <p className="text-slate-400 text-sm">Loading...</p>
+            <p className="text-slate-400 text-sm">{t('loading')}</p>
           </div>
         ) : logs.length === 0 ? (
           <div className="text-center py-16 text-slate-400">
             <div className="flex justify-center mb-3">
               <Scale size={40} strokeWidth={1} className="text-slate-200 dark:text-slate-700" />
             </div>
-            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">No entries yet</p>
-            <p className="text-xs mt-1">Log your first entry above to start tracking</p>
+            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{t('noEntriesYet')}</p>
+            <p className="text-xs mt-1">{t('noEntriesDesc')}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">
-                  <th className="text-left px-5 py-3">Date</th>
-                  <th className="text-left px-3 py-3">Weight</th>
-                  <th className="text-left px-3 py-3">HR</th>
-                  <th className="text-left px-3 py-3">Sleep</th>
-                  <th className="text-left px-3 py-3">Quality</th>
-                  <th className="text-left px-3 py-3">Notes</th>
+                  <th className="text-left px-5 py-3">{t('date')}</th>
+                  <th className="text-left px-3 py-3">{t('weight')}</th>
+                  <th className="text-left px-3 py-3">{t('hr')}</th>
+                  <th className="text-left px-3 py-3">{t('sleep')}</th>
+                  <th className="text-left px-3 py-3">{t('quality')}</th>
+                  <th className="text-left px-3 py-3">{t('notes')}</th>
                   <th className="px-3 py-3"></th>
                 </tr>
               </thead>
@@ -259,7 +261,7 @@ export default function BodyLogPage() {
                     <td className="px-3 py-3">
                       <button onClick={() => handleDelete(log.id)}
                         className="p-1.5 rounded-lg text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-                        title="Delete entry">
+                        title={t('deleteEntry')}>
                         <Trash2 size={14} strokeWidth={2} />
                       </button>
                     </td>

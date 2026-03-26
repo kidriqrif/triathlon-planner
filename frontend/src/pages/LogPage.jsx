@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useI18n } from '../i18n/I18nContext'
 import WorkoutForm from '../components/WorkoutForm'
 import { readableSummary } from '../components/WorkoutBuilder'
 import { brickReadableSummary } from '../components/BrickBuilder'
@@ -27,6 +28,7 @@ const TYPE_LABELS = {
 const FILTER_TABS = ['all', 'completed', 'planned', 'skipped']
 
 export default function LogPage({ workouts, onRefresh, user }) {
+  const { t } = useI18n()
   const isPro = user?.plan === 'pro'
   const [formState, setFormState] = useState(null)
   const [filter, setFilter] = useState('all')
@@ -44,7 +46,7 @@ export default function LogPage({ workouts, onRefresh, user }) {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this workout?')) return
+    if (!confirm(t('deleteWorkoutConfirm'))) return
     await deleteWorkout(id)
     closeForm()
     onRefresh()
@@ -55,8 +57,8 @@ export default function LogPage({ workouts, onRefresh, user }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-800">Workout Log</h1>
-          <p className="text-slate-400 text-sm mt-0.5">{workouts.filter(w => w.status === 'completed').length} sessions completed</p>
+          <h1 className="text-2xl font-black text-slate-800">{t('workoutLog')}</h1>
+          <p className="text-slate-400 text-sm mt-0.5">{`${workouts.filter(w => w.status === 'completed').length} ${t('sessionsCompleted')}`}</p>
         </div>
         <div className="flex items-center gap-2">
           {isPro && workouts.length > 0 && (
@@ -68,7 +70,7 @@ export default function LogPage({ workouts, onRefresh, user }) {
           )}
           <button onClick={() => setFormState({ workout: null, defaultDate: null })}
             className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
-            + Log Workout
+            {t('logWorkout')}
           </button>
         </div>
       </div>
@@ -77,12 +79,12 @@ export default function LogPage({ workouts, onRefresh, user }) {
       <div className="flex gap-2">
         {FILTER_TABS.map(f => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`px-4 py-1.5 rounded-xl text-sm font-bold border-2 capitalize transition-all ${
+            className={`px-4 py-1.5 rounded-xl text-sm font-bold border-2 transition-all ${
               filter === f
                 ? 'bg-slate-800 text-white border-slate-800'
                 : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
             }`}>
-            {f}
+            {t(f)}
           </button>
         ))}
       </div>
@@ -93,8 +95,8 @@ export default function LogPage({ workouts, onRefresh, user }) {
           <div className="flex justify-center mb-4">
             <ClipboardList size={48} strokeWidth={1} className="text-slate-200" />
           </div>
-          <p className="text-lg font-semibold text-slate-500">No workouts here yet</p>
-          <p className="text-sm mt-1">Start logging to track your training</p>
+          <p className="text-lg font-semibold text-slate-500">{t('noWorkoutsYet')}</p>
+          <p className="text-sm mt-1">{t('startLogging')}</p>
         </div>
       ) : (
         <div className="space-y-2">

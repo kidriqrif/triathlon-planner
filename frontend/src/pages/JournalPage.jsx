@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Waves, Bike, Footprints, Layers, BookOpen } from 'lucide-react'
+import { useI18n } from '../i18n/I18nContext'
 
 const SPORT_CONFIG = {
   swim:  { Icon: Waves,      label: 'Swim',  color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20'   },
@@ -14,13 +15,14 @@ const TYPE_LABELS = {
 }
 
 const FILTERS = [
-  { key: 'all',  label: 'All'  },
-  { key: 'swim', label: 'Swim' },
-  { key: 'bike', label: 'Bike' },
-  { key: 'run',  label: 'Run'  },
+  { key: 'all',  tKey: 'all'  },
+  { key: 'swim', tKey: 'swim' },
+  { key: 'bike', tKey: 'bike' },
+  { key: 'run',  tKey: 'run'  },
 ]
 
 export default function JournalPage({ workouts }) {
+  const { t } = useI18n()
   const [filter, setFilter] = useState('all')
 
   // Only workouts with non-empty notes, sorted by date descending
@@ -36,22 +38,22 @@ export default function JournalPage({ workouts }) {
     <div className="space-y-5">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800 dark:text-white">Training Notes</h1>
+        <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('trainingNotes')}</h1>
         <p className="text-slate-400 dark:text-slate-500 text-sm mt-0.5">
-          {withNotes.length} {withNotes.length === 1 ? 'entry' : 'entries'} with notes
+          {withNotes.length} {withNotes.length === 1 ? t('entryWithNotes') : t('entriesWithNotes')}
         </p>
       </div>
 
       {/* Filter tabs */}
       <div className="flex gap-2">
-        {FILTERS.map(({ key, label }) => (
+        {FILTERS.map(({ key, tKey }) => (
           <button key={key} onClick={() => setFilter(key)}
             className={`px-4 py-1.5 rounded-xl text-sm font-bold border-2 transition-all ${
               filter === key
                 ? 'bg-slate-800 dark:bg-indigo-600 text-white border-slate-800 dark:border-indigo-600'
                 : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
             }`}>
-            {label}
+            {t(tKey)}
           </button>
         ))}
       </div>
@@ -62,8 +64,8 @@ export default function JournalPage({ workouts }) {
           <div className="flex justify-center mb-4">
             <BookOpen size={48} strokeWidth={1} className="text-slate-200 dark:text-slate-700" />
           </div>
-          <p className="text-lg font-semibold text-slate-500 dark:text-slate-400">No notes yet</p>
-          <p className="text-sm mt-1">Add notes to your workouts and they will appear here</p>
+          <p className="text-lg font-semibold text-slate-500 dark:text-slate-400">{t('noNotesYet')}</p>
+          <p className="text-sm mt-1">{t('noNotesDesc')}</p>
         </div>
       ) : (
         <div className="space-y-3">
