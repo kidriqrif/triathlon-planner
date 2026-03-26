@@ -150,8 +150,41 @@ def forgot_password(request: Request, payload: ForgotPasswordRequest, db: Sessio
         db.commit()
 
         reset_url = f"{FRONTEND_URL}?reset={token}"
-        logger.info(f"Password reset for {user.email}: {reset_url}")
-        print(f"[RESET LINK] {user.email}: {reset_url}")
+
+        # Send reset email
+        resend_key = os.getenv("RESEND_API_KEY", "")
+        if resend_key:
+            try:
+                import resend
+                resend.api_key = resend_key
+                resend.Emails.send({
+                    "from": os.getenv("EMAIL_FROM", "Strelo <onboarding@resend.dev>"),
+                    "to": [user.email],
+                    "subject": "Reset your Strelo password",
+                    "html": f"""
+                        <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px">
+                            <h2 style="color:#1e1b4b;margin-bottom:8px">Password Reset</h2>
+                            <p style="color:#64748b;font-size:14px">
+                                You requested a password reset for your Strelo account.
+                                Click the button below to set a new password. This link expires in 1 hour.
+                            </p>
+                            <a href="{reset_url}"
+                               style="display:inline-block;margin-top:16px;padding:12px 24px;
+                                      background:linear-gradient(135deg,#6366f1,#7c3aed);
+                                      color:white;text-decoration:none;border-radius:12px;
+                                      font-weight:bold;font-size:14px">
+                                Reset Password
+                            </a>
+                            <p style="color:#94a3b8;font-size:12px;margin-top:24px">
+                                If you didn't request this, you can safely ignore this email.
+                            </p>
+                        </div>
+                    """,
+                })
+            except Exception as e:
+                logger.warning(f"Failed to send reset email: {e}")
+        else:
+            logger.info(f"Password reset (no email configured): {reset_url}")
 
     return {"message": "If an account with that email exists, a reset link has been sent."}
 
