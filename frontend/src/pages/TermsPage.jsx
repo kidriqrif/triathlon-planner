@@ -33,7 +33,7 @@ export default function TermsPage({ onBack }) {
           <section>
             <h2 className="text-lg font-bold text-slate-800">2. Description of Service</h2>
             <p className="text-slate-600 leading-relaxed">
-              Strelo is a triathlon training planner that allows users to log workouts, track races, manage athlete profiles, and receive AI-generated training suggestions. The service is provided on a free tier with optional paid upgrades.
+              Strelo is a triathlon training planner that allows users to log workouts, track races, manage athlete profiles, and receive StreloIQ-generated training plans. The service is provided on a free tier with optional paid upgrades.
             </p>
           </section>
 
@@ -52,15 +52,15 @@ export default function TermsPage({ onBack }) {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-slate-800">5. AI Training Suggestions</h2>
+            <h2 className="text-lg font-bold text-slate-800">5. StreloIQ Training Plans</h2>
             <p className="text-slate-600 leading-relaxed">
-              AI-generated training plans are provided for informational purposes only. They do not constitute medical advice, professional coaching, or a substitute for consultation with qualified health and fitness professionals. You acknowledge that:
+              StreloIQ-generated training plans are provided for informational purposes only. They do not constitute medical advice, professional coaching, or a substitute for consultation with qualified health and fitness professionals. You acknowledge that:
             </p>
             <ul className="list-disc pl-5 text-slate-600 space-y-1">
-              <li>AI suggestions may not be suitable for your specific health conditions</li>
+              <li>StreloIQ suggestions may not be suitable for your specific health conditions</li>
               <li>You should consult a doctor before starting any training programme</li>
-              <li>You follow AI suggestions at your own risk</li>
-              <li>Strelo is not liable for injuries or health issues arising from AI suggestions</li>
+              <li>You follow StreloIQ suggestions at your own risk</li>
+              <li>Strelo is not liable for injuries or health issues arising from StreloIQ suggestions</li>
             </ul>
           </section>
 

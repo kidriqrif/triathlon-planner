@@ -35,7 +35,7 @@ export default function PrivacyPage({ onBack }) {
             <p className="text-slate-600 leading-relaxed">We use your information to:</p>
             <ul className="list-disc pl-5 text-slate-600 space-y-1">
               <li>Provide and maintain your Strelo account and training data</li>
-              <li>Generate personalised AI training suggestions (Pro plan)</li>
+              <li>Generate personalised StreloIQ training plans (Pro plan)</li>
               <li>Process payments through our payment provider (LemonSqueezy)</li>
               <li>Send essential account-related communications</li>
               <li>Improve and develop our services</li>
@@ -64,7 +64,7 @@ export default function PrivacyPage({ onBack }) {
               <li><strong>Render</strong> — application hosting</li>
               <li><strong>Vercel</strong> — frontend hosting</li>
               <li><strong>LemonSqueezy</strong> — payment processing</li>
-              <li><strong>Groq</strong> — AI training suggestions (Pro plan only)</li>
+              <li><strong>Groq</strong> — StreloIQ training engine (Pro plan only)</li>
             </ul>
             <p className="text-slate-600 leading-relaxed mt-2">
               Each provider has their own privacy policy governing their handling of data.

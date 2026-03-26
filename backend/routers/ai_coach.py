@@ -108,7 +108,7 @@ def suggest_week(
     current_user: models.User = Depends(get_current_user),
 ):
     if current_user.plan != "pro":
-        raise HTTPException(status_code=403, detail="AI Coach requires a Pro subscription")
+        raise HTTPException(status_code=403, detail="StreloIQ requires a Pro subscription")
 
     # Gather context scoped to the current user
     athlete = db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).first()

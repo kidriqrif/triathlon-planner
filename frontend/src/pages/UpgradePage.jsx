@@ -11,7 +11,7 @@ const FREE_FEATURES = [
 
 const PRO_FEATURES = [
   'Everything in Free',
-  'AI Coach — personalised weekly plans',
+  'StreloIQ — personalised weekly plans',
   'Advanced analytics & trends',
   'Unlimited race tracking',
   'Priority support',
@@ -44,7 +44,7 @@ export default function UpgradePage({ user, onPlanChange }) {
         <p className="text-slate-400 text-sm mt-1">
           {isPro
             ? 'You have access to all premium features'
-            : 'Unlock AI coaching and advanced features'}
+            : 'Unlock StreloIQ and advanced features'}
         </p>
       </div>
 

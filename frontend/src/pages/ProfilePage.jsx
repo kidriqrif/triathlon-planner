@@ -104,7 +104,7 @@ export default function ProfilePage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-black text-slate-800">Athlete Profile</h1>
-        <p className="text-slate-400 text-sm mt-0.5">Your details are used by the AI coach to personalise training suggestions</p>
+        <p className="text-slate-400 text-sm mt-0.5">Your details are used by StreloIQ to personalise training plans</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">

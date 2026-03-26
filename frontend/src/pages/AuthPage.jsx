@@ -77,7 +77,7 @@ export default function AuthPage({ onAuth, resetToken }) {
             </div>
           </div>
           <h1 className="text-2xl font-black text-slate-800">Strelo</h1>
-          <p className="text-slate-400 text-sm mt-1">AI-powered triathlon training</p>
+          <p className="text-slate-400 text-sm mt-1">Smart triathlon training</p>
         </div>
 
         {/* Card */}

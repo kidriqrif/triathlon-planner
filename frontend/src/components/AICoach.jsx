@@ -84,9 +84,9 @@ export default function AICoach({ onWorkoutsAdded }) {
         <div>
           <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
             <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
-            AI Coach
+            StreloIQ
           </h2>
-          <p className="text-sm text-gray-500 mt-0.5">Get a personalised training week based on your history</p>
+          <p className="text-sm text-gray-500 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
         </div>
         <button
           onClick={handleGenerate}
