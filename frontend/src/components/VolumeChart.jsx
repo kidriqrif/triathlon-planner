@@ -3,7 +3,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, LineChart, Line,
 } from 'recharts'
-import { startOfWeek, format, addDays } from 'date-fns'
+import { startOfWeek, format } from 'date-fns'
+import useDark from '../utils/useDark'
 
 function getWeekKey(date) {
   const d = new Date(date + 'T12:00:00')
@@ -43,28 +44,34 @@ function buildWeeklyData(workouts, weeks) {
 export default function VolumeChart({ workouts }) {
   const [range, setRange] = useState(8)
   const [chartType, setChartType] = useState('distance')
+  const dark = useDark()
 
   const data = useMemo(() => buildWeeklyData(workouts, range), [workouts, range])
+
+  const gridColor = dark ? '#334155' : '#f0f0f0'
+  const textColor = dark ? '#94a3b8' : '#64748b'
+  const tooltipBg = dark ? '#1e293b' : '#fff'
+  const tooltipBorder = dark ? '#334155' : '#e2e8f0'
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800">Weekly Volume</h2>
+        <h2 className="text-lg font-bold text-slate-800 dark:text-white">Weekly Volume</h2>
         <div className="flex gap-2">
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+          <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm">
             {['distance', 'hours'].map(t => (
               <button key={t}
                 onClick={() => setChartType(t)}
-                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                 {t === 'distance' ? 'Distance (km)' : 'Hours'}
               </button>
             ))}
           </div>
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
+          <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm">
             {[4, 8, 12].map(w => (
               <button key={w}
                 onClick={() => setRange(w)}
-                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                 {w}w
               </button>
             ))}
@@ -73,17 +80,21 @@ export default function VolumeChart({ workouts }) {
       </div>
 
       {data.length === 0 ? (
-        <div className="flex items-center justify-center h-48 text-slate-400 text-sm">
+        <div className="flex items-center justify-center h-48 text-slate-400 dark:text-slate-500 text-sm">
           No completed workouts yet — start logging to see your volume here.
         </div>
       ) : chartType === 'distance' ? (
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="week" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} unit=" km" />
-            <Tooltip formatter={(v, n) => [`${v} km`, n]} />
-            <Legend />
+            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <XAxis dataKey="week" tick={{ fontSize: 12, fill: textColor }} />
+            <YAxis tick={{ fontSize: 12, fill: textColor }} unit=" km" />
+            <Tooltip
+              formatter={(v, n) => [`${v} km`, n]}
+              contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: textColor }}
+            />
+            <Legend wrapperStyle={{ fontSize: 12 }} />
             <Bar dataKey="swim" name="Swim" fill="#3b82f6" radius={[4, 4, 0, 0]} />
             <Bar dataKey="bike" name="Bike" fill="#f97316" radius={[4, 4, 0, 0]} />
             <Bar dataKey="run" name="Run" fill="#22c55e" radius={[4, 4, 0, 0]} />
@@ -92,10 +103,14 @@ export default function VolumeChart({ workouts }) {
       ) : (
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="week" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} unit=" h" />
-            <Tooltip formatter={(v) => [`${v} h`, 'Total hours']} />
+            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <XAxis dataKey="week" tick={{ fontSize: 12, fill: textColor }} />
+            <YAxis tick={{ fontSize: 12, fill: textColor }} unit=" h" />
+            <Tooltip
+              formatter={(v) => [`${v} h`, 'Total hours']}
+              contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: textColor }}
+            />
             <Line type="monotone" dataKey="hours" name="Hours" stroke="#6366f1" strokeWidth={2}
               dot={{ r: 4, fill: '#6366f1' }} activeDot={{ r: 6 }} />
           </LineChart>

@@ -5,6 +5,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import useDark from '../utils/useDark'
 
 const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white'
 
@@ -15,6 +16,7 @@ function todayStr() {
 }
 
 export default function BodyLogPage() {
+  const dark = useDark()
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -173,16 +175,18 @@ export default function BodyLogPage() {
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Weight Trend</h2>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartData} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }}
+              <CartesianGrid strokeDasharray="3 3" stroke={dark ? '#334155' : '#e2e8f0'} />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: dark ? '#94a3b8' : '#64748b' }}
                 tickFormatter={(v) => {
                   const d = new Date(v + 'T12:00:00')
                   return `${d.getDate()}/${d.getMonth() + 1}`
                 }} />
-              <YAxis tick={{ fontSize: 11 }} unit=" kg" domain={['dataMin - 1', 'dataMax + 1']} />
+              <YAxis tick={{ fontSize: 11, fill: dark ? '#94a3b8' : '#64748b' }} unit=" kg" domain={['dataMin - 1', 'dataMax + 1']} />
               <Tooltip
                 labelFormatter={(v) => v}
-                formatter={(v) => [`${v} kg`, 'Weight']} />
+                formatter={(v) => [`${v} kg`, 'Weight']}
+                contentStyle={{ background: dark ? '#1e293b' : '#fff', border: `1px solid ${dark ? '#334155' : '#e2e8f0'}`, borderRadius: 8, fontSize: 12 }}
+                labelStyle={{ color: dark ? '#94a3b8' : '#64748b' }} />
               <Line type="monotone" dataKey="weight" name="Weight" stroke="#6366f1" strokeWidth={2}
                 dot={{ r: 3, fill: '#6366f1' }} activeDot={{ r: 5 }} />
             </LineChart>
