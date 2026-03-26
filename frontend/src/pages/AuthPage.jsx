@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { register, login, forgotPassword, resetPassword } from '../api'
 import { Mail, Lock, User, ArrowRight, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'
 
@@ -9,6 +9,11 @@ export default function AuthPage({ onAuth, resetToken }) {
   const [form, setForm] = useState({ email: '', password: '', confirmPassword: '', name: '' })
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+
+  // Wake up backend while user types credentials
+  useEffect(() => {
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/health').catch(() => {})
+  }, [])
   const [loading, setLoading] = useState(false)
 
   const set = (f) => (e) => setForm(p => ({ ...p, [f]: e.target.value }))
