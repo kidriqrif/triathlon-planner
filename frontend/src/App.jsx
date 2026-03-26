@@ -12,17 +12,23 @@ import TermsPage from './pages/TermsPage'
 import OnboardingPage from './pages/OnboardingPage'
 import SettingsPage from './pages/SettingsPage'
 import SavedPage from './pages/SavedPage'
+import PlansLibraryPage from './pages/PlansLibraryPage'
+import JournalPage from './pages/JournalPage'
+import BodyLogPage from './pages/BodyLogPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun, BookMarked } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun, BookMarked, Library, NotebookPen, Scale } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
   { id: 'plan',      label: 'Calendar',  Icon: CalendarDays    },
   { id: 'log',       label: 'Log',       Icon: ClipboardList   },
   { id: 'races',     label: 'Races',     Icon: Flag            },
+  { id: 'plans',     label: 'Plans',     Icon: Library          },
+  { id: 'journal',   label: 'Journal',   Icon: NotebookPen     },
+  { id: 'body',      label: 'Body Log',  Icon: Scale           },
   { id: 'saved',     label: 'Saved',     Icon: BookMarked      },
   { id: 'profile',   label: 'Profile',   Icon: User            },
 ]
@@ -122,6 +128,9 @@ export default function App() {
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
       case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} user={user} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
+      case 'plans':     return <PlansLibraryPage onRefresh={fetchAll} />
+      case 'journal':   return <JournalPage workouts={workouts} />
+      case 'body':      return <BodyLogPage />
       case 'saved':     return <SavedPage user={user} onRefresh={fetchAll} />
       case 'profile':   return <ProfilePage />
       case 'upgrade':   return <UpgradePage user={user} />

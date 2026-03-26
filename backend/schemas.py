@@ -99,6 +99,23 @@ class AthleteOut(AthleteBase):
     model_config = {"from_attributes": True}
 
 
+# --- Body Log ---
+
+class BodyLogCreate(BaseModel):
+    date: date
+    weight_kg: Optional[float] = None
+    resting_hr: Optional[int] = None
+    sleep_hours: Optional[float] = None
+    sleep_quality: Optional[int] = None
+    notes: Optional[str] = None
+
+
+class BodyLogOut(BodyLogCreate):
+    id: int
+
+    model_config = {"from_attributes": True}
+
+
 # --- AI ---
 
 class AISuggestRequest(BaseModel):

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getAthlete, updateAthlete } from '../api'
+import ZonesCalculator from '../components/ZonesCalculator'
 import { Sprout, Zap, Flame, AlertTriangle, User } from 'lucide-react'
 
 const FITNESS_LEVELS = [
@@ -256,6 +257,8 @@ export default function ProfilePage() {
           {saved ? 'Saved' : 'Save Profile'}
         </button>
       </form>
+
+      <ZonesCalculator />
     </div>
   )
 }

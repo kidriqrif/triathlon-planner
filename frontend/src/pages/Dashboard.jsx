@@ -2,6 +2,8 @@ import React from 'react'
 import RaceCountdown from '../components/RaceCountdown'
 import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
+import PersonalRecords from '../components/PersonalRecords'
+import WeatherWidget from '../components/WeatherWidget'
 import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp, Lock } from 'lucide-react'
 
 function ProLock({ label, desc, onUpgrade }) {
@@ -128,6 +130,8 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       </div>
 
       <SportBreakdown workouts={workouts} />
+      <WeatherWidget workouts={workouts} />
+      <PersonalRecords workouts={workouts} />
 
       {user?.plan === 'pro' ? (
         <>

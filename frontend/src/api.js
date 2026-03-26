@@ -115,6 +115,13 @@ export const exportFitUrl = (workoutId) => {
   return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
 }
 
+// --- Plans ---
+export const getPlans = () =>
+  api.get('/plans').then(r => r.data)
+
+export const importPlan = (planId, startDate) =>
+  api.post(`/plans/${planId}/import`, null, { params: { start_date: startDate } }).then(r => r.data)
+
 // --- Templates ---
 export const getTemplates = () =>
   api.get('/templates').then(r => r.data)
@@ -124,6 +131,15 @@ export const createTemplate = (data) =>
 
 export const deleteTemplate = (id) =>
   api.delete(`/templates/${id}`)
+
+// --- Digest ---
+export const sendDigest = () =>
+  api.post('/digest/send').then(r => r.data)
+
+// --- Body Log ---
+export const getBodyLogs = () => api.get('/bodylog').then(r => r.data)
+export const createBodyLog = (data) => api.post('/bodylog', data).then(r => r.data)
+export const deleteBodyLog = (id) => api.delete(`/bodylog/${id}`)
 
 // --- Support Chat ---
 export const sendSupportChat = (messages) =>

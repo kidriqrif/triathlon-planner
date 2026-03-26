@@ -134,3 +134,16 @@ class Athlete(Base):
     goal_description = Column(Text, nullable=True)
 
     owner = relationship("User", back_populates="athlete")
+
+
+class BodyLog(Base):
+    __tablename__ = "body_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    date = Column(Date, nullable=False)
+    weight_kg = Column(Float, nullable=True)
+    resting_hr = Column(Integer, nullable=True)
+    sleep_hours = Column(Float, nullable=True)
+    sleep_quality = Column(Integer, nullable=True)  # 1-5
+    notes = Column(Text, nullable=True)
