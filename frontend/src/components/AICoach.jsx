@@ -79,14 +79,14 @@ export default function AICoach({ onWorkoutsAdded }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
             <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
             StreloIQ
           </h2>
-          <p className="text-sm text-gray-500 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
+          <p className="text-sm text-slate-500 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
         </div>
         <button
           onClick={handleGenerate}
@@ -120,17 +120,17 @@ export default function AICoach({ onWorkoutsAdded }) {
           <div className="grid gap-3">
             {plan.workouts?.map((w, i) => (
               <div key={i}
-                className={`rounded-xl border-2 p-4 flex items-start justify-between gap-3 ${SPORT_COLORS[w.sport] || 'border-gray-200 bg-gray-50'}`}>
+                className={`rounded-xl border-2 p-4 flex items-start justify-between gap-3 ${SPORT_COLORS[w.sport] || 'border-slate-200 bg-slate-50'}`}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-sm font-semibold text-gray-700">{w.day}</span>
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${SPORT_BADGE[w.sport] || 'bg-gray-100 text-gray-700'}`}>
+                    <span className="text-sm font-semibold text-slate-700">{w.day}</span>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${SPORT_BADGE[w.sport] || 'bg-slate-100 text-slate-700'}`}>
                       {w.sport}
                     </span>
-                    <span className="text-xs text-gray-500 capitalize">{w.workout_type}</span>
+                    <span className="text-xs text-slate-500 capitalize">{w.workout_type}</span>
                   </div>
-                  <p className="text-sm text-gray-600">{w.description}</p>
-                  <div className="flex gap-3 mt-1 text-xs text-gray-400">
+                  <p className="text-sm text-slate-600">{w.description}</p>
+                  <div className="flex gap-3 mt-1 text-xs text-slate-400">
                     {w.duration_min && <span>{w.duration_min} min</span>}
                     {w.distance_km && <span>{w.distance_km} km</span>}
                   </div>
@@ -160,7 +160,7 @@ export default function AICoach({ onWorkoutsAdded }) {
       )}
 
       {!plan && !loading && !error && (
-        <div className="text-center py-10 text-gray-400">
+        <div className="text-center py-10 text-slate-400">
           <div className="flex justify-center gap-3 mb-3 text-slate-200">
             <Waves size={28} strokeWidth={1.5} />
             <Bike size={28} strokeWidth={1.5} />

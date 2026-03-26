@@ -114,13 +114,13 @@ export function readableSummary(notes) {
 function Field({ label, children }) {
   return (
     <div>
-      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1">{label}</p>
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">{label}</p>
       {children}
     </div>
   )
 }
 
-const inputCls = 'w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
+const inputCls = 'w-full border border-slate-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
 const selectCls = inputCls
 
 // Rest duration: side-by-side min + sec inputs
@@ -134,13 +134,13 @@ function RestField({ block, onChange }) {
           <input type="number" min="0" max="59" value={block.rest_min ?? 1}
             onChange={setMin}
             className={inputCls + ' pr-8'} />
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-gray-400 pointer-events-none">min</span>
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-slate-400 pointer-events-none">min</span>
         </div>
         <div className="flex-1 relative">
           <input type="number" min="0" max="59" value={block.rest_sec ?? 30}
             onChange={setSec}
             className={inputCls + ' pr-8'} />
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-gray-400 pointer-events-none">sec</span>
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-slate-400 pointer-events-none">sec</span>
         </div>
       </div>
     </Field>
@@ -187,7 +187,7 @@ function TargetField({ block, onChange }) {
               className={inputCls + (meta.suffix ? ' pr-10' : '')}
             />
             {meta.suffix && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-gray-400 pointer-events-none whitespace-nowrap">
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-slate-400 pointer-events-none whitespace-nowrap">
                 {meta.suffix}
               </span>
             )}
@@ -208,11 +208,11 @@ function BlockCard({ block, onChange, onDelete }) {
     <div className={`rounded-2xl border-2 ${meta.border} ${meta.bg} w-52 flex-shrink-0 overflow-hidden shadow-sm`}>
       {/* header */}
       <div className={`flex items-center justify-between px-3 py-2 border-b-2 ${meta.header}`}>
-        <span className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+        <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
           <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
         </span>
         <button type="button" onClick={onDelete}
-          className="w-5 h-5 rounded-full bg-white/60 hover:bg-red-100 text-gray-400 hover:text-red-500 transition-colors text-sm leading-none flex items-center justify-center">
+          className="w-5 h-5 rounded-full bg-white/60 hover:bg-red-100 text-slate-400 hover:text-red-500 transition-colors text-sm leading-none flex items-center justify-center">
           ×
         </button>
       </div>
@@ -270,7 +270,7 @@ export default function WorkoutBuilder({ value, onChange }) {
       <div className="flex flex-wrap gap-2">
         {Object.entries(BLOCK_META).map(([type, meta]) => (
           <button key={type} type="button" onClick={() => addBlock(type)}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
             <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}
@@ -284,35 +284,35 @@ export default function WorkoutBuilder({ value, onChange }) {
               <React.Fragment key={block.id}>
                 <BlockCard block={block} onChange={changeBlock} onDelete={() => removeBlock(block.id)} />
                 {i < blocks.length - 1 && (
-                  <div className="self-center text-gray-300 text-xl mt-6">→</div>
+                  <div className="self-center text-slate-300 text-xl mt-6">→</div>
                 )}
               </React.Fragment>
             ))}
           </div>
         </div>
       ) : (
-        <div className="border-2 border-dashed border-gray-200 rounded-2xl py-8 text-center text-sm text-gray-400">
+        <div className="border-2 border-dashed border-slate-200 rounded-2xl py-8 text-center text-sm text-slate-400">
           Add blocks above to build your interval workout
         </div>
       )}
 
       {/* Summary */}
       {blocks.length > 0 && (
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-1">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Workout preview</p>
-          <p className="text-sm text-gray-700 leading-relaxed">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-1">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Workout preview</p>
+          <p className="text-sm text-slate-700 leading-relaxed">
             {blocks.map((b, i) => {
               const meta = BLOCK_META[b.type]
               return (
                 <span key={b.id} className="inline-flex items-center gap-1">
-                  {i > 0 && <span className="text-gray-300 mx-1">→</span>}
-                  <meta.Icon size={11} strokeWidth={1.5} className="text-gray-400" />
+                  {i > 0 && <span className="text-slate-300 mx-1">→</span>}
+                  <meta.Icon size={11} strokeWidth={1.5} className="text-slate-400" />
                   <span>{blockSummary(b)}</span>
                 </span>
               )
             })}
           </p>
-          <p className="text-xs text-gray-400">~{Math.round(totalMin)} min total</p>
+          <p className="text-xs text-slate-400">~{Math.round(totalMin)} min total</p>
         </div>
       )}
     </div>

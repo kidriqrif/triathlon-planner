@@ -1,7 +1,7 @@
 import os
 import time
 import httpx
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -147,7 +147,7 @@ def sync_strava_activities(
         raise HTTPException(status_code=401, detail="Strava token expired. Please reconnect.")
 
     # Fetch last 30 days of activities
-    after = int((datetime.utcnow() - timedelta(days=30)).timestamp())
+    after = int((datetime.now(timezone.utc) - timedelta(days=30)).timestamp())
     resp = httpx.get("https://www.strava.com/api/v3/athlete/activities", params={
         "after": after,
         "per_page": 100,

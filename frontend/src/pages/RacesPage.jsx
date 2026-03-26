@@ -147,14 +147,14 @@ function RaceForm({ race, onSave, onClose }) {
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Name</label>
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required
               placeholder="e.g. City Olympic Tri 2025"
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
+              className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
           </div>
 
           {/* Date */}
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Date</label>
             <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
+              className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
           </div>
 
           {/* Category tabs */}

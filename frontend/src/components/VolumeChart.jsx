@@ -47,24 +47,24 @@ export default function VolumeChart({ workouts }) {
   const data = useMemo(() => buildWeeklyData(workouts, range), [workouts, range])
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-gray-800">Weekly Volume</h2>
+        <h2 className="text-lg font-bold text-slate-800">Weekly Volume</h2>
         <div className="flex gap-2">
-          <div className="flex rounded-lg border border-gray-200 overflow-hidden text-sm">
+          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
             {['distance', 'hours'].map(t => (
               <button key={t}
                 onClick={() => setChartType(t)}
-                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
                 {t === 'distance' ? 'Distance (km)' : 'Hours'}
               </button>
             ))}
           </div>
-          <div className="flex rounded-lg border border-gray-200 overflow-hidden text-sm">
+          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-sm">
             {[4, 8, 12].map(w => (
               <button key={w}
                 onClick={() => setRange(w)}
-                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
                 {w}w
               </button>
             ))}
@@ -73,7 +73,7 @@ export default function VolumeChart({ workouts }) {
       </div>
 
       {data.length === 0 ? (
-        <div className="flex items-center justify-center h-48 text-gray-400 text-sm">
+        <div className="flex items-center justify-center h-48 text-slate-400 text-sm">
           No completed workouts yet — start logging to see your volume here.
         </div>
       ) : chartType === 'distance' ? (
