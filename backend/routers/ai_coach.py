@@ -1,14 +1,17 @@
 import os
 import json
 from datetime import date, timedelta
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from database import get_db
 from auth_utils import get_current_user
 import models
 
 router = APIRouter(prefix="/ai", tags=["ai"])
+limiter = Limiter(key_func=get_remote_address)
 
 
 def _get_training_phase(days_to_race: int) -> str:
@@ -98,7 +101,9 @@ MOCK_RESPONSE = {
 
 
 @router.post("/suggest-week")
+@limiter.limit("5/hour")
 def suggest_week(
+    request: Request,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):

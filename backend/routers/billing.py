@@ -5,11 +5,15 @@ import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
 from database import get_db
 from auth_utils import get_current_user
 import models
 
 router = APIRouter(prefix="/billing", tags=["billing"])
+limiter = Limiter(key_func=get_remote_address)
 
 LEMON_API_KEY = os.getenv("LEMONSQUEEZY_API_KEY", "").strip().replace("\n", "").replace("\r", "")
 LEMON_WEBHOOK_SECRET = os.getenv("LEMONSQUEEZY_WEBHOOK_SECRET", "").strip()
@@ -22,7 +26,9 @@ VARIANT_IDS = {
 
 
 @router.post("/checkout")
+@limiter.limit("10/hour")
 def create_checkout(
+    request: Request,
     plan: str = "monthly",
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
