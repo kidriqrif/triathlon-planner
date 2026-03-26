@@ -11,6 +11,7 @@ import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import OnboardingPage from './pages/OnboardingPage'
 import { getWorkouts, getRaces, getMe } from './api'
+import { DashboardSkeleton } from './components/Skeleton'
 import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut } from 'lucide-react'
 
 const NAV = [
@@ -103,21 +104,7 @@ export default function App() {
   }
 
   const renderPage = () => {
-    if (loading) {
-      return (
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center space-y-3">
-            <div className="flex justify-center">
-              <svg className="animate-spin h-9 w-9 text-indigo-400" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-              </svg>
-            </div>
-            <p className="text-slate-400 text-sm font-medium">Loading your training data...</p>
-          </div>
-        </div>
-      )
-    }
+    if (loading) return <DashboardSkeleton />
     switch (page) {
       case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={setPage} />
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
