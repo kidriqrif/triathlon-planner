@@ -21,7 +21,7 @@ import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun, BookMarked, Library, NotebookPen, Scale } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
@@ -141,7 +141,7 @@ export default function App() {
         const updated = { ...user, ...u }
         setUser(updated)
         localStorage.setItem('strelo_user', JSON.stringify(updated))
-      }} onLogout={handleLogout} />
+      }} onLogout={handleLogout} dark={dark} setDark={setDark} />
       default: return null
     }
   }
@@ -216,25 +216,6 @@ export default function App() {
 
             {/* Bottom section */}
             <div className="border-t border-slate-100 dark:border-slate-800 p-3 space-y-0.5">
-              {/* Language dropdown */}
-              <div className="px-3 py-2">
-                <select
-                  value={lang}
-                  onChange={e => setLang(e.target.value)}
-                  className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer">
-                  {Object.entries(LANGUAGES).map(([code, { label, flag }]) => (
-                    <option key={code} value={code}>{flag} — {label}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Dark mode toggle */}
-              <button onClick={() => setDark(d => !d)}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                {dark ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-                {dark ? t('lightMode') : t('darkMode')}
-              </button>
-
               <button onClick={() => navigate('settings')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   page === 'settings'

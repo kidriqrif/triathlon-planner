@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { updateName, changePassword, deleteAccount, getStravaConnectUrl, getStravaStatus, disconnectStrava, syncStrava } from '../api'
-import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw } from 'lucide-react'
+import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw, Moon, Sun } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
+import { LANGUAGES } from '../i18n/translations'
 
 const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
 
@@ -27,8 +28,8 @@ function Alert({ type, message }) {
   )
 }
 
-export default function SettingsPage({ user, onUserUpdate, onLogout }) {
-  const { t } = useI18n()
+export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDark }) {
+  const { t, lang, setLang } = useI18n()
   // Name
   const [name, setName] = useState(user.name)
   const [nameMsg, setNameMsg] = useState(null)
@@ -160,6 +161,29 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
       </Section>
 
       {/* Password */}
+      {/* Preferences */}
+      <Section title={t('preferences') || 'Preferences'}>
+        <div>
+          <label className="text-xs font-semibold text-slate-500 mb-1.5 block">{t('language')}</label>
+          <select value={lang} onChange={e => setLang(e.target.value)}
+            className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer">
+            {Object.entries(LANGUAGES).map(([code, { label, flag }]) => (
+              <option key={code} value={code}>{flag} — {label}</option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{dark ? t('darkMode') : t('lightMode')}</p>
+            <p className="text-xs text-slate-400 dark:text-slate-500">{t('themeDesc') || 'Switch between light and dark appearance'}</p>
+          </div>
+          <button onClick={() => setDark(d => !d)}
+            className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            {dark ? <Sun size={18} strokeWidth={1.5} /> : <Moon size={18} strokeWidth={1.5} />}
+          </button>
+        </div>
+      </Section>
+
       <Section title={t('changePassword')}>
         <form onSubmit={handlePasswordChange} className="space-y-3">
           <div className="relative">
