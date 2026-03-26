@@ -153,16 +153,16 @@ export default function App() {
           </button>
 
           {/* Nav */}
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center gap-0.5 sm:gap-1">
             {NAV.map(({ id, label, Icon }) => (
               <button key={id} onClick={() => setPage(id)}
-                className={`relative flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
+                className={`relative flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
                   page === id
                     ? 'bg-white/15 text-white shadow-inner'
                     : 'text-white/50 hover:text-white hover:bg-white/8'
                 }`}>
                 <Icon size={16} strokeWidth={1.5} />
-                <span className="hidden md:block">{label}</span>
+                <span className="hidden lg:block">{label}</span>
                 {page === id && (
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-400 rounded-full" />
                 )}
@@ -173,13 +173,13 @@ export default function App() {
             {user.plan !== 'pro' && (
               <button
                 onClick={() => setPage('upgrade')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-xl text-sm font-bold transition-all ${
                   page === 'upgrade'
                     ? 'bg-amber-400/20 text-amber-300'
                     : 'text-amber-400/80 hover:text-amber-300 hover:bg-amber-400/10'
                 }`}>
                 <Sparkles size={14} strokeWidth={2} />
-                <span className="hidden md:block">Pro</span>
+                <span className="hidden lg:block">Pro</span>
               </button>
             )}
 
@@ -187,7 +187,7 @@ export default function App() {
             <button
               onClick={() => setPage('settings')}
               title="Settings"
-              className={`ml-2 flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-all ${
+              className={`ml-1 sm:ml-2 flex items-center px-2 py-2 rounded-xl text-sm font-semibold transition-all ${
                 page === 'settings' ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white hover:bg-white/8'
               }`}>
               <Settings size={16} strokeWidth={1.5} />
@@ -197,7 +197,7 @@ export default function App() {
             <button
               onClick={handleLogout}
               title="Sign out"
-              className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
+              className="flex items-center px-2 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
               <LogOut size={16} strokeWidth={1.5} />
             </button>
           </nav>

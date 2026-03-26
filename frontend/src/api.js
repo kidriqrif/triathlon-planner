@@ -114,3 +114,8 @@ export const exportFitUrl = (workoutId) => {
   const token = localStorage.getItem('strelo_token')
   return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
 }
+
+export const exportCsvUrl = () => {
+  const token = localStorage.getItem('strelo_token')
+  return `${api.defaults.baseURL}/export/csv?token=${token}`
+}

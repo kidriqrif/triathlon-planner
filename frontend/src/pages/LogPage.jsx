@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import WorkoutForm from '../components/WorkoutForm'
 import { readableSummary } from '../components/WorkoutBuilder'
 import { brickReadableSummary } from '../components/BrickBuilder'
-import { createWorkout, updateWorkout, deleteWorkout, exportFitUrl } from '../api'
-import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList, Download } from 'lucide-react'
+import { createWorkout, updateWorkout, deleteWorkout, exportFitUrl, exportCsvUrl } from '../api'
+import { Waves, Bike, Footprints, Layers, Dumbbell, ClipboardList, Download, FileDown } from 'lucide-react'
 
 const SPORT_CONFIG = {
   swim:  { Icon: Waves,      label: 'Swim',  border: 'border-l-blue-400',   badge: 'bg-blue-50 text-blue-700 border-blue-200'       },
@@ -57,10 +57,19 @@ export default function LogPage({ workouts, onRefresh }) {
           <h1 className="text-2xl font-black text-slate-800">Workout Log</h1>
           <p className="text-slate-400 text-sm mt-0.5">{workouts.filter(w => w.status === 'completed').length} sessions completed</p>
         </div>
-        <button onClick={() => setFormState({ workout: null, defaultDate: null })}
-          className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all shadow-sm">
-          + Log Workout
-        </button>
+        <div className="flex items-center gap-2">
+          {workouts.length > 0 && (
+            <a href={exportCsvUrl()} title="Export all as CSV"
+              className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-500 border border-slate-200 hover:border-slate-300 transition-all">
+              <FileDown size={15} strokeWidth={2} />
+              <span className="hidden sm:inline">CSV</span>
+            </a>
+          )}
+          <button onClick={() => setFormState({ workout: null, defaultDate: null })}
+            className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all shadow-sm">
+            + Log Workout
+          </button>
+        </div>
       </div>
 
       {/* Filter tabs */}
@@ -98,25 +107,25 @@ export default function LogPage({ workouts, onRefresh }) {
             return (
               <div key={w.id} onClick={() => setFormState({ workout: w, defaultDate: null })}
                 className={`bg-white rounded-2xl border border-slate-100 shadow-sm border-l-4 ${sport.border} cursor-pointer hover:shadow-md hover:border-l-4 transition-all group`}>
-                <div className="p-4 flex items-center gap-4">
+                <div className="p-3 sm:p-4 flex items-center gap-2 sm:gap-4">
                   {/* Status icon */}
-                  <div className={`w-9 h-9 rounded-xl ${status.bg} flex items-center justify-center shrink-0`}>
+                  <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl ${status.bg} flex items-center justify-center shrink-0`}>
                     <span className={`text-sm font-black ${status.color}`}>{status.icon}</span>
                   </div>
 
                   {/* Date */}
-                  <div className="w-20 shrink-0">
+                  <div className="w-14 sm:w-20 shrink-0">
                     <p className="text-xs font-bold text-slate-400 leading-none">
                       {new Date(w.date + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                     </p>
-                    <p className="text-[10px] text-slate-300 mt-0.5">
+                    <p className="text-[10px] text-slate-300 mt-0.5 hidden sm:block">
                       {new Date(w.date + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short' })}
                     </p>
                   </div>
 
                   {/* Sport badge */}
-                  <span className={`shrink-0 flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-xl border ${sport.badge}`}>
-                    <sport.Icon size={12} strokeWidth={1.5} /> {sport.label}
+                  <span className={`shrink-0 flex items-center gap-1 sm:gap-1.5 text-xs font-bold px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl border ${sport.badge}`}>
+                    <sport.Icon size={12} strokeWidth={1.5} /> <span className="hidden sm:inline">{sport.label}</span>
                   </span>
 
                   {/* Description */}
@@ -125,12 +134,12 @@ export default function LogPage({ workouts, onRefresh }) {
                       {TYPE_LABELS[w.workout_type] || w.workout_type}
                     </p>
                     {noteText && (
-                      <p className="text-xs text-slate-400 truncate mt-0.5">{noteText}</p>
+                      <p className="text-xs text-slate-400 truncate mt-0.5 hidden sm:block">{noteText}</p>
                     )}
                   </div>
 
                   {/* Stats */}
-                  <div className="text-right text-xs text-slate-400 shrink-0 space-y-0.5">
+                  <div className="text-right text-xs text-slate-400 shrink-0 space-y-0.5 hidden sm:block">
                     {w.duration_min && <p className="font-semibold text-slate-600">{w.duration_min}<span className="font-normal text-slate-400"> min</span></p>}
                     {w.distance_km  && <p>{w.distance_km} km</p>}
                     {w.rpe          && <p>RPE {w.rpe}</p>}
@@ -142,7 +151,7 @@ export default function LogPage({ workouts, onRefresh }) {
                       href={exportFitUrl(w.id)}
                       onClick={e => e.stopPropagation()}
                       title="Download .FIT file"
-                      className="p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-all shrink-0"
+                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-all shrink-0"
                     >
                       <Download size={14} strokeWidth={2} />
                     </a>

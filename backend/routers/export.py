@@ -1,3 +1,4 @@
+import csv
 import io
 import jwt
 import os
@@ -102,4 +103,43 @@ def export_workout_fit(
         fit_file,
         media_type="application/octet-stream",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+@router.get("/csv")
+def export_workouts_csv(
+    token: str = Query(...),
+    db: Session = Depends(get_db),
+):
+    """Export all user workouts as CSV."""
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        user_id = int(payload["sub"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    workouts = db.query(models.Workout).filter(
+        models.Workout.user_id == user_id,
+    ).order_by(models.Workout.date).all()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Date", "Sport", "Type", "Status", "Duration (min)", "Distance (km)", "RPE", "Notes"])
+    for w in workouts:
+        writer.writerow([
+            str(w.date),
+            w.sport,
+            w.workout_type,
+            w.status,
+            w.duration_min or "",
+            w.distance_km or "",
+            w.rpe or "",
+            (w.notes or "").replace("\n", " "),
+        ])
+
+    csv_bytes = io.BytesIO(output.getvalue().encode("utf-8"))
+    return StreamingResponse(
+        csv_bytes,
+        media_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="strelo_workouts.csv"'},
     )

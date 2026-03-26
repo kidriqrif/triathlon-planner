@@ -186,9 +186,9 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
       {/* Delete Account */}
       {/* Strava */}
       <Section title="Connected Apps">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="#FC4C02">
                 <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
               </svg>
@@ -206,7 +206,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout }) {
                 <button onClick={handleStravaSync} disabled={stravaSyncing}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-indigo-600 border border-indigo-200 hover:border-indigo-400 transition-all disabled:opacity-40">
                   <RefreshCw size={13} strokeWidth={2} className={stravaSyncing ? 'animate-spin' : ''} />
-                  {stravaSyncing ? 'Syncing...' : 'Sync Now'}
+                  {stravaSyncing ? 'Syncing...' : 'Sync'}
                 </button>
                 <button onClick={handleStravaDisconnect}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-red-500 border border-red-200 hover:border-red-400 transition-all">
