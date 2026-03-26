@@ -66,21 +66,16 @@ export function ListSkeleton({ rows = 5 }) {
 
 export function DashboardSkeleton() {
   return (
-    <div className="space-y-5">
-      {/* Race countdown */}
-      <CardSkeleton lines={2} />
-
-      {/* Stat cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCardSkeleton />
-        <StatCardSkeleton />
-        <StatCardSkeleton />
-        <StatCardSkeleton />
+    <div className="space-y-4">
+      <Bone className="h-4 w-48" />
+      <div className="flex gap-6 border-b border-slate-100 pb-4">
+        <Bone className="h-3 w-24" />
+        <Bone className="h-3 w-20" />
+        <Bone className="h-3 w-16" />
+        <Bone className="h-3 w-24" />
       </div>
-
-      {/* Chart + AI coach */}
+      <Bone className="h-2 w-full rounded-full" />
       <CardSkeleton lines={5} />
-      <CardSkeleton lines={4} />
     </div>
   )
 }
