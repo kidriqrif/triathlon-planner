@@ -110,7 +110,7 @@ export default function SupportChat() {
       {/* Floating bubble */}
       <button
         onClick={() => setOpen(o => !o)}
-        className="fixed bottom-5 right-4 sm:right-6 w-11 h-11 rounded-full bg-slate-900 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 transition-colors z-50">
+        className="fixed bottom-5 right-4 sm:right-6 w-11 h-11 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg flex items-center justify-center hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors z-50">
         {open ? <X size={20} strokeWidth={2} /> : <MessageCircle size={20} strokeWidth={2} />}
       </button>
     </>
