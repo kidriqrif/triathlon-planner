@@ -21,7 +21,9 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             </div>
             <span className="font-bold text-sm">Strelo</span>
           </div>
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-5 text-sm">
+            <a href="#pricing" className="text-white/40 hover:text-white transition-colors hidden sm:block">Pricing</a>
+            <a href="#contact" className="text-white/40 hover:text-white transition-colors hidden sm:block">Contact</a>
             <button onClick={onSignIn} className="text-white/50 hover:text-white transition-colors">Log in</button>
             <button onClick={onGetStarted} className="font-medium bg-indigo-500 hover:bg-indigo-400 px-3.5 py-1.5 rounded-md transition-colors">
               Sign up free
@@ -161,7 +163,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       </section>
 
       {/* Pricing */}
-      <section className="border-t border-white/5">
+      <section id="pricing" className="border-t border-white/5 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-5 py-20">
           <div className="sm:flex items-start gap-12">
             <div className="mb-8 sm:mb-0 sm:w-1/3">
@@ -203,6 +205,35 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             className="mt-8 font-medium bg-indigo-500 hover:bg-indigo-400 px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
             Create free account <ArrowRight size={15} />
           </button>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="border-t border-white/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <div className="sm:flex items-start gap-12">
+            <div className="mb-6 sm:mb-0 sm:w-1/3">
+              <p className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-2">Contact</p>
+              <h2 className="text-xl font-bold">Get in touch</h2>
+              <p className="text-sm text-white/40 mt-2">
+                Questions, feedback, or partnership inquiries — we'd love to hear from you.
+              </p>
+            </div>
+            <div className="sm:flex-1 space-y-4">
+              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5">
+                <p className="text-sm font-medium mb-1">Email</p>
+                <a href="mailto:support@strelo.app" className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">support@strelo.app</a>
+              </div>
+              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5">
+                <p className="text-sm font-medium mb-1">Strava partnerships</p>
+                <p className="text-sm text-white/40">Interested in integrating with Strelo? Reach out via email.</p>
+              </div>
+              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5">
+                <p className="text-sm font-medium mb-1">Bug reports</p>
+                <p className="text-sm text-white/40">Found something broken? Use the in-app support chat (Pro) or email us.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
