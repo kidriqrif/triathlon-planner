@@ -14,7 +14,7 @@ import SettingsPage from './pages/SettingsPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
@@ -33,6 +33,14 @@ export default function App() {
   const [workouts, setWorkouts] = useState([])
   const [races, setRaces] = useState([])
   const [loading, setLoading] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [dark, setDark] = useState(() => localStorage.getItem('strelo_theme') === 'dark')
+
+  // Apply dark class
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark)
+    localStorage.setItem('strelo_theme', dark ? 'dark' : 'light')
+  }, [dark])
 
   const fetchAll = useCallback(async () => {
     try {
@@ -46,7 +54,6 @@ export default function App() {
     }
   }, [])
 
-  // Refresh user data from server on mount (catches webhook upgrades + onboarding status)
   useEffect(() => {
     if (user) {
       getMe().then(me => {
@@ -62,25 +69,19 @@ export default function App() {
     else setLoading(false)
   }, [user, fetchAll])
 
-  const handleAuth = (userData) => {
-    setUser(userData)
-    setLoading(true)
-  }
+  const handleAuth = (userData) => { setUser(userData); setLoading(true) }
 
   const handleLogout = () => {
     localStorage.removeItem('strelo_token')
     localStorage.removeItem('strelo_user')
-    setUser(null)
-    setWorkouts([])
-    setRaces([])
-    setPage('dashboard')
+    setUser(null); setWorkouts([]); setRaces([]); setPage('dashboard'); setSidebarOpen(false)
   }
 
-  // Check URL params
+  const navigate = (id) => { setPage(id); setSidebarOpen(false) }
+
   const params = new URLSearchParams(window.location.search)
   const resetToken = params.get('reset')
 
-  // Strava callback — redirect to settings
   useEffect(() => {
     if (params.get('strava') && user) {
       setPage('settings')
@@ -88,40 +89,31 @@ export default function App() {
     }
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Not authenticated — show landing, auth, or legal pages
+  // Not authenticated
   if (!user) {
     if (resetToken) return <AuthPage onAuth={handleAuth} resetToken={resetToken} />
     if (page === 'auth') return <AuthPage onAuth={handleAuth} />
     if (page === 'privacy') return <PrivacyPage onBack={() => setPage('landing')} />
     if (page === 'terms') return <TermsPage onBack={() => setPage('landing')} />
-    return (
-      <LandingPage
-        onGetStarted={() => setPage('auth')}
-        onSignIn={() => setPage('auth')}
-        onNavigate={setPage}
-      />
-    )
+    return <LandingPage onGetStarted={() => setPage('auth')} onSignIn={() => setPage('auth')} onNavigate={setPage} />
   }
 
-  // Authenticated but not onboarded — show onboarding
+  // Onboarding
   if (user && !user.onboarded) {
     return (
-      <OnboardingPage
-        user={user}
-        onComplete={() => {
-          const updated = { ...user, onboarded: true }
-          setUser(updated)
-          localStorage.setItem('strelo_user', JSON.stringify(updated))
-          fetchAll()
-        }}
-      />
+      <OnboardingPage user={user} onComplete={() => {
+        const updated = { ...user, onboarded: true }
+        setUser(updated)
+        localStorage.setItem('strelo_user', JSON.stringify(updated))
+        fetchAll()
+      }} />
     )
   }
 
   const renderPage = () => {
     if (loading) return <DashboardSkeleton />
     switch (page) {
-      case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={setPage} />
+      case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={navigate} />
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
       case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
@@ -132,64 +124,112 @@ export default function App() {
         setUser(updated)
         localStorage.setItem('strelo_user', JSON.stringify(updated))
       }} onLogout={handleLogout} />
-      default:          return null
+      default: return null
     }
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-slate-900">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 transition-colors">
+      {/* Top bar — slim, just logo + hamburger */}
+      <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
-          {/* Brand */}
-          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
+          <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-indigo-600 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="hidden sm:block font-bold text-white text-sm">Strelo</span>
+            <span className="font-bold text-slate-900 dark:text-white text-sm">Strelo</span>
           </button>
 
-          {/* Nav */}
-          <nav className="flex items-center gap-0.5 sm:gap-1">
-            {NAV.map(({ id, label, Icon }) => (
-              <button key={id} onClick={() => setPage(id)}
-                className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                  page === id
-                    ? 'bg-white/15 text-white'
-                    : 'text-white/40 hover:text-white/80'
-                }`}>
-                <Icon size={14} strokeWidth={1.5} />
-                <span className="hidden lg:block">{label}</span>
-              </button>
-            ))}
-
-            {user.plan !== 'pro' && (
-              <button onClick={() => setPage('upgrade')}
-                className={`flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                  page === 'upgrade' ? 'bg-white/15 text-white' : 'text-amber-400/80 hover:text-amber-300'
-                }`}>
-                <Sparkles size={12} strokeWidth={2} />
-                <span className="hidden lg:block">Pro</span>
-              </button>
-            )}
-
-            <button onClick={() => setPage('settings')} title="Settings"
-              className={`ml-1 p-1.5 rounded-md transition-colors ${
-                page === 'settings' ? 'bg-white/15 text-white' : 'text-white/30 hover:text-white/70'
-              }`}>
-              <Settings size={14} strokeWidth={1.5} />
+          <div className="flex items-center gap-2">
+            {/* Page label */}
+            <span className="text-xs font-medium text-slate-400 dark:text-slate-500 hidden sm:block capitalize">{page}</span>
+            <button onClick={() => setSidebarOpen(true)}
+              className="p-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+              <Menu size={18} strokeWidth={2} />
             </button>
-            <button onClick={handleLogout} title="Sign out"
-              className="p-1.5 rounded-md text-white/30 hover:text-white/70 transition-colors">
-              <LogOut size={14} strokeWidth={1.5} />
-            </button>
-          </nav>
+          </div>
         </div>
       </header>
+
+      {/* Sidebar overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div className="absolute inset-0 bg-black/30" onClick={() => setSidebarOpen(false)} />
+          <div className="relative w-72 bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col">
+            {/* Sidebar header */}
+            <div className="px-5 h-14 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
+              <span className="font-bold text-slate-900 dark:text-white text-sm">Menu</span>
+              <button onClick={() => setSidebarOpen(false)}
+                className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+                <X size={18} strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
+              {NAV.map(({ id, label, Icon }) => (
+                <button key={id} onClick={() => navigate(id)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    page === id
+                      ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }`}>
+                  <Icon size={16} strokeWidth={1.5} />
+                  {label}
+                </button>
+              ))}
+
+              {user.plan !== 'pro' && (
+                <button onClick={() => navigate('upgrade')}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    page === 'upgrade'
+                      ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400'
+                      : 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800'
+                  }`}>
+                  <Sparkles size={16} strokeWidth={1.5} />
+                  Upgrade to Pro
+                </button>
+              )}
+            </nav>
+
+            {/* Bottom section */}
+            <div className="border-t border-slate-100 dark:border-slate-800 p-3 space-y-0.5">
+              {/* Dark mode toggle */}
+              <button onClick={() => setDark(d => !d)}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                {dark ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
+                {dark ? 'Light mode' : 'Dark mode'}
+              </button>
+
+              <button onClick={() => navigate('settings')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  page === 'settings'
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}>
+                <Settings size={16} strokeWidth={1.5} />
+                Settings
+              </button>
+
+              <button onClick={handleLogout}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-red-500 transition-colors">
+                <LogOut size={16} strokeWidth={1.5} />
+                Sign out
+              </button>
+
+              {/* User info */}
+              <div className="px-3 pt-3 pb-1 border-t border-slate-100 dark:border-slate-800 mt-2">
+                <p className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate">{user.name}</p>
+                <p className="text-xs text-slate-400 truncate">{user.email}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <main className="max-w-5xl mx-auto px-4 py-5">

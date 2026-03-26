@@ -5,22 +5,22 @@ import AICoach from '../components/AICoach'
 import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp, Lock } from 'lucide-react'
 
 const SPORT_META = {
-  swim:  { Icon: Waves,      color: 'text-blue-600',   bg: 'bg-blue-50',   border: 'border-blue-200',   label: 'Swim'  },
-  bike:  { Icon: Bike,       color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', label: 'Bike'  },
-  run:   { Icon: Footprints, color: 'text-green-600',  bg: 'bg-green-50',  border: 'border-green-200',  label: 'Run'   },
-  gym:   { Icon: Dumbbell,   color: 'text-rose-600',   bg: 'bg-rose-50',   border: 'border-rose-200',   label: 'Gym'   },
-  brick: { Icon: Layers,     color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-200', label: 'Brick' },
+  swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20',    label: 'Swim'  },
+  bike:  { Icon: Bike,       color: 'text-orange-500',  bg: 'bg-orange-500/10 dark:bg-orange-500/20', border: 'border-orange-500/20', label: 'Bike'  },
+  run:   { Icon: Footprints, color: 'text-emerald-500', bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', border: 'border-emerald-500/20', label: 'Run'   },
+  gym:   { Icon: Dumbbell,   color: 'text-rose-500',    bg: 'bg-rose-500/10 dark:bg-rose-500/20',   border: 'border-rose-500/20',    label: 'Gym'   },
+  brick: { Icon: Layers,     color: 'text-violet-500',  bg: 'bg-violet-500/10 dark:bg-violet-500/20', border: 'border-violet-500/20', label: 'Brick' },
 }
 
-function StatCard({ label, sub, value, valueColor = 'text-slate-800', icon }) {
+function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-white', icon }) {
   return (
-    <div className="bg-white rounded-xl p-4 border border-slate-200">
+    <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-slate-400">{label}</p>
+        <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
         {icon}
       </div>
       <p className={`text-2xl font-bold mt-1 ${valueColor}`}>{value}</p>
-      <p className="text-xs text-slate-400 mt-0.5">{sub}</p>
+      <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{sub}</p>
     </div>
   )
 }
@@ -45,8 +45,8 @@ function SportBreakdown({ workouts }) {
   if (sports.length === 0) return null
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <p className="text-xs font-medium text-slate-400 mb-3">Sport breakdown</p>
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+      <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">Sport breakdown</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {sports.map(sport => {
           const meta = SPORT_META[sport] || SPORT_META.brick
@@ -56,7 +56,7 @@ function SportBreakdown({ workouts }) {
               <meta.Icon size={18} strokeWidth={1.5} className={meta.color} />
               <div>
                 <p className={`text-sm font-semibold ${meta.color}`}>{meta.label}</p>
-                <p className="text-xs text-slate-500">{d.sessions}x · {Math.round(d.minutes)}min</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{d.sessions}x · {Math.round(d.minutes)}min</p>
               </div>
             </div>
           )
@@ -97,15 +97,16 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard label="This week" sub="sessions done" value={weekDone.length}
-          icon={<CheckCircle size={15} strokeWidth={1.5} className="text-slate-300" />} />
+          icon={<CheckCircle size={15} strokeWidth={1.5} className="text-emerald-400" />} />
         <StatCard label="This week" sub="training hours" value={`${weekHours.toFixed(1)}h`}
-          valueColor="text-blue-600"
-          icon={<Clock size={15} strokeWidth={1.5} className="text-slate-300" />} />
+          valueColor="text-blue-500"
+          icon={<Clock size={15} strokeWidth={1.5} className="text-blue-400" />} />
         <StatCard label="Streak" sub="consecutive days" value={`${streak}d`}
           valueColor="text-orange-500"
-          icon={<Flame size={15} strokeWidth={1.5} className="text-slate-300" />} />
+          icon={<Flame size={15} strokeWidth={1.5} className="text-orange-400" />} />
         <StatCard label="All time" sub="hours logged" value={`${Math.round(totalHours)}h`}
-          icon={<TrendingUp size={15} strokeWidth={1.5} className="text-slate-300" />} />
+          valueColor="text-violet-500"
+          icon={<TrendingUp size={15} strokeWidth={1.5} className="text-violet-400" />} />
       </div>
 
       <SportBreakdown workouts={workouts} />
@@ -114,16 +115,16 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       {user?.plan === 'pro' ? (
         <AICoach onWorkoutsAdded={onWorkoutsAdded} />
       ) : (
-        <div className="bg-white rounded-xl border border-dashed border-slate-200 p-4 flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Lock size={16} className="text-slate-300" />
+            <Lock size={16} className="text-slate-300 dark:text-slate-600" />
             <div>
-              <p className="text-sm font-medium text-slate-700">StreloIQ</p>
-              <p className="text-xs text-slate-400">Auto-generate your training week</p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">StreloIQ</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">Auto-generate your training week</p>
             </div>
           </div>
           <button onClick={() => onNavigate('upgrade')}
-            className="text-xs font-medium text-slate-600 border border-slate-200 px-3 py-1.5 rounded-md hover:border-slate-300 transition-colors">
+            className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
             Upgrade
           </button>
         </div>
