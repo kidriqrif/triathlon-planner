@@ -85,21 +85,21 @@ export default function AuthPage({ onAuth, resetToken }) {
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+        <div className="border border-slate-200 rounded-lg p-5">
           {/* Tab toggle — only for login/register */}
           {(mode === 'login' || mode === 'register') && (
-            <div className="flex bg-slate-100 rounded-xl p-1 mb-6">
+            <div className="flex border-b border-slate-200 mb-5 -mt-1">
               <button onClick={() => switchMode('login')}
-                className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
-                  mode === 'login' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400 hover:text-slate-600'
+                className={`flex-1 py-2 text-sm font-medium border-b-2 transition-colors ${
+                  mode === 'login' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-600'
                 }`}>
-                Sign In
+                Sign in
               </button>
               <button onClick={() => switchMode('register')}
-                className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
-                  mode === 'register' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400 hover:text-slate-600'
+                className={`flex-1 py-2 text-sm font-medium border-b-2 transition-colors ${
+                  mode === 'register' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-600'
                 }`}>
-                Create Account
+                Create account
               </button>
             </div>
           )}

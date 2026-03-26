@@ -137,76 +137,64 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-slate-900">
-        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <div className="min-h-screen bg-white">
+      {/* Header — functional toolbar style */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 h-11 flex items-center justify-between">
           {/* Brand */}
-          <button onClick={() => setPage('dashboard')} className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
+          <button onClick={() => setPage('dashboard')} className="flex items-center gap-1.5">
+            <div className="w-5 h-5 rounded bg-slate-900 flex items-center justify-center">
+              <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
+                <path d="M5 14L8 4" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="hidden sm:block font-extrabold text-white text-base tracking-tight">Strelo</span>
+            <span className="hidden sm:block font-bold text-slate-900 text-sm">Strelo</span>
           </button>
 
-          {/* Nav */}
-          <nav className="flex items-center gap-0.5 sm:gap-1">
+          {/* Nav — tab style */}
+          <nav className="flex items-center gap-0 h-full">
             {NAV.map(({ id, label, Icon }) => (
               <button key={id} onClick={() => setPage(id)}
-                className={`relative flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 h-full text-xs font-medium border-b-2 transition-colors ${
                   page === id
-                    ? 'bg-white/15 text-white shadow-inner'
-                    : 'text-white/50 hover:text-white hover:bg-white/8'
+                    ? 'border-slate-900 text-slate-900'
+                    : 'border-transparent text-slate-400 hover:text-slate-600'
                 }`}>
-                <Icon size={16} strokeWidth={1.5} />
-                <span className="hidden lg:block">{label}</span>
-                {page === id && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-white/60 rounded-full" />
-                )}
+                <Icon size={14} strokeWidth={1.5} />
+                <span className="hidden md:block">{label}</span>
               </button>
             ))}
+          </nav>
 
-            {/* Upgrade button (only for free users) */}
+          {/* Actions */}
+          <div className="flex items-center gap-1">
             {user.plan !== 'pro' && (
-              <button
-                onClick={() => setPage('upgrade')}
-                className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                  page === 'upgrade'
-                    ? 'bg-white/15 text-white'
-                    : 'text-amber-400/90 hover:text-amber-300 border border-amber-400/30 hover:border-amber-400/50'
+              <button onClick={() => setPage('upgrade')}
+                className={`text-xs font-medium px-2 py-1 rounded transition-colors ${
+                  page === 'upgrade' ? 'bg-slate-100 text-slate-900' : 'text-amber-600 hover:bg-amber-50'
                 }`}>
-                <Sparkles size={12} strokeWidth={2} />
-                <span className="hidden lg:block">Pro</span>
+                <Sparkles size={11} strokeWidth={2} className="inline mr-1" />
+                <span className="hidden sm:inline">Pro</span>
               </button>
             )}
-
-            {/* Settings */}
-            <button
-              onClick={() => setPage('settings')}
-              title="Settings"
-              className={`ml-1 sm:ml-2 flex items-center px-2 py-2 rounded-xl text-sm font-semibold transition-all ${
-                page === 'settings' ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white hover:bg-white/8'
+            <button onClick={() => setPage('settings')} title="Settings"
+              className={`p-1.5 rounded transition-colors ${
+                page === 'settings' ? 'bg-slate-100 text-slate-900' : 'text-slate-400 hover:text-slate-600'
               }`}>
-              <Settings size={16} strokeWidth={1.5} />
+              <Settings size={14} strokeWidth={1.5} />
             </button>
-
-            {/* Logout */}
-            <button
-              onClick={handleLogout}
-              title="Sign out"
-              className="flex items-center px-2 py-2 rounded-xl text-sm font-semibold text-white/40 hover:text-white hover:bg-white/8 transition-all">
-              <LogOut size={16} strokeWidth={1.5} />
+            <button onClick={handleLogout} title="Sign out"
+              className="p-1.5 rounded text-slate-400 hover:text-slate-600 transition-colors">
+              <LogOut size={14} strokeWidth={1.5} />
             </button>
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* Content */}
-      <main className="max-w-5xl mx-auto px-4 py-7">
+      {/* Content — tighter padding */}
+      <main className="max-w-6xl mx-auto px-4 py-5">
         {renderPage()}
       </main>
 
