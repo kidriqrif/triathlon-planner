@@ -4,7 +4,8 @@ import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw, 
 import { useI18n } from '../i18n/I18nContext'
 import { LANGUAGES } from '../i18n/translations'
 
-const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputWithIconCls = inputCls + ' pl-10'
 
 function Section({ title, children }) {
   return (
@@ -162,7 +163,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
 
       {/* Password */}
       {/* Preferences */}
-      <Section title={t('preferences') || 'Preferences'}>
+      <Section title="Preferences">
         <div>
           <label className="text-xs font-semibold text-slate-500 mb-1.5 block">{t('language')}</label>
           <select value={lang} onChange={e => setLang(e.target.value)}
@@ -175,7 +176,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{dark ? t('darkMode') : t('lightMode')}</p>
-            <p className="text-xs text-slate-400 dark:text-slate-500">{t('themeDesc') || 'Switch between light and dark appearance'}</p>
+            <p className="text-xs text-slate-400 dark:text-slate-500">Switch between light and dark appearance</p>
           </div>
           <button onClick={() => setDark(d => !d)}
             className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
@@ -189,17 +190,17 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={currentPw} onChange={e => setCurrentPw(e.target.value)}
-              required placeholder={t('currentPassword')} className={inputCls} />
+              required placeholder={t('currentPassword')} className={inputWithIconCls} />
           </div>
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={newPw} onChange={e => setNewPw(e.target.value)}
-              required minLength={6} placeholder={t('newPassword')} className={inputCls} />
+              required minLength={6} placeholder={t('newPassword')} className={inputWithIconCls} />
           </div>
           <div className="relative">
             <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)}
-              required minLength={6} placeholder={t('confirmNewPassword')} className={inputCls} />
+              required minLength={6} placeholder={t('confirmNewPassword')} className={inputWithIconCls} />
           </div>
           {pwMsg && <Alert {...pwMsg} />}
           <button type="submit" disabled={pwSaving}
