@@ -6,7 +6,7 @@ const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm 
 
 function Section({ title, children }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
       <h3 className="font-bold text-slate-800">{title}</h3>
       {children}
     </div>

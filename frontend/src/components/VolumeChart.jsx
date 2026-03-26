@@ -47,7 +47,7 @@ export default function VolumeChart({ workouts }) {
   const data = useMemo(() => buildWeeklyData(workouts, range), [workouts, range])
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
         <h2 className="text-lg font-bold text-slate-800">Weekly Volume</h2>
         <div className="flex gap-2">

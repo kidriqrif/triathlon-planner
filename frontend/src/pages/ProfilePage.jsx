@@ -109,7 +109,7 @@ export default function ProfilePage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Name + basics */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Basics</p>
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Name</label>
@@ -131,7 +131,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Fitness level */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Fitness Level</label>
           <div className="space-y-2">
             {FITNESS_LEVELS.map(({ key, label, desc, Icon }) => (
@@ -158,7 +158,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Current paces / thresholds */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Benchmarks</p>
             <p className="text-xs text-slate-400 mt-0.5">Helps the AI set accurate intensities — fill in what you know</p>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Weekly hours */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
             Weekly Hours Target
           </label>
@@ -207,7 +207,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Preferred training days */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
             Available Training Days
           </label>
@@ -229,7 +229,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Goal */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Race Goal</label>
           <textarea value={form.goal_description} onChange={set('goal_description')} rows={2}
             placeholder="e.g. Sub-6hr Olympic tri, finish first Ironman, qualify for Worlds..."
@@ -237,7 +237,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Injuries */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
             Injuries / Limitations
           </label>

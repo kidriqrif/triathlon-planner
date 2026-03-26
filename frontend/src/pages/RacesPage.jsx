@@ -229,7 +229,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
   const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-indigo-600'
 
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border-2 overflow-hidden transition-all ${
+    <div className={`bg-white dark:bg-slate-900 rounded-2xl shadow-sm border-2 overflow-hidden transition-all ${
       race.is_active ? 'border-indigo-200 shadow-indigo-100 shadow-md' : 'border-slate-100'
     }`}>
       {/* Top colour bar */}

@@ -120,7 +120,7 @@ function Field({ label, children }) {
   )
 }
 
-const inputCls = 'w-full border border-slate-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
 const selectCls = inputCls
 
 // Rest duration: side-by-side min + sec inputs
