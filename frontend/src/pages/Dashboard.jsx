@@ -4,6 +4,24 @@ import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
 import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp, Lock } from 'lucide-react'
 
+function ProLock({ label, desc, onUpgrade }) {
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <Lock size={16} className="text-slate-300 dark:text-slate-600" />
+        <div>
+          <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{desc}</p>
+        </div>
+      </div>
+      <button onClick={onUpgrade}
+        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
+        Pro
+      </button>
+    </div>
+  )
+}
+
 const SPORT_META = {
   swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20',    label: 'Swim'  },
   bike:  { Icon: Bike,       color: 'text-orange-500',  bg: 'bg-orange-500/10 dark:bg-orange-500/20', border: 'border-orange-500/20', label: 'Bike'  },
@@ -110,23 +128,16 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       </div>
 
       <SportBreakdown workouts={workouts} />
-      <VolumeChart workouts={workouts} />
 
       {user?.plan === 'pro' ? (
-        <AICoach onWorkoutsAdded={onWorkoutsAdded} />
+        <>
+          <VolumeChart workouts={workouts} />
+          <AICoach onWorkoutsAdded={onWorkoutsAdded} />
+        </>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Lock size={16} className="text-slate-300 dark:text-slate-600" />
-            <div>
-              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">StreloIQ</p>
-              <p className="text-xs text-slate-400 dark:text-slate-500">Auto-generate your training week</p>
-            </div>
-          </div>
-          <button onClick={() => onNavigate('upgrade')}
-            className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
-            Upgrade
-          </button>
+        <div className="space-y-2">
+          <ProLock label="Weekly volume trends" desc="See training load over time" onUpgrade={() => onNavigate('upgrade')} />
+          <ProLock label="StreloIQ" desc="Auto-generate your training week" onUpgrade={() => onNavigate('upgrade')} />
         </div>
       )}
     </div>

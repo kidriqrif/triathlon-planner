@@ -115,6 +115,16 @@ export const exportFitUrl = (workoutId) => {
   return `${api.defaults.baseURL}/export/fit/${workoutId}?token=${token}`
 }
 
+// --- Templates ---
+export const getTemplates = () =>
+  api.get('/templates').then(r => r.data)
+
+export const createTemplate = (data) =>
+  api.post('/templates', data).then(r => r.data)
+
+export const deleteTemplate = (id) =>
+  api.delete(`/templates/${id}`)
+
 // --- Support Chat ---
 export const sendSupportChat = (messages) =>
   api.post('/support/chat', { messages }).then(r => r.data)

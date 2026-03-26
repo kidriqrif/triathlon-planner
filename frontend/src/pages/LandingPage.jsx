@@ -102,14 +102,14 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
                   <p className="font-semibold text-sm">Free</p>
                   <p className="font-bold">$0</p>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Calendar, log, dashboard, Strava sync, FIT export, races</p>
+                <p className="text-xs text-slate-400 mt-1">Calendar, log, basic stats, 1 race, 3 templates</p>
               </div>
               <div className="border-2 border-slate-900 rounded-lg p-5">
                 <div className="flex items-baseline justify-between">
                   <p className="font-semibold text-sm">Pro</p>
                   <p className="font-bold">$12.99<span className="text-xs font-normal text-slate-400">/mo</span></p>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Everything free + StreloIQ plans, advanced analytics, priority support</p>
+                <p className="text-xs text-slate-400 mt-1">StreloIQ plans, volume trends, FIT/CSV export, unlimited races & templates, support chat</p>
                 <p className="text-xs text-slate-400">Yearly: $123.99 <span className="text-emerald-600 font-medium">(save 20%)</span></p>
               </div>
             </div>

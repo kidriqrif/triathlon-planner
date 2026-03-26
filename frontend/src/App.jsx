@@ -11,16 +11,19 @@ import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import OnboardingPage from './pages/OnboardingPage'
 import SettingsPage from './pages/SettingsPage'
+import SavedPage from './pages/SavedPage'
 import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun } from 'lucide-react'
+import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, Moon, Sun, BookMarked } from 'lucide-react'
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
   { id: 'plan',      label: 'Calendar',  Icon: CalendarDays    },
   { id: 'log',       label: 'Log',       Icon: ClipboardList   },
   { id: 'races',     label: 'Races',     Icon: Flag            },
+  { id: 'saved',     label: 'Saved',     Icon: BookMarked      },
   { id: 'profile',   label: 'Profile',   Icon: User            },
 ]
 
@@ -47,6 +50,7 @@ export default function App() {
       const [ws, rs] = await Promise.all([getWorkouts(), getRaces()])
       setWorkouts(ws)
       setRaces(rs)
+      notifyPlannedWorkouts(ws)
     } catch (e) {
       console.error('Failed to load data:', e)
     } finally {
@@ -56,6 +60,7 @@ export default function App() {
 
   useEffect(() => {
     if (user) {
+      requestNotificationPermission()
       getMe().then(me => {
         const updated = { ...user, plan: me.plan, onboarded: me.onboarded }
         setUser(updated)
@@ -115,8 +120,9 @@ export default function App() {
     switch (page) {
       case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={navigate} />
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
-      case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} />
+      case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} user={user} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
+      case 'saved':     return <SavedPage user={user} onRefresh={fetchAll} />
       case 'profile':   return <ProfilePage />
       case 'upgrade':   return <UpgradePage user={user} />
       case 'settings':  return <SettingsPage user={user} onUserUpdate={(u) => {
@@ -236,7 +242,7 @@ export default function App() {
         {renderPage()}
       </main>
 
-      <SupportChat />
+      {user.plan === 'pro' && <SupportChat />}
     </div>
   )
 }

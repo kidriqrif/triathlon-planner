@@ -71,6 +71,19 @@ class PasswordReset(Base):
     used = Column(Boolean, default=False)
 
 
+class WorkoutTemplate(Base):
+    __tablename__ = "workout_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    name = Column(String, nullable=False)
+    sport = Column(String, nullable=False)
+    workout_type = Column(String, nullable=False, default="easy")
+    duration_min = Column(Integer, nullable=True)
+    distance_km = Column(Float, nullable=True)
+    notes = Column(Text, nullable=True)
+
+
 class Workout(Base):
     __tablename__ = "workouts"
 

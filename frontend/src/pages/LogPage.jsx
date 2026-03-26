@@ -26,7 +26,8 @@ const TYPE_LABELS = {
 
 const FILTER_TABS = ['all', 'completed', 'planned', 'skipped']
 
-export default function LogPage({ workouts, onRefresh }) {
+export default function LogPage({ workouts, onRefresh, user }) {
+  const isPro = user?.plan === 'pro'
   const [formState, setFormState] = useState(null)
   const [filter, setFilter] = useState('all')
 
@@ -58,9 +59,9 @@ export default function LogPage({ workouts, onRefresh }) {
           <p className="text-slate-400 text-sm mt-0.5">{workouts.filter(w => w.status === 'completed').length} sessions completed</p>
         </div>
         <div className="flex items-center gap-2">
-          {workouts.length > 0 && (
+          {isPro && workouts.length > 0 && (
             <a href={exportCsvUrl()} title="Export all as CSV"
-              className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-500 border border-slate-200 hover:border-slate-300 transition-all">
+              className="flex items-center gap-1.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-all">
               <FileDown size={15} strokeWidth={2} />
               <span className="hidden sm:inline">CSV</span>
             </a>
@@ -145,8 +146,8 @@ export default function LogPage({ workouts, onRefresh }) {
                     {w.rpe          && <p>RPE {w.rpe}</p>}
                   </div>
 
-                  {/* FIT export */}
-                  {w.status === 'planned' && (
+                  {/* FIT export — Pro only */}
+                  {isPro && w.status === 'planned' && (
                     <a
                       href={exportFitUrl(w.id)}
                       onClick={e => e.stopPropagation()}

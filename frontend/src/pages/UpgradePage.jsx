@@ -3,19 +3,22 @@ import { createCheckout } from '../api'
 import { Check, AlertCircle } from 'lucide-react'
 
 const FREE_FEATURES = [
-  'Log workouts & races',
+  'Log unlimited workouts',
   'Training calendar',
-  'Dashboard & stats',
-  'Strava sync',
-  'FIT file export',
+  'Basic dashboard stats',
+  '1 active race',
+  '3 saved workout templates',
 ]
 
 const PRO_FEATURES = [
-  'Everything in Free',
-  'StreloIQ weekly plans',
-  'Advanced analytics',
-  'Unlimited race tracking',
-  'Priority support',
+  'Everything in Free, plus:',
+  'StreloIQ — auto-generated weekly plans',
+  'Weekly volume trends & RPE analysis',
+  'FIT export to Garmin / COROS / Wahoo',
+  'CSV data export',
+  'Unlimited races & templates',
+  'Auto Strava sync on login',
+  'Priority support chat',
 ]
 
 export default function UpgradePage({ user }) {
