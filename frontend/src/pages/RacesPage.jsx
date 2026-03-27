@@ -127,7 +127,7 @@ function RaceForm({ race, onSave, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Gradient header */}
         <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-3xl px-6 py-5 flex items-center justify-between`}>
           <div>
@@ -149,14 +149,14 @@ function RaceForm({ race, onSave, onClose }) {
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceName')}</label>
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required
               placeholder="e.g. City Olympic Tri 2025"
-              className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
+              className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none bg-white dark:bg-slate-800 dark:text-white" />
           </div>
 
           {/* Date */}
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceDate')}</label>
             <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required
-              className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none" />
+              className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none bg-white dark:bg-slate-800 dark:text-white" />
           </div>
 
           {/* Category tabs */}
@@ -168,7 +168,7 @@ function RaceForm({ race, onSave, onClose }) {
                   className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl text-xs font-bold border-2 transition-all ${
                     category === key
                       ? `bg-gradient-to-b ${meta.gradient} text-white border-transparent shadow-md`
-                      : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'
+                      : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   <meta.Icon size={16} strokeWidth={1.5} />
                   <span className="leading-tight text-center">{meta.label}</span>
@@ -187,7 +187,7 @@ function RaceForm({ race, onSave, onClose }) {
                   className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-all ${
                     form.type === key
                       ? `border-transparent bg-gradient-to-r ${catMeta.gradient} text-white shadow-sm`
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300'
+                      : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   {label}
                 </button>
@@ -201,10 +201,10 @@ function RaceForm({ race, onSave, onClose }) {
               <input type="checkbox" checked={form.is_active}
                 onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))}
                 className="sr-only" />
-              <div className={`w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-indigo-500' : 'bg-slate-200'}`} />
+              <div className={`w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
               <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${form.is_active ? 'translate-x-5' : ''}`} />
             </div>
-            <span className="text-sm font-semibold text-slate-700">{t('setAsGoal')}</span>
+            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('setAsGoal')}</span>
           </label>
 
           <button type="submit"
@@ -233,7 +233,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
 
   return (
     <div className={`bg-white dark:bg-slate-900 rounded-2xl shadow-sm border-2 overflow-hidden transition-all ${
-      race.is_active ? 'border-indigo-200 shadow-indigo-100 shadow-md' : 'border-slate-100'
+      race.is_active ? 'border-indigo-200 dark:border-indigo-800 shadow-indigo-100 shadow-md' : 'border-slate-100 dark:border-slate-800'
     }`}>
       {/* Top colour bar */}
       <div className={`h-1.5 bg-gradient-to-r ${meta.gradient}`} />
@@ -247,14 +247,14 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <p className="font-black text-slate-800 text-base">{race.name}</p>
+            <p className="font-black text-slate-800 dark:text-white text-base">{race.name}</p>
             {race.is_active && (
               <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${meta.badge}`}>
                 {t('goalRace')}
               </span>
             )}
           </div>
-          <p className="text-sm text-slate-500">{meta.label} · {typeLabel} · {race.date}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{meta.label} · {typeLabel} · {race.date}</p>
           <p className={`text-sm font-bold mt-1 ${countdownColor}`}>{countdownText}</p>
         </div>
 
@@ -263,17 +263,17 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
           <button onClick={() => onToggleActive(race)}
             className={`text-xs px-3 py-1.5 rounded-xl border font-semibold transition-colors ${
               race.is_active
-                ? 'border-slate-200 text-slate-500 hover:bg-slate-50'
-                : 'border-indigo-200 text-indigo-600 hover:bg-indigo-50'
+                ? 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                : 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
             }`}>
             {race.is_active ? t('deactivate') : t('setGoal')}
           </button>
           <button onClick={() => onEdit(race)}
-            className="text-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 font-semibold transition-colors">
+            className="text-xs px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 font-semibold transition-colors">
             {t('edit')}
           </button>
           <button onClick={() => onDelete(race.id)}
-            className="text-xs px-3 py-1.5 rounded-xl border border-red-100 text-red-400 hover:bg-red-50 font-semibold transition-colors">
+            className="text-xs px-3 py-1.5 rounded-xl border border-red-100 dark:border-red-800 text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 font-semibold transition-colors">
             {t('delete')}
           </button>
         </div>
@@ -318,7 +318,7 @@ export default function RacesPage({ races, onRefresh }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-800">{t('races')}</h1>
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('races')}</h1>
           <p className="text-slate-400 text-sm mt-0.5">{races.length} {t('racesPlanned')}</p>
         </div>
         <button onClick={() => setFormState({ race: null })}
@@ -337,7 +337,7 @@ export default function RacesPage({ races, onRefresh }) {
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border-2 shrink-0 transition-all ${
                   filterCat === key
                     ? 'bg-slate-800 text-white border-slate-800'
-                    : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                    : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                 }`}>
                 {key === 'all'
                   ? <><Flag size={12} strokeWidth={1.5} /> {t('filterAll')}</>
@@ -355,7 +355,7 @@ export default function RacesPage({ races, onRefresh }) {
           <div className="flex justify-center mb-4">
             <Flag size={48} strokeWidth={1} className="text-slate-200" />
           </div>
-          <p className="text-lg font-semibold text-slate-500">{t('noRacesYet')}</p>
+          <p className="text-lg font-semibold text-slate-500 dark:text-slate-400">{t('noRacesYet')}</p>
           <p className="text-sm mt-1">{t('noRacesDesc')}</p>
         </div>
       ) : (

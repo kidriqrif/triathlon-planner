@@ -270,7 +270,7 @@ export default function WorkoutBuilder({ value, onChange }) {
       <div className="flex flex-wrap gap-2">
         {Object.entries(BLOCK_META).map(([type, meta]) => (
           <button key={type} type="button" onClick={() => addBlock(type)}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all">
             <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}
@@ -291,16 +291,16 @@ export default function WorkoutBuilder({ value, onChange }) {
           </div>
         </div>
       ) : (
-        <div className="border-2 border-dashed border-slate-200 rounded-2xl py-8 text-center text-sm text-slate-400">
+        <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl py-8 text-center text-sm text-slate-400">
           Add blocks above to build your interval workout
         </div>
       )}
 
       {/* Summary */}
       {blocks.length > 0 && (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-1">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Workout preview</p>
-          <p className="text-sm text-slate-700 leading-relaxed">
+        <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 space-y-1">
+          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Workout preview</p>
+          <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
             {blocks.map((b, i) => {
               const meta = BLOCK_META[b.type]
               return (

@@ -17,7 +17,7 @@ const RACE_DISTANCES = [
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
 
 export default function OnboardingPage({ user, onComplete }) {
   const [step, setStep] = useState(0)
@@ -93,7 +93,7 @@ export default function OnboardingPage({ user, onComplete }) {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-black text-slate-800">Welcome to Strelo, {user.name}!</h2>
+        <h2 className="text-2xl font-black text-slate-800 dark:text-white">Welcome to Strelo, {user.name}!</h2>
         <p className="text-slate-400 mt-2 max-w-sm mx-auto">
           Let's set up your training profile in under a minute so we can personalise your experience.
         </p>
@@ -109,7 +109,7 @@ export default function OnboardingPage({ user, onComplete }) {
     () => (
       <div className="space-y-5">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Your fitness level</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">Your fitness level</h2>
           <p className="text-sm text-slate-400 mt-1">This helps us calibrate training suggestions</p>
         </div>
         <div className="space-y-2">
@@ -117,16 +117,16 @@ export default function OnboardingPage({ user, onComplete }) {
             <button key={value} onClick={() => setFitness(value)}
               className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all ${
                 fitness === value
-                  ? 'border-indigo-400 bg-indigo-50'
-                  : 'border-slate-100 hover:border-slate-200'
+                  ? 'border-indigo-400 bg-indigo-50 dark:bg-indigo-900/30'
+                  : 'border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
               }`}>
-              <p className="font-bold text-sm text-slate-800">{label}</p>
+              <p className="font-bold text-sm text-slate-800 dark:text-white">{label}</p>
               <p className="text-xs text-slate-400">{desc}</p>
             </button>
           ))}
         </div>
         <div>
-          <label className="text-sm font-semibold text-slate-600">Weekly training hours</label>
+          <label className="text-sm font-semibold text-slate-600 dark:text-slate-400">Weekly training hours</label>
           <div className="flex items-center gap-3 mt-1">
             <input type="range" min="3" max="20" step="0.5" value={weeklyHours}
               onChange={e => setWeeklyHours(parseFloat(e.target.value))}
@@ -135,14 +135,14 @@ export default function OnboardingPage({ user, onComplete }) {
           </div>
         </div>
         <div>
-          <label className="text-sm font-semibold text-slate-600 mb-1.5 block">Training days</label>
+          <label className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5 block">Training days</label>
           <div className="flex gap-1.5">
             {DAYS.map(d => (
               <button key={d} onClick={() => toggleDay(d)}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedDays.includes(d)
                     ? 'bg-indigo-500 text-white'
-                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}>
                 {d}
               </button>
@@ -156,40 +156,40 @@ export default function OnboardingPage({ user, onComplete }) {
     () => (
       <div className="space-y-5">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Your benchmarks</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">Your benchmarks</h2>
           <p className="text-sm text-slate-400 mt-1">Optional — helps the AI give better paces. Skip any you don't know.</p>
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-semibold text-slate-500">Age</label>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Age</label>
             <input type="number" value={age} onChange={e => setAge(e.target.value)}
               placeholder="e.g. 30" className={inputCls} />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500">Weight (kg)</label>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Weight (kg)</label>
             <input type="number" value={weight} onChange={e => setWeight(e.target.value)}
               placeholder="e.g. 72" className={inputCls} />
           </div>
         </div>
         <div className="grid grid-cols-3 gap-3">
           <div>
-            <label className="text-xs font-semibold text-slate-500 flex items-center gap-1"><Waves size={12} className="text-blue-400" /> Swim /100m</label>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1"><Waves size={12} className="text-blue-400" /> Swim /100m</label>
             <input value={swimPace} onChange={e => setSwimPace(e.target.value)}
               placeholder="1:45" className={inputCls} />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500 flex items-center gap-1"><Bike size={12} className="text-orange-400" /> FTP (W)</label>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1"><Bike size={12} className="text-orange-400" /> FTP (W)</label>
             <input type="number" value={bikeFtp} onChange={e => setBikeFtp(e.target.value)}
               placeholder="200" className={inputCls} />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500 flex items-center gap-1"><Footprints size={12} className="text-green-400" /> Run /km</label>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1"><Footprints size={12} className="text-green-400" /> Run /km</label>
             <input value={runPace} onChange={e => setRunPace(e.target.value)}
               placeholder="5:30" className={inputCls} />
           </div>
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">Training goal (optional)</label>
+          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Training goal (optional)</label>
           <input value={goal} onChange={e => setGoal(e.target.value)}
             placeholder="e.g. Finish my first Olympic tri under 3 hours"
             className={inputCls} />
@@ -201,33 +201,33 @@ export default function OnboardingPage({ user, onComplete }) {
     () => (
       <div className="space-y-5">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Set your target race</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">Set your target race</h2>
           <p className="text-sm text-slate-400 mt-1">We'll build your training around race day</p>
         </div>
 
         {!skipRace ? (
           <>
             <div>
-              <label className="text-xs font-semibold text-slate-500">Race name</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Race name</label>
               <input value={raceName} onChange={e => setRaceName(e.target.value)}
                 placeholder="e.g. Singapore Triathlon 2026" className={inputCls} />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500">Race date</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Race date</label>
               <input type="date" value={raceDate} onChange={e => setRaceDate(e.target.value)}
                 className={inputCls} />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 mb-1.5 block">Distance</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 block">Distance</label>
               <div className="space-y-2">
                 {RACE_DISTANCES.map(({ value, label, desc }) => (
                   <button key={value} onClick={() => setRaceDistance(value)}
                     className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all ${
                       raceDistance === value
-                        ? 'border-indigo-400 bg-indigo-50'
-                        : 'border-slate-100 hover:border-slate-200'
+                        ? 'border-indigo-400 bg-indigo-50 dark:bg-indigo-900/30'
+                        : 'border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
                     }`}>
-                    <p className="font-bold text-sm text-slate-800">{label}</p>
+                    <p className="font-bold text-sm text-slate-800 dark:text-white">{label}</p>
                     <p className="text-xs text-slate-400">{desc}</p>
                   </button>
                 ))}
@@ -259,7 +259,7 @@ export default function OnboardingPage({ user, onComplete }) {
             <Check size={28} strokeWidth={2.5} className="text-emerald-600" />
           </div>
         </div>
-        <h2 className="text-2xl font-black text-slate-800">You're all set!</h2>
+        <h2 className="text-2xl font-black text-slate-800 dark:text-white">You're all set!</h2>
         <p className="text-slate-400 mt-2 max-w-sm mx-auto">
           Your profile is ready. Head to the dashboard to start planning your training.
         </p>
@@ -277,25 +277,25 @@ export default function OnboardingPage({ user, onComplete }) {
   const isFirst = step === 0
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900/50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Progress */}
         <div className="flex gap-1.5 mb-6">
           {steps.map((_, i) => (
             <div key={i} className={`h-1 flex-1 rounded-full transition-all ${
-              i <= step ? 'bg-indigo-500' : 'bg-slate-200'
+              i <= step ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'
             }`} />
           ))}
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 min-h-[380px] flex flex-col">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 min-h-[380px] flex flex-col">
           <div className="flex-1">
             {steps[step]()}
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
             {!isFirst ? (
               <button onClick={() => setStep(s => s - 1)}
                 className="flex items-center gap-1 text-sm font-semibold text-slate-400 hover:text-slate-600 transition-colors">

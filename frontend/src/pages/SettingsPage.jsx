@@ -10,7 +10,7 @@ const inputWithIconCls = inputCls + ' pl-10'
 function Section({ title, children }) {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
-      <h3 className="font-bold text-slate-800">{title}</h3>
+      <h3 className="font-bold text-slate-800 dark:text-white">{title}</h3>
       {children}
     </div>
   )
@@ -21,7 +21,7 @@ function Alert({ type, message }) {
   const isError = type === 'error'
   return (
     <div className={`flex items-center gap-2 text-sm rounded-xl px-3 py-2.5 ${
-      isError ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'
+      isError ? 'bg-red-50 dark:bg-red-900/30 text-red-600' : 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600'
     }`}>
       {isError ? <AlertCircle size={16} strokeWidth={1.5} className="shrink-0" /> : <CheckCircle size={16} strokeWidth={1.5} className="shrink-0" />}
       {message}
@@ -132,21 +132,21 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
 
   return (
     <div className="space-y-5 max-w-lg mx-auto">
-      <h1 className="text-2xl font-black text-slate-800">{t('accountSettings')}</h1>
+      <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('accountSettings')}</h1>
 
       {/* Name */}
       <Section title={t('profile')}>
         <div>
-          <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('email')}</label>
-          <p className="text-sm text-slate-600">{user.email}</p>
+          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">{t('email')}</label>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{user.email}</p>
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('name')}</label>
+          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">{t('name')}</label>
           <div className="flex gap-2">
             <div className="relative flex-1">
               <User size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input value={name} onChange={e => setName(e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white" />
+                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white" />
             </div>
             <button onClick={handleNameSave} disabled={nameSaving || name === user.name}
               className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-600 transition-colors disabled:opacity-40">
@@ -156,8 +156,8 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
         </div>
         {nameMsg && <Alert {...nameMsg} />}
         <div>
-          <label className="text-xs font-semibold text-slate-500">{t('plan')}</label>
-          <p className="text-sm text-slate-600 capitalize">{user.plan}</p>
+          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t('plan')}</label>
+          <p className="text-sm text-slate-600 dark:text-slate-400 capitalize">{user.plan}</p>
         </div>
       </Section>
 
@@ -165,7 +165,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
       {/* Preferences */}
       <Section title="Preferences">
         <div>
-          <label className="text-xs font-semibold text-slate-500 mb-1.5 block">{t('language')}</label>
+          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 block">{t('language')}</label>
           <select value={lang} onChange={e => setLang(e.target.value)}
             className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer">
             {Object.entries(LANGUAGES).map(([code, { label, flag }]) => (
@@ -221,7 +221,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-800">{t('strava')}</p>
+              <p className="text-sm font-bold text-slate-800 dark:text-white">{t('strava')}</p>
               <p className="text-xs text-slate-400">
                 {stravaConnected ? t('stravaConnectedDesc') : t('importWorkouts')}
               </p>
@@ -259,7 +259,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
             {t('deleteAccount')}
           </button>
         ) : (
-          <div className="space-y-3 bg-red-50 rounded-xl p-4">
+          <div className="space-y-3 bg-red-50 dark:bg-red-900/30 rounded-xl p-4">
             <p className="text-sm text-red-600 font-semibold">
               {t('deleteConfirmText')}
             </p>
@@ -267,7 +267,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
               <Lock size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400" />
               <input type="password" value={deletePw} onChange={e => setDeletePw(e.target.value)}
                 placeholder={t('enterPasswordConfirm')}
-                className="w-full border border-red-200 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition-all bg-white" />
+                className="w-full border border-red-200 dark:border-red-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white" />
             </div>
             {deleteMsg && <Alert {...deleteMsg} />}
             <div className="flex gap-2">
@@ -276,7 +276,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
                 {deleting ? t('deleting') : t('deleteAccountBtn')}
               </button>
               <button onClick={() => { setShowDelete(false); setDeletePw(''); setDeleteMsg(null) }}
-                className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
+                className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
                 {t('cancel')}
               </button>
             </div>

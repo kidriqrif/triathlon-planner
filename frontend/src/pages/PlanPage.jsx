@@ -45,7 +45,7 @@ export default function PlanPage({ workouts, onRefresh }) {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-800">Training Calendar</h1>
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white">Training Calendar</h1>
           <p className="text-slate-400 text-sm mt-0.5">Click to add · click event to edit · drag to move</p>
         </div>
         <button
@@ -57,14 +57,14 @@ export default function PlanPage({ workouts, onRefresh }) {
 
       <div className="flex flex-wrap gap-3 mb-4">
         {LEGEND.map(({ color, label, Icon }) => (
-          <span key={label} className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+          <span key={label} className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
             <span className={`w-3 h-3 rounded-full ${color}`} />
             <Icon size={12} strokeWidth={1.5} />
             {label}
           </span>
         ))}
         <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
-          <span className="w-6 h-3 rounded border-2 border-dashed border-slate-300" /> Planned
+          <span className="w-6 h-3 rounded border-2 border-dashed border-slate-300 dark:border-slate-600" /> Planned
         </span>
       </div>
 

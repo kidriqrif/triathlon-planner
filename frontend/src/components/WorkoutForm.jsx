@@ -129,7 +129,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
                   className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl border-2 text-xs font-bold transition-all ${
                     form.sport === key
                       ? `${meta.color} text-white border-transparent shadow-md`
-                      : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'
+                      : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   <meta.Icon size={18} strokeWidth={1.5} />
                   <span>{meta.label}</span>
@@ -148,7 +148,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
                     className={`px-3 py-1.5 rounded-xl text-sm font-semibold border transition-all ${
                       form.workout_type === t
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300'
+                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
                     }`}>
                     {TYPE_LABELS[t] || t}
                   </button>
@@ -164,7 +164,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
               {STATUSES.map(s => (
                 <button key={s} type="button" onClick={() => setForm(f => ({ ...f, status: s }))}
                   className={`flex-1 py-2 rounded-xl text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 ${
-                    form.status === s ? STATUS_CONFIG[s].active : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                    form.status === s ? STATUS_CONFIG[s].active : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   <span>{STATUS_CONFIG[s].icon}</span>
                   <span className="capitalize">{s}</span>

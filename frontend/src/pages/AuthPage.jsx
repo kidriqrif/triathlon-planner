@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { register, login, forgotPassword, resetPassword } from '../api'
 import { Mail, Lock, User, ArrowRight, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'
 
-const inputCls = 'w-full border border-slate-200 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
 
 export default function AuthPage({ onAuth, resetToken }) {
   const [mode, setMode] = useState(resetToken ? 'reset' : 'login') // 'login' | 'register' | 'forgot' | 'reset'
@@ -68,7 +68,7 @@ export default function AuthPage({ onAuth, resetToken }) {
   const switchMode = (m) => { setMode(m); setError(null); setSuccess(null) }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Brand */}
         <div className="text-center mb-8">
@@ -81,23 +81,23 @@ export default function AuthPage({ onAuth, resetToken }) {
               </svg>
             </div>
           </div>
-          <h1 className="text-xl font-extrabold text-slate-900">Strelo</h1>
+          <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">Strelo</h1>
         </div>
 
         {/* Card */}
-        <div className="border border-slate-200 rounded-lg p-5">
+        <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
           {/* Tab toggle — only for login/register */}
           {(mode === 'login' || mode === 'register') && (
-            <div className="flex border-b border-slate-200 mb-5 -mt-1">
+            <div className="flex border-b border-slate-200 dark:border-slate-700 mb-5 -mt-1">
               <button onClick={() => switchMode('login')}
                 className={`flex-1 py-2 text-sm font-medium border-b-2 transition-colors ${
-                  mode === 'login' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-600'
+                  mode === 'login' ? 'border-slate-900 dark:border-white text-slate-900 dark:text-white' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                 }`}>
                 Sign in
               </button>
               <button onClick={() => switchMode('register')}
                 className={`flex-1 py-2 text-sm font-medium border-b-2 transition-colors ${
-                  mode === 'register' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-600'
+                  mode === 'register' ? 'border-slate-900 dark:border-white text-slate-900 dark:text-white' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                 }`}>
                 Create account
               </button>
@@ -111,7 +111,7 @@ export default function AuthPage({ onAuth, resetToken }) {
                 className="flex items-center gap-1 text-sm text-slate-400 hover:text-slate-600 mb-3">
                 <ArrowLeft size={14} /> Back to sign in
               </button>
-              <h2 className="text-lg font-bold text-slate-800">Forgot password</h2>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white">Forgot password</h2>
               <p className="text-sm text-slate-400 mt-1">Enter your email and we'll send a reset link</p>
             </div>
           )}
@@ -119,20 +119,20 @@ export default function AuthPage({ onAuth, resetToken }) {
           {/* Reset password header */}
           {mode === 'reset' && (
             <div className="mb-5">
-              <h2 className="text-lg font-bold text-slate-800">Set new password</h2>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white">Set new password</h2>
               <p className="text-sm text-slate-400 mt-1">Enter your new password below</p>
             </div>
           )}
 
           {error && (
-            <div className="flex items-center gap-2 bg-red-50 text-red-600 text-sm rounded-xl px-3 py-2.5 mb-4">
+            <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/30 text-red-600 text-sm rounded-xl px-3 py-2.5 mb-4">
               <AlertCircle size={16} strokeWidth={1.5} className="shrink-0" />
               {error}
             </div>
           )}
 
           {success && (
-            <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 text-sm rounded-xl px-3 py-2.5 mb-4">
+            <div className="flex items-center gap-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 text-sm rounded-xl px-3 py-2.5 mb-4">
               <CheckCircle size={16} strokeWidth={1.5} className="shrink-0" />
               {success}
             </div>

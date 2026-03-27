@@ -82,11 +82,11 @@ export default function AICoach({ onWorkoutsAdded }) {
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
             <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
             StreloIQ
           </h2>
-          <p className="text-sm text-slate-500 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
         </div>
         <button
           onClick={handleGenerate}
@@ -105,31 +105,31 @@ export default function AICoach({ onWorkoutsAdded }) {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-4 text-sm mb-4">
+        <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-xl p-4 text-sm mb-4">
           {error}
         </div>
       )}
 
       {plan && (
         <div className="space-y-4">
-          <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-            <p className="font-semibold text-indigo-900">{plan.week_focus}</p>
-            <p className="text-sm text-indigo-700 mt-1">{plan.rationale}</p>
+          <div className="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-xl p-4">
+            <p className="font-semibold text-indigo-900 dark:text-indigo-200">{plan.week_focus}</p>
+            <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">{plan.rationale}</p>
           </div>
 
           <div className="grid gap-3">
             {plan.workouts?.map((w, i) => (
               <div key={i}
-                className={`rounded-xl border-2 p-4 flex items-start justify-between gap-3 ${SPORT_COLORS[w.sport] || 'border-slate-200 bg-slate-50'}`}>
+                className={`rounded-xl border-2 p-4 flex items-start justify-between gap-3 ${SPORT_COLORS[w.sport] || 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'}`}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-sm font-semibold text-slate-700">{w.day}</span>
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{w.day}</span>
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${SPORT_BADGE[w.sport] || 'bg-slate-100 text-slate-700'}`}>
                       {w.sport}
                     </span>
-                    <span className="text-xs text-slate-500 capitalize">{w.workout_type}</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 capitalize">{w.workout_type}</span>
                   </div>
-                  <p className="text-sm text-slate-600">{w.description}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{w.description}</p>
                   <div className="flex gap-3 mt-1 text-xs text-slate-400">
                     {w.duration_min && <span>{w.duration_min} min</span>}
                     {w.distance_km && <span>{w.distance_km} km</span>}
@@ -141,7 +141,7 @@ export default function AICoach({ onWorkoutsAdded }) {
                   className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
                     addedIds.has(i)
                       ? 'bg-green-100 text-green-700 border-green-300 cursor-default'
-                      : 'bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50'
+                      : 'bg-white dark:bg-slate-800 text-indigo-600 border-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
                   }`}>
                   {addedIds.has(i) ? '✓ Added' : addingId === i ? '…' : 'Add'}
                 </button>
