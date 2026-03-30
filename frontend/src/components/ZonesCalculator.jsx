@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { Heart, Zap } from 'lucide-react'
 
 const HR_ZONES = [
-  { zone: 1, label: 'Recovery',  lowPct: 50, highPct: 60, color: 'bg-blue-400',   text: 'text-blue-700 dark:text-blue-300',   bg: 'bg-blue-50 dark:bg-blue-950' },
-  { zone: 2, label: 'Endurance', lowPct: 60, highPct: 70, color: 'bg-green-400',  text: 'text-green-700 dark:text-green-300', bg: 'bg-green-50 dark:bg-green-950' },
-  { zone: 3, label: 'Tempo',     lowPct: 70, highPct: 80, color: 'bg-yellow-400', text: 'text-yellow-700 dark:text-yellow-300', bg: 'bg-yellow-50 dark:bg-yellow-950' },
-  { zone: 4, label: 'Threshold', lowPct: 80, highPct: 90, color: 'bg-orange-400', text: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-50 dark:bg-orange-950' },
-  { zone: 5, label: 'VO2max',    lowPct: 90, highPct: 100, color: 'bg-red-500',   text: 'text-red-700 dark:text-red-300',     bg: 'bg-red-50 dark:bg-red-950' },
+  { zone: 1, label: 'Recovery',  lowPct: 50, highPct: 60, color: 'bg-blue-500',   text: 'text-blue-700 dark:text-blue-300',   bg: 'bg-blue-100 dark:bg-blue-950' },
+  { zone: 2, label: 'Endurance', lowPct: 60, highPct: 70, color: 'bg-emerald-500', text: 'text-emerald-700 dark:text-emerald-300', bg: 'bg-emerald-100 dark:bg-emerald-950' },
+  { zone: 3, label: 'Tempo',     lowPct: 70, highPct: 80, color: 'bg-yellow-500', text: 'text-yellow-700 dark:text-yellow-300', bg: 'bg-yellow-100 dark:bg-yellow-950' },
+  { zone: 4, label: 'Threshold', lowPct: 80, highPct: 90, color: 'bg-orange-500', text: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-100 dark:bg-orange-950' },
+  { zone: 5, label: 'VO2max',    lowPct: 90, highPct: 100, color: 'bg-red-600',   text: 'text-red-700 dark:text-red-300',     bg: 'bg-red-100 dark:bg-red-950' },
 ]
 
 const POWER_ZONES = [
-  { zone: 1, label: 'Active Recovery', lowPct: 0,   highPct: 55,  color: 'bg-slate-400',  text: 'text-slate-700 dark:text-slate-300', bg: 'bg-slate-50 dark:bg-slate-800' },
-  { zone: 2, label: 'Endurance',       lowPct: 56,  highPct: 75,  color: 'bg-blue-400',   text: 'text-blue-700 dark:text-blue-300',   bg: 'bg-blue-50 dark:bg-blue-950' },
-  { zone: 3, label: 'Tempo',           lowPct: 76,  highPct: 90,  color: 'bg-green-400',  text: 'text-green-700 dark:text-green-300', bg: 'bg-green-50 dark:bg-green-950' },
-  { zone: 4, label: 'Threshold',       lowPct: 91,  highPct: 105, color: 'bg-yellow-400', text: 'text-yellow-700 dark:text-yellow-300', bg: 'bg-yellow-50 dark:bg-yellow-950' },
-  { zone: 5, label: 'VO2max',          lowPct: 106, highPct: 120, color: 'bg-orange-400', text: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-50 dark:bg-orange-950' },
-  { zone: 6, label: 'Anaerobic',       lowPct: 121, highPct: 150, color: 'bg-red-500',    text: 'text-red-700 dark:text-red-300',     bg: 'bg-red-50 dark:bg-red-950' },
-  { zone: 7, label: 'Sprint',          lowPct: 150, highPct: null, color: 'bg-purple-500', text: 'text-purple-700 dark:text-purple-300', bg: 'bg-purple-50 dark:bg-purple-950' },
+  { zone: 1, label: 'Active Recovery', lowPct: 0,   highPct: 55,  color: 'bg-slate-500',  text: 'text-slate-700 dark:text-slate-300', bg: 'bg-slate-100 dark:bg-slate-800' },
+  { zone: 2, label: 'Endurance',       lowPct: 56,  highPct: 75,  color: 'bg-blue-500',   text: 'text-blue-700 dark:text-blue-300',   bg: 'bg-blue-100 dark:bg-blue-950' },
+  { zone: 3, label: 'Tempo',           lowPct: 76,  highPct: 90,  color: 'bg-emerald-500', text: 'text-emerald-700 dark:text-emerald-300', bg: 'bg-emerald-100 dark:bg-emerald-950' },
+  { zone: 4, label: 'Threshold',       lowPct: 91,  highPct: 105, color: 'bg-yellow-500', text: 'text-yellow-700 dark:text-yellow-300', bg: 'bg-yellow-100 dark:bg-yellow-950' },
+  { zone: 5, label: 'VO2max',          lowPct: 106, highPct: 120, color: 'bg-orange-500', text: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-100 dark:bg-orange-950' },
+  { zone: 6, label: 'Anaerobic',       lowPct: 121, highPct: 150, color: 'bg-red-600',    text: 'text-red-700 dark:text-red-300',     bg: 'bg-red-100 dark:bg-red-950' },
+  { zone: 7, label: 'Sprint',          lowPct: 150, highPct: null, color: 'bg-purple-600', text: 'text-purple-700 dark:text-purple-300', bg: 'bg-purple-100 dark:bg-purple-950' },
 ]
 
 function computeHRZones(maxHR) {
