@@ -57,14 +57,9 @@ html {
 .rbc-show-more { color: #6366f1; font-size: 0.7rem; font-weight: 600; }
 
 /* ── Dark mode calendar ── */
-.dark .rbc-header { border-bottom-color: #1e293b; color: #94a3b8; background-color: #0f172a; }
-.dark .rbc-time-header-content { border-left-color: #1e293b; }
-.dark .rbc-time-content { border-top-color: #1e293b; }
-.dark .rbc-timeslot-group { border-bottom-color: #1e293b; }
-.dark .rbc-time-slot { border-top-color: #0f172a; }
-.dark .rbc-day-bg + .rbc-day-bg { border-left-color: #1e293b; }
-.dark .rbc-month-row + .rbc-month-row { border-top-color: #1e293b; }
-.dark .rbc-month-view { border-color: #1e293b; }
+.dark .rbc-calendar,
+.dark .rbc-calendar * { border-color: #1e293b !important; }
+.dark .rbc-header { color: #94a3b8; background-color: #0f172a; }
 .dark .rbc-day-bg { background-color: #0f172a; }
 .dark .rbc-off-range-bg { background-color: #020617 !important; }
 .dark .rbc-today { background-color: #1e1b4b !important; }
