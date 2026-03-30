@@ -24,6 +24,46 @@ html {
   background: rgba(99, 102, 241, 0.15);
 }
 
+/* ── Range slider styling ── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #6366f1;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #6366f1;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.dark input[type="range"] {
+  background: #334155;
+}
+.dark input[type="range"]::-webkit-slider-thumb {
+  border-color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.dark input[type="range"]::-moz-range-thumb {
+  border-color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
 /* ── Protect react-big-calendar from Tailwind's base reset ── */
 .rbc-calendar *,
 .rbc-calendar *::before,
