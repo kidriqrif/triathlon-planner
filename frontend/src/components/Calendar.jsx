@@ -27,37 +27,40 @@ function workoutsToEvents(workouts) {
   }))
 }
 
-function eventStyleGetter(event) {
-  const w = event.resource
-  const color = SPORT_COLORS[w.sport] || '#6b7280'
-  const isDashed = w.status === 'planned'
-  const isSkipped = w.status === 'skipped'
-  return {
-    style: {
-      backgroundColor: color,
-      opacity: isSkipped ? 0.4 : isDashed ? 0.7 : 1,
-      border: isDashed ? '2px dashed rgba(255,255,255,0.7)' : 'none',
-      textDecoration: isSkipped ? 'line-through' : 'none',
-      borderRadius: '6px',
-      fontSize: '0.75rem',
-      cursor: 'grab',
-    },
-  }
-}
-
-export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMoveWorkout }) {
+export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMoveWorkout, selectedIds }) {
   const [view, setView] = useState('month')
   const [date, setDate] = useState(new Date())
 
   const events = workoutsToEvents(workouts)
+  const selSet = selectedIds || new Set()
+
+  const eventStyleGetter = useCallback((event) => {
+    const w = event.resource
+    const color = SPORT_COLORS[w.sport] || '#6b7280'
+    const isDashed = w.status === 'planned'
+    const isSkipped = w.status === 'skipped'
+    const isSelected = selSet.has(w.id)
+    return {
+      style: {
+        backgroundColor: color,
+        opacity: isSkipped ? 0.4 : isDashed ? 0.7 : 1,
+        border: isSelected ? '2px solid #fff' : isDashed ? '2px dashed rgba(255,255,255,0.7)' : 'none',
+        outline: isSelected ? '2px solid #6366f1' : 'none',
+        textDecoration: isSkipped ? 'line-through' : 'none',
+        borderRadius: '6px',
+        fontSize: '0.75rem',
+        cursor: 'grab',
+      },
+    }
+  }, [selSet])
 
   const handleSelectSlot = useCallback(({ start }) => {
     const dateStr = format(start, 'yyyy-MM-dd')
     onSelectSlot(dateStr)
   }, [onSelectSlot])
 
-  const handleSelectEvent = useCallback((event) => {
-    onSelectEvent(event.resource)
+  const handleSelectEvent = useCallback((event, e) => {
+    onSelectEvent(event.resource, e)
   }, [onSelectEvent])
 
   const handleEventDrop = useCallback(({ event, start }) => {
