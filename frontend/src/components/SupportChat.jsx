@@ -40,7 +40,7 @@ export default function SupportChat() {
     <>
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-50 overflow-hidden">
+        <div className="fixed bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col z-50 overflow-hidden">
           {/* Header */}
           <div className="bg-slate-900 px-4 py-3 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export default function SupportChat() {
                     <Bot size={13} strokeWidth={2} className="text-indigo-500" />
                   </div>
                 )}
-                <div className={`max-w-[80%] text-sm leading-relaxed px-3 py-2 rounded-2xl ${
+                <div className={`max-w-[80%] text-sm leading-relaxed px-3 py-2 rounded-lg ${
                   msg.role === 'user'
                     ? 'bg-indigo-500 text-white rounded-br-md'
                     : 'bg-slate-100 text-slate-700 rounded-bl-md'
@@ -80,7 +80,7 @@ export default function SupportChat() {
                 <div className="w-6 h-6 rounded-lg bg-indigo-100 flex items-center justify-center shrink-0">
                   <Bot size={13} strokeWidth={2} className="text-indigo-500" />
                 </div>
-                <div className="bg-slate-100 text-slate-400 text-sm px-3 py-2 rounded-2xl rounded-bl-md">
+                <div className="bg-slate-100 text-slate-400 text-sm px-3 py-2 rounded-lg rounded-bl-md">
                   <span className="flex gap-1">
                     <span className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <span className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />

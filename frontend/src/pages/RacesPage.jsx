@@ -127,11 +127,11 @@ function RaceForm({ race, onSave, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Gradient header */}
-        <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-3xl px-6 py-5 flex items-center justify-between`}>
+        <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-xl px-6 py-5 flex items-center justify-between`}>
           <div>
-            <p className="text-white font-black text-xl">{race ? t('editRace') : t('addRaceTitle')}</p>
+            <p className="text-white font-bold text-xl">{race ? t('editRace') : t('addRaceTitle')}</p>
             <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
               <catMeta.Icon size={13} strokeWidth={1.5} />
               <span>{catMeta.label}</span>
@@ -143,7 +143,7 @@ function RaceForm({ race, onSave, onClose }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 space-y-3">
           {/* Race name */}
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceName')}</label>
@@ -165,9 +165,9 @@ function RaceForm({ race, onSave, onClose }) {
             <div className="grid grid-cols-5 gap-1.5">
               {Object.entries(RACE_CATEGORIES).map(([key, meta]) => (
                 <button key={key} type="button" onClick={() => handleCategoryChange(key)}
-                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl text-xs font-bold border-2 transition-all ${
+                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-lg text-xs font-bold border-2 transition-all ${
                     category === key
-                      ? `bg-gradient-to-b ${meta.gradient} text-white border-transparent shadow-md`
+                      ? `bg-gradient-to-b ${meta.gradient} text-white border-transparent shadow-sm`
                       : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   <meta.Icon size={16} strokeWidth={1.5} />
@@ -186,7 +186,7 @@ function RaceForm({ race, onSave, onClose }) {
                   onClick={() => setForm(f => ({ ...f, type: key }))}
                   className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-all ${
                     form.type === key
-                      ? `border-transparent bg-gradient-to-r ${catMeta.gradient} text-white shadow-sm`
+                      ? `border-transparent bg-gradient-to-r ${catMeta.gradient} text-white`
                       : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   {label}
@@ -208,7 +208,7 @@ function RaceForm({ race, onSave, onClose }) {
           </label>
 
           <button type="submit"
-            className={`w-full bg-gradient-to-r ${catMeta.gradient} text-white font-bold py-3 rounded-2xl shadow-sm hover:opacity-90 transition-opacity`}>
+            className={`w-full bg-gradient-to-r ${catMeta.gradient} text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity`}>
             {race ? t('saveChanges') : t('addRaceTitle')}
           </button>
         </form>
@@ -232,22 +232,22 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
   const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-indigo-600'
 
   return (
-    <div className={`bg-white dark:bg-slate-900 rounded-2xl shadow-sm border-2 overflow-hidden transition-all ${
-      race.is_active ? 'border-indigo-200 dark:border-indigo-800 shadow-indigo-100 shadow-md' : 'border-slate-100 dark:border-slate-800'
+    <div className={`bg-white dark:bg-slate-900 rounded-lg border-2 overflow-hidden transition-all ${
+      race.is_active ? 'border-indigo-200 dark:border-indigo-800 shadow-indigo-100 shadow-sm' : 'border-slate-100 dark:border-slate-800'
     }`}>
       {/* Top colour bar */}
       <div className={`h-1.5 bg-gradient-to-r ${meta.gradient}`} />
 
-      <div className="p-5 flex items-center gap-4">
+      <div className="p-3.5 flex items-center gap-4">
         {/* Icon */}
-        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${meta.gradient} flex items-center justify-center shrink-0`}>
+        <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${meta.gradient} flex items-center justify-center shrink-0`}>
           <meta.Icon size={22} strokeWidth={1.5} className="text-white" />
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <p className="font-black text-slate-800 dark:text-white text-base">{race.name}</p>
+            <p className="font-bold text-slate-800 dark:text-white text-base">{race.name}</p>
             {race.is_active && (
               <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${meta.badge}`}>
                 {t('goalRace')}
@@ -314,11 +314,11 @@ export default function RacesPage({ races, onRefresh }) {
   const categoryKeys = ['all', ...Object.keys(RACE_CATEGORIES)]
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('races')}</h1>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('races')}</h1>
           <p className="text-slate-400 text-sm mt-0.5">{races.length} {t('racesPlanned')}</p>
         </div>
         <button onClick={() => setFormState({ race: null })}

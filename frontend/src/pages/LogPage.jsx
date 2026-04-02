@@ -53,11 +53,11 @@ export default function LogPage({ workouts, onRefresh, user }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('workoutLog')}</h1>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('workoutLog')}</h1>
           <p className="text-slate-400 text-sm mt-0.5">{`${workouts.filter(w => w.status === 'completed').length} ${t('sessionsCompleted')}`}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -109,11 +109,11 @@ export default function LogPage({ workouts, onRefresh, user }) {
 
             return (
               <div key={w.id} onClick={() => setFormState({ workout: w, defaultDate: null })}
-                className={`bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm border-l-4 ${sport.border} cursor-pointer hover:shadow-md hover:border-l-4 transition-all group`}>
+                className={`bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 border-l-4 ${sport.border} cursor-pointer hover:shadow-sm hover:border-l-4 transition-all group`}>
                 <div className="p-3 sm:p-4 flex items-center gap-2 sm:gap-4">
                   {/* Status icon */}
                   <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl ${status.bg} flex items-center justify-center shrink-0`}>
-                    <span className={`text-sm font-black ${status.color}`}>{status.icon}</span>
+                    <span className={`text-sm font-bold ${status.color}`}>{status.icon}</span>
                   </div>
 
                   {/* Date */}

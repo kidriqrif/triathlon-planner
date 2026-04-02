@@ -57,7 +57,7 @@ function SegmentCard({ seg, index, total, onChange, onDelete, onMove }) {
   const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
 
   return (
-    <div className={`rounded-2xl border-2 ${meta.border} ${meta.bg} w-36 flex-shrink-0 overflow-hidden shadow-sm flex flex-col`}>
+    <div className={`rounded-lg border-2 ${meta.border} ${meta.bg} w-36 flex-shrink-0 overflow-hidden flex flex-col`}>
       {/* header */}
       <div className={`${meta.header} border-b-2 ${meta.border} px-3 py-2 flex items-center justify-between`}>
         <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
@@ -161,7 +161,7 @@ export default function BrickBuilder({ value, onChange }) {
           </div>
         </div>
       ) : (
-        <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl py-8 text-center text-sm text-slate-400">
+        <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg py-8 text-center text-sm text-slate-400">
           Add sport segments above — any order, any number
         </div>
       )}

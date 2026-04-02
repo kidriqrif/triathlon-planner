@@ -20,7 +20,7 @@ export default class ErrorBoundary extends React.Component {
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
           <div className="text-center max-w-sm">
             <div className="flex justify-center mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-lg bg-red-100 flex items-center justify-center">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="8" x2="12" y2="12" />
@@ -32,7 +32,7 @@ export default class ErrorBoundary extends React.Component {
             <p className="text-sm text-slate-400 mt-2">An unexpected error occurred. Please try refreshing the page.</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-6 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors">
+              className="mt-4 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors">
               Refresh Page
             </button>
           </div>

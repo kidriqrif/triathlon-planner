@@ -37,7 +37,7 @@ function Ring({ daysToRace, phase }) {
           strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-black text-white leading-none">{Math.max(0, daysToRace)}</span>
+        <span className="text-2xl font-bold text-white leading-none">{Math.max(0, daysToRace)}</span>
         <span className="text-[10px] text-white/60 uppercase tracking-widest mt-0.5">days</span>
       </div>
     </div>
@@ -63,8 +63,8 @@ export default function RaceCountdown({ races }) {
 
   if (!activeRace) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+      <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4 flex items-center gap-4">
+        <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
           <Flag size={22} strokeWidth={1.5} className="text-slate-400" />
         </div>
         <div>
@@ -85,10 +85,10 @@ export default function RaceCountdown({ races }) {
 
   if (daysToRace < 0) {
     return (
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl shadow-lg p-6 flex items-center gap-4">
+      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-4 flex items-center gap-4">
         <Trophy size={36} strokeWidth={1.5} className="text-white/90 shrink-0" />
         <div>
-          <p className="font-black text-white text-xl">{activeRace.name}</p>
+          <p className="font-bold text-white text-xl">{activeRace.name}</p>
           <p className="text-white/70 text-sm">{Math.abs(daysToRace)} days ago — you did it!</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function RaceCountdown({ races }) {
   }
 
   return (
-    <div className={`bg-gradient-to-br ${phaseConfig.bg} rounded-2xl shadow-lg p-6`}>
+    <div className={`bg-gradient-to-br ${phaseConfig.bg} rounded-lg shadow-lg p-4`}>
       <div className="flex items-center gap-5">
         <Ring daysToRace={daysToRace} phase={phase} />
         <div className="flex-1 min-w-0">
@@ -105,7 +105,7 @@ export default function RaceCountdown({ races }) {
               {phase} Phase
             </span>
           </div>
-          <p className="text-white font-black text-xl leading-tight mt-2 truncate">{activeRace.name}</p>
+          <p className="text-white font-bold text-xl leading-tight mt-2 truncate">{activeRace.name}</p>
           <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
             <CategoryIcon size={13} strokeWidth={1.5} />
             <span>{activeRace.date}</span>

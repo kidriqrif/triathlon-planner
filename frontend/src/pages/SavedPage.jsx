@@ -104,7 +104,7 @@ export default function SavedPage({ user, onRefresh }) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-slate-800 dark:text-white">{t('savedWorkouts')}</h1>
@@ -130,7 +130,7 @@ export default function SavedPage({ user, onRefresh }) {
 
       {/* Template builder form — mirrors WorkoutForm style */}
       {showForm && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
           {/* Colored header */}
           <div className={`${sportMeta.color} px-5 py-3 flex items-center justify-between`}>
             <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ export default function SavedPage({ user, onRefresh }) {
             </button>
           </div>
 
-          <form onSubmit={handleSave} className="p-5 space-y-4">
+          <form onSubmit={handleSave} className="p-3.5 space-y-3">
             {/* Template name */}
             <div>
               <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Template Name</label>
@@ -159,7 +159,7 @@ export default function SavedPage({ user, onRefresh }) {
                   <button key={key} type="button" onClick={() => handleSportChange(key)}
                     className={`flex flex-col items-center gap-1 py-2 rounded-xl border-2 text-xs font-bold transition-all ${
                       form.sport === key
-                        ? `${meta.color} text-white border-transparent shadow-md`
+                        ? `${meta.color} text-white border-transparent shadow-sm`
                         : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300'
                     }`}>
                     <meta.Icon size={16} strokeWidth={1.5} />

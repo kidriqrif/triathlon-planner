@@ -68,7 +68,7 @@ export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMove
   }, [onMoveWorkout])
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
       <DnDCalendar
         localizer={localizer}
         events={events}

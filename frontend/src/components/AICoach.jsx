@@ -79,8 +79,8 @@ export default function AICoach({ onWorkoutsAdded }) {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
             <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
@@ -111,7 +111,7 @@ export default function AICoach({ onWorkoutsAdded }) {
       )}
 
       {plan && (
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-xl p-4">
             <p className="font-semibold text-indigo-900 dark:text-indigo-200">{plan.week_focus}</p>
             <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">{plan.rationale}</p>

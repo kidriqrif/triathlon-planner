@@ -98,7 +98,7 @@ export default function ZonesCalculator() {
   const inputCls = 'w-24 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-900 flex items-center justify-center">
@@ -108,7 +108,7 @@ export default function ZonesCalculator() {
       </div>
 
       {/* Tabs */}
-      <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm mb-5">
+      <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm mb-3">
         <button
           onClick={() => setTab('hr')}
           className={`flex-1 px-4 py-2 font-medium transition-colors flex items-center justify-center gap-1.5 ${

@@ -115,7 +115,7 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
   })()
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <RaceCountdown races={races} />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

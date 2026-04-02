@@ -54,8 +54,8 @@ export default function VolumeChart({ workouts }) {
   const tooltipBorder = dark ? '#334155' : '#e2e8f0'
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
-      <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+      <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-slate-800 dark:text-white">Weekly Volume</h2>
         <div className="flex gap-2">
           <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm">

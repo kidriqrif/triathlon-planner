@@ -9,7 +9,7 @@ const inputWithIconCls = inputCls + ' pl-10'
 
 function Section({ title, children }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
       <h3 className="font-bold text-slate-800 dark:text-white">{title}</h3>
       {children}
     </div>
@@ -134,8 +134,8 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
   }
 
   return (
-    <div className="space-y-5 max-w-lg mx-auto">
-      <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('accountSettings')}</h1>
+    <div className="space-y-3 max-w-lg mx-auto">
+      <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('accountSettings')}</h1>
 
       {/* Name */}
       <Section title={t('profile')}>

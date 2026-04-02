@@ -103,16 +103,16 @@ export default function ProfilePage() {
   const selectedDays = form.preferred_days ? form.preferred_days.split(',') : []
 
   return (
-    <div className="space-y-5 max-w-lg">
+    <div className="space-y-3 max-w-lg">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('athleteProfile')}</h1>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('athleteProfile')}</h1>
         <p className="text-slate-400 text-sm mt-0.5">{t('profileDesc')}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-3">
         {/* Name + basics */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('basics')}</p>
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('name')}</label>
@@ -134,15 +134,15 @@ export default function ProfilePage() {
         </div>
 
         {/* Fitness level */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">{t('fitnessLevel')}</label>
           <div className="space-y-2">
             {FITNESS_LEVELS.map(({ key, label, desc, Icon }) => (
               <button key={key} type="button"
                 onClick={() => setForm(f => ({ ...f, fitness_level: key }))}
-                className={`w-full flex items-center gap-4 p-3.5 rounded-2xl border-2 text-left transition-all ${
+                className={`w-full flex items-center gap-4 p-3.5 rounded-lg border-2 text-left transition-all ${
                   form.fitness_level === key
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 border-indigo-400 shadow-sm'
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 border-indigo-400'
                     : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                 }`}>
                 <Icon size={22} strokeWidth={1.5} className={form.fitness_level === key ? 'text-indigo-500' : 'text-slate-400'} />
@@ -153,7 +153,7 @@ export default function ProfilePage() {
                   <p className="text-xs text-slate-400 mt-0.5">{t(`${key}Desc`)}</p>
                 </div>
                 {form.fitness_level === key && (
-                  <span className="ml-auto text-indigo-500 font-black">✓</span>
+                  <span className="ml-auto text-indigo-500 font-bold">✓</span>
                 )}
               </button>
             ))}
@@ -161,7 +161,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Current paces / thresholds */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('currentBenchmarks')}</p>
             <p className="text-xs text-slate-400 mt-0.5">{t('benchmarksDesc')}</p>
@@ -186,7 +186,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Weekly hours */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
             {t('weeklyHoursTarget')}
           </label>
@@ -210,7 +210,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Preferred training days */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
             {t('availableTrainingDays')}
           </label>
@@ -232,7 +232,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Goal */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceGoal')}</label>
           <textarea value={form.goal_description} onChange={set('goal_description')} rows={2}
             placeholder="e.g. Sub-6hr Olympic tri, finish first Ironman, qualify for Worlds..."
@@ -240,7 +240,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Injuries */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
             {t('injuriesLimitations')}
           </label>

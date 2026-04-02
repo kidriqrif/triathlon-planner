@@ -84,7 +84,7 @@ export default function OnboardingPage({ user, onComplete }) {
     // Step 0: Welcome
     () => (
       <div className="text-center py-8">
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-4">
           <div className="w-14 h-14 rounded-xl bg-slate-900 flex items-center justify-center">
             <svg width="28" height="28" viewBox="0 0 18 18" fill="none">
               <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
@@ -93,7 +93,7 @@ export default function OnboardingPage({ user, onComplete }) {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-black text-slate-800 dark:text-white">Welcome to Strelo, {user.name}!</h2>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Welcome to Strelo, {user.name}!</h2>
         <p className="text-slate-400 mt-2 max-w-sm mx-auto">
           Let's set up your training profile in under a minute so we can personalise your experience.
         </p>
@@ -107,7 +107,7 @@ export default function OnboardingPage({ user, onComplete }) {
 
     // Step 1: Fitness & basics
     () => (
-      <div className="space-y-5">
+      <div className="space-y-3">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">Your fitness level</h2>
           <p className="text-sm text-slate-400 mt-1">This helps us calibrate training suggestions</p>
@@ -154,7 +154,7 @@ export default function OnboardingPage({ user, onComplete }) {
 
     // Step 2: Benchmarks (optional)
     () => (
-      <div className="space-y-5">
+      <div className="space-y-3">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">Your benchmarks</h2>
           <p className="text-sm text-slate-400 mt-1">Optional — helps the AI give better paces. Skip any you don't know.</p>
@@ -199,7 +199,7 @@ export default function OnboardingPage({ user, onComplete }) {
 
     // Step 3: Race
     () => (
-      <div className="space-y-5">
+      <div className="space-y-3">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">Set your target race</h2>
           <p className="text-sm text-slate-400 mt-1">We'll build your training around race day</p>
@@ -259,7 +259,7 @@ export default function OnboardingPage({ user, onComplete }) {
             <Check size={28} strokeWidth={2.5} className="text-emerald-600" />
           </div>
         </div>
-        <h2 className="text-2xl font-black text-slate-800 dark:text-white">You're all set!</h2>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">You're all set!</h2>
         <p className="text-slate-400 mt-2 max-w-sm mx-auto">
           Your profile is ready. Head to the dashboard to start planning your training.
         </p>
@@ -280,7 +280,7 @@ export default function OnboardingPage({ user, onComplete }) {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900/50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Progress */}
-        <div className="flex gap-1.5 mb-6">
+        <div className="flex gap-1.5 mb-4">
           {steps.map((_, i) => (
             <div key={i} className={`h-1 flex-1 rounded-full transition-all ${
               i <= step ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'
@@ -289,13 +289,13 @@ export default function OnboardingPage({ user, onComplete }) {
         </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 min-h-[380px] flex flex-col">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 p-4 min-h-[380px] flex flex-col">
           <div className="flex-1">
             {steps[step]()}
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
             {!isFirst ? (
               <button onClick={() => setStep(s => s - 1)}
                 className="flex items-center gap-1 text-sm font-semibold text-slate-400 hover:text-slate-600 transition-colors">
@@ -305,12 +305,12 @@ export default function OnboardingPage({ user, onComplete }) {
 
             {isLast ? (
               <button onClick={handleFinish} disabled={saving}
-                className="flex items-center gap-2 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all shadow-sm disabled:opacity-60">
+                className="flex items-center gap-2 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all disabled:opacity-60">
                 {saving ? 'Saving...' : <>Go to Dashboard <Sparkles size={14} strokeWidth={2} /></>}
               </button>
             ) : (
               <button onClick={() => setStep(s => s + 1)}
-                className="flex items-center gap-1 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all shadow-sm">
+                className="flex items-center gap-1 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all">
                 {isFirst ? 'Let\'s Go' : 'Next'} <ArrowRight size={14} strokeWidth={2} />
               </button>
             )}

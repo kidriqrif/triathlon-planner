@@ -86,16 +86,16 @@ export default function BodyLogPage() {
   }, [logs])
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('bodyLog')}</h1>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('bodyLog')}</h1>
         <p className="text-slate-400 text-sm mt-0.5">{t('trackBodyMetrics')}</p>
       </div>
 
       {/* Input form */}
       <form onSubmit={handleSubmit}
-        className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
+        className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
         <div className="flex items-center gap-2 mb-1">
           <Plus size={16} strokeWidth={2} className="text-indigo-500" />
           <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('newEntry')}</p>
@@ -173,7 +173,7 @@ export default function BodyLogPage() {
 
       {/* Weight chart */}
       {chartData.length >= 2 && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">{t('weightTrend')}</h2>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartData} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
@@ -197,7 +197,7 @@ export default function BodyLogPage() {
       )}
 
       {/* Log entries table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white">{t('recentEntries')}</h2>
           <p className="text-xs text-slate-400 mt-0.5">{t('last90Days')}</p>

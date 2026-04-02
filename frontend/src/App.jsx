@@ -183,7 +183,7 @@ export default function App() {
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="absolute inset-0 bg-black/30" onClick={() => setSidebarOpen(false)} />
-          <div className="relative w-72 bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col">
+          <div className="relative w-72 bg-white dark:bg-slate-900 h-full shadow-lg flex flex-col">
             {/* Sidebar header */}
             <div className="px-5 h-14 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
               <span className="font-bold text-slate-900 dark:text-white text-sm">{t('menu')}</span>

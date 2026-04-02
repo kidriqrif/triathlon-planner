@@ -124,10 +124,10 @@ export default function AuthPage({ onAuth, resetToken }) {
         </div>
 
         {/* Card */}
-        <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+        <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3.5">
           {/* Tab toggle — only for login/register */}
           {(mode === 'login' || mode === 'register') && (
-            <div className="flex border-b border-slate-200 dark:border-slate-700 mb-5 -mt-1">
+            <div className="flex border-b border-slate-200 dark:border-slate-700 mb-3 -mt-1">
               <button onClick={() => switchMode('login')}
                 className={`flex-1 py-2 text-sm font-medium border-b-2 transition-colors ${
                   mode === 'login' ? 'border-slate-900 dark:border-white text-slate-900 dark:text-white' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
@@ -145,7 +145,7 @@ export default function AuthPage({ onAuth, resetToken }) {
 
           {/* Forgot password header */}
           {mode === 'forgot' && (
-            <div className="mb-5">
+            <div className="mb-3">
               <button onClick={() => switchMode('login')}
                 className="flex items-center gap-1 text-sm text-slate-400 hover:text-slate-600 mb-3">
                 <ArrowLeft size={14} /> Back to sign in
@@ -157,7 +157,7 @@ export default function AuthPage({ onAuth, resetToken }) {
 
           {/* Reset password header */}
           {mode === 'reset' && (
-            <div className="mb-5">
+            <div className="mb-3">
               <h2 className="text-lg font-bold text-slate-800 dark:text-white">Set new password</h2>
               <p className="text-sm text-slate-400 mt-1">Enter your new password below</p>
             </div>
@@ -246,7 +246,7 @@ export default function AuthPage({ onAuth, resetToken }) {
         </div>
 
         {(mode === 'login' || mode === 'register') && (
-          <p className="text-center text-xs text-slate-400 mt-6">
+          <p className="text-center text-xs text-slate-400 mt-4">
             {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
             <button onClick={() => switchMode(mode === 'login' ? 'register' : 'login')}
               className="text-indigo-500 font-semibold hover:underline">

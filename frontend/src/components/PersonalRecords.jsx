@@ -111,7 +111,7 @@ export default function PersonalRecords({ workouts }) {
   if (!badges || badges.length === 0) return null
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
           <Trophy size={16} strokeWidth={1.5} className="text-amber-600 dark:text-amber-400" />

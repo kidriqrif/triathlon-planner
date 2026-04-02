@@ -93,14 +93,14 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg w-full max-w-lg max-h-[92vh] overflow-y-auto">
 
         {/* Sport-coloured header */}
-        <div className={`${sportMeta.color} rounded-t-3xl px-6 py-4 flex items-center justify-between`}>
+        <div className={`${sportMeta.color} rounded-t-xl px-6 py-4 flex items-center justify-between`}>
           <div className="flex items-center gap-3">
             <sportMeta.Icon size={28} strokeWidth={1.5} className="text-white" />
             <div>
-              <p className="text-white font-black text-lg leading-none">
+              <p className="text-white font-bold text-lg leading-none">
                 {workout ? 'Edit Workout' : 'New Workout'}
               </p>
               <p className="text-white/70 text-xs mt-0.5">{sportMeta.label}</p>
@@ -112,7 +112,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 space-y-3">
 
           {/* Date */}
           <div>
@@ -126,9 +126,9 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
             <div className="grid grid-cols-5 gap-2">
               {Object.entries(SPORT_CONFIG).map(([key, meta]) => (
                 <button key={key} type="button" onClick={() => handleSportChange(key)}
-                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-2xl border-2 text-xs font-bold transition-all ${
+                  className={`flex flex-col items-center gap-1.5 py-2.5 rounded-lg border-2 text-xs font-bold transition-all ${
                     form.sport === key
-                      ? `${meta.color} text-white border-transparent shadow-md`
+                      ? `${meta.color} text-white border-transparent shadow-sm`
                       : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}>
                   <meta.Icon size={18} strokeWidth={1.5} />
@@ -147,7 +147,7 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
                   <button key={t} type="button" onClick={() => handleTypeChange(t)}
                     className={`px-3 py-1.5 rounded-xl text-sm font-semibold border transition-all ${
                       form.workout_type === t
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                        ? 'bg-indigo-600 text-white border-indigo-600'
                         : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
                     }`}>
                     {TYPE_LABELS[t] || t}
@@ -221,12 +221,12 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
           {/* Actions */}
           <div className="flex gap-3 pt-1">
             <button type="submit"
-              className={`flex-1 ${sportMeta.color} hover:opacity-90 text-white font-bold py-3 rounded-2xl transition-all shadow-sm`}>
+              className={`flex-1 ${sportMeta.color} hover:opacity-90 text-white font-bold py-3 rounded-lg transition-all`}>
               {workout ? 'Save Changes' : 'Add Workout'}
             </button>
             {workout && (
               <button type="button" onClick={() => onDelete(workout.id)}
-                className="px-4 py-3 border-2 border-red-200 text-red-500 hover:bg-red-50 rounded-2xl transition-colors text-sm font-bold">
+                className="px-4 py-3 border-2 border-red-200 text-red-500 hover:bg-red-50 rounded-lg transition-colors text-sm font-bold">
                 Delete
               </button>
             )}

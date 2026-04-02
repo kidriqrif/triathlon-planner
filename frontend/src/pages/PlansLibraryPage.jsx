@@ -39,7 +39,7 @@ export default function PlansLibraryPage({ onRefresh }) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div>
         <h1 className="text-xl font-bold text-slate-800 dark:text-white">{t('trainingPlans')}</h1>
         <p className="text-sm text-slate-400 dark:text-slate-500 mt-0.5">

@@ -11,7 +11,7 @@ function WeekContent({ data }) {
   return (
     <>
       <p className="text-xs font-medium uppercase tracking-wider text-indigo-400">Week Summary</p>
-      <p className="text-3xl font-black text-white mt-2">
+      <p className="text-3xl font-bold text-white mt-2">
         {data.sessions} <span className="text-lg font-semibold text-slate-400">sessions</span>
       </p>
       <p className="text-lg font-bold text-slate-300 mt-0.5">
@@ -42,7 +42,7 @@ function RaceContent({ data }) {
   return (
     <>
       <p className="text-xs font-medium uppercase tracking-wider text-indigo-400">Race Day</p>
-      <p className="text-2xl font-black text-white mt-2">{data.name || 'Upcoming Race'}</p>
+      <p className="text-2xl font-bold text-white mt-2">{data.name || 'Upcoming Race'}</p>
       {formattedDate && (
         <p className="text-sm font-medium text-slate-400 mt-1">{formattedDate}</p>
       )}
@@ -134,16 +134,16 @@ export default function ShareCard({ type, data }) {
     <div className="space-y-3">
       {/* Card */}
       <div ref={cardRef}
-        className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/50 shadow-xl">
+        className="relative rounded-lg overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/50 shadow-md">
         {/* Decorative accents */}
         <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -ml-8 -mb-8 pointer-events-none" />
 
-        <div className="relative p-6">
+        <div className="relative p-4">
           {type === 'week' ? <WeekContent data={data} /> : <RaceContent data={data} />}
 
           {/* Branding */}
-          <div className="mt-6 pt-4 border-t border-slate-700/50 flex items-center gap-2">
+          <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center gap-2">
             <div className="w-5 h-5 rounded bg-indigo-600 flex items-center justify-center">
               <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>

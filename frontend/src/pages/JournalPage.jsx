@@ -35,10 +35,10 @@ export default function JournalPage({ workouts }) {
     : withNotes.filter(w => w.sport === filter)
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-800 dark:text-white">{t('trainingNotes')}</h1>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('trainingNotes')}</h1>
         <p className="text-slate-400 dark:text-slate-500 text-sm mt-0.5">
           {withNotes.length} {withNotes.length === 1 ? t('entryWithNotes') : t('entriesWithNotes')}
         </p>
@@ -75,7 +75,7 @@ export default function JournalPage({ workouts }) {
 
             return (
               <div key={w.id}
-                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 {/* Entry header */}
                 <div className="px-4 pt-4 pb-2 flex items-center gap-3">
                   {/* Sport icon */}

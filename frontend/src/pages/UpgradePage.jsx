@@ -44,28 +44,28 @@ export default function UpgradePage({ user }) {
       <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
         {isPro ? 'You\'re on Pro' : 'Upgrade to Pro'}
       </h1>
-      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 mb-6">
+      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 mb-4">
         {isPro ? 'All premium features are unlocked.' : 'Unlock StreloIQ and let the engine write your training week.'}
       </p>
 
       {error && (
-        <div className="flex items-center gap-2 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 text-sm rounded-lg px-4 py-3 mb-5">
+        <div className="flex items-center gap-2 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 text-sm rounded-lg px-4 py-3 mb-3">
           <AlertCircle size={16} strokeWidth={1.5} />
           {error}
         </div>
       )}
 
       {isPro ? (
-        <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-900">
+        <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-900">
           <p className="font-bold text-slate-900 dark:text-white">Pro Plan Active</p>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">You have access to all features including StreloIQ.</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-5">
-          <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-900">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-900">
             <p className="text-sm font-bold text-slate-900 dark:text-white">Free</p>
             <p className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">$0</p>
-            <p className="text-sm text-slate-400 dark:text-slate-500 mb-5">No limits, no expiry</p>
+            <p className="text-sm text-slate-400 dark:text-slate-500 mb-3">No limits, no expiry</p>
             <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-400">
               {FREE_FEATURES.map(f => (
                 <li key={f} className="flex items-start gap-2">
@@ -74,18 +74,18 @@ export default function UpgradePage({ user }) {
               ))}
             </ul>
             <button disabled
-              className="w-full mt-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 cursor-default">
+              className="w-full mt-4 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 cursor-default">
               Current plan
             </button>
           </div>
 
-          <div className="border-2 border-indigo-500 rounded-xl p-6 bg-white dark:bg-slate-900">
+          <div className="border-2 border-indigo-500 rounded-xl p-4 bg-white dark:bg-slate-900">
             <p className="text-sm font-bold text-slate-900 dark:text-white">Pro</p>
             <div className="flex items-baseline gap-2 mt-1">
               <p className="text-3xl font-extrabold text-slate-900 dark:text-white">$12.99</p>
               <p className="text-sm text-slate-400 dark:text-slate-500">/mo</p>
             </div>
-            <p className="text-sm text-slate-400 dark:text-slate-500 mb-5">or $123.99/yr <span className="text-emerald-500 font-semibold">(save 20%)</span></p>
+            <p className="text-sm text-slate-400 dark:text-slate-500 mb-3">or $123.99/yr <span className="text-emerald-500 font-semibold">(save 20%)</span></p>
             <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
               {PRO_FEATURES.map(f => (
                 <li key={f} className="flex items-start gap-2">
@@ -93,7 +93,7 @@ export default function UpgradePage({ user }) {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 space-y-2">
+            <div className="mt-4 space-y-2">
               <button onClick={() => handleUpgrade('monthly')} disabled={!!loading}
                 className="w-full py-2.5 rounded-lg text-sm font-semibold bg-indigo-500 text-white hover:bg-indigo-400 transition-colors disabled:opacity-50">
                 {loading === 'monthly' ? 'Redirecting...' : 'Monthly — $12.99/mo'}
