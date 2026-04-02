@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import Calendar from '../components/Calendar'
 import WorkoutForm from '../components/WorkoutForm'
 import { createWorkout, updateWorkout, deleteWorkout } from '../api'
@@ -16,23 +16,13 @@ export default function PlanPage({ workouts, onRefresh }) {
   const [formState, setFormState] = useState(null)
   const [selected, setSelected] = useState(new Set())
   const [deleting, setDeleting] = useState(false)
-  // Local workouts for optimistic updates on drag
   const [localWorkouts, setLocalWorkouts] = useState(null)
   const displayWorkouts = localWorkouts || workouts
-
-  const openNew = (dateStr) => { clearSelection(); setFormState({ workout: null, defaultDate: dateStr }) }
-  const closeForm = () => setFormState(null)
-  const clearSelection = () => setSelected(new Set())
-
-  const openEdit = useCallback((workout) => {
-    clearSelection()
-    setFormState({ workout, defaultDate: null })
-  }, [])
 
   const handleSave = async (payload) => {
     if (formState?.workout) await updateWorkout(formState.workout.id, payload)
     else await createWorkout(payload)
-    closeForm()
+    setFormState(null)
     setLocalWorkouts(null)
     onRefresh()
   }
@@ -40,26 +30,22 @@ export default function PlanPage({ workouts, onRefresh }) {
   const handleDelete = async (id) => {
     if (!confirm('Delete this workout?')) return
     await deleteWorkout(id)
-    closeForm()
+    setFormState(null)
     setLocalWorkouts(null)
     onRefresh()
   }
 
-  const handleMoveWorkout = useCallback(async (workoutId, newDate) => {
-    // Optimistic update — move it instantly in local state
+  const handleMoveWorkout = async (workoutId, newDate) => {
     setLocalWorkouts(prev => {
       const base = prev || workouts
       return base.map(w => w.id === workoutId ? { ...w, date: newDate } : w)
     })
-    // Then persist to API
     await updateWorkout(workoutId, { date: newDate })
     onRefresh()
-    // Clear optimistic state after refresh
     setTimeout(() => setLocalWorkouts(null), 500)
-  }, [workouts, onRefresh])
+  }
 
-  // Multi-select: Ctrl/Cmd+click
-  const handleEventClick = useCallback((workout, e) => {
+  const handleEventClick = (workout, e) => {
     if (e?.ctrlKey || e?.metaKey) {
       setSelected(prev => {
         const next = new Set(prev)
@@ -67,18 +53,22 @@ export default function PlanPage({ workouts, onRefresh }) {
         else next.add(workout.id)
         return next
       })
+    } else if (selected.size > 0) {
+      // If there's an active selection, clicking without Ctrl clears it
+      setSelected(new Set())
     } else {
-      openEdit(workout)
+      setFormState({ workout, defaultDate: null })
     }
-  }, [openEdit])
+  }
 
   const handleBulkDelete = async () => {
     if (!confirm(`Delete ${selected.size} selected workout${selected.size > 1 ? 's' : ''}?`)) return
     setDeleting(true)
-    for (const id of selected) {
+    const ids = [...selected]
+    setSelected(new Set())
+    for (const id of ids) {
       await deleteWorkout(id)
     }
-    clearSelection()
     setDeleting(false)
     setLocalWorkouts(null)
     onRefresh()
@@ -92,18 +82,18 @@ export default function PlanPage({ workouts, onRefresh }) {
           <p className="text-slate-400 text-sm mt-0.5">Click to add · click event to edit · Ctrl+click to select · drag to move</p>
         </div>
         <button
-          onClick={() => openNew(new Date().toISOString().split('T')[0])}
+          onClick={() => { setSelected(new Set()); setFormState({ workout: null, defaultDate: new Date().toISOString().split('T')[0] }) }}
           className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
           + Add Workout
         </button>
       </div>
 
-      {/* Multi-select toolbar — sticky so it's visible when scrolled */}
+      {/* Multi-select toolbar — sticky */}
       {selected.size > 0 && (
         <div className="sticky top-14 z-30 flex items-center justify-between bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg px-4 py-2.5 mb-3">
           <div className="flex items-center gap-2 text-sm text-indigo-700 dark:text-indigo-300">
             <CheckSquare size={15} strokeWidth={2} />
-            <span className="font-medium">{selected.size} workout{selected.size > 1 ? 's' : ''} selected</span>
+            <span className="font-medium">{selected.size} selected</span>
           </div>
           <div className="flex items-center gap-3">
             <button onClick={handleBulkDelete} disabled={deleting}
@@ -111,7 +101,7 @@ export default function PlanPage({ workouts, onRefresh }) {
               <Trash2 size={13} strokeWidth={2} />
               {deleting ? 'Deleting...' : 'Delete'}
             </button>
-            <button onClick={clearSelection}
+            <button onClick={() => setSelected(new Set())}
               className="flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 transition-colors">
               <X size={13} strokeWidth={2} /> Clear
             </button>
@@ -134,7 +124,7 @@ export default function PlanPage({ workouts, onRefresh }) {
 
       <Calendar
         workouts={displayWorkouts}
-        onSelectSlot={openNew}
+        onSelectSlot={(dateStr) => { setSelected(new Set()); setFormState({ workout: null, defaultDate: dateStr }) }}
         onSelectEvent={handleEventClick}
         onMoveWorkout={handleMoveWorkout}
         selectedIds={selected}
@@ -146,7 +136,7 @@ export default function PlanPage({ workouts, onRefresh }) {
           defaultDate={formState.defaultDate}
           onSave={handleSave}
           onDelete={handleDelete}
-          onClose={closeForm}
+          onClose={() => setFormState(null)}
         />
       )}
     </div>
