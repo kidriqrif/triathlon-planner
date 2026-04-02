@@ -4,6 +4,7 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const locales = { 'en-US': enUS }
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales })
@@ -17,6 +18,8 @@ const SPORT_COLORS = {
   gym:   '#f43f5e',
 }
 
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
 function workoutsToEvents(workouts) {
   return workouts.map(w => ({
     id: w.id,
@@ -27,32 +30,87 @@ function workoutsToEvents(workouts) {
   }))
 }
 
+function CustomToolbar({ date, onNavigate }) {
+  const month = date.getMonth()
+  const year = date.getFullYear()
+
+  const changeMonth = (dir) => {
+    const d = new Date(date)
+    d.setMonth(d.getMonth() + dir)
+    onNavigate('DATE', d)
+  }
+
+  const changeYear = (dir) => {
+    const d = new Date(date)
+    d.setFullYear(d.getFullYear() + dir)
+    onNavigate('DATE', d)
+  }
+
+  return (
+    <div className="flex items-center justify-between mb-3">
+      {/* Month selector */}
+      <div className="flex items-center gap-1">
+        <button onClick={() => changeMonth(-1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronLeft size={16} strokeWidth={2} />
+        </button>
+        <span className="text-sm font-semibold text-slate-800 dark:text-white w-10 text-center">
+          {MONTHS[month]}
+        </span>
+        <button onClick={() => changeMonth(1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronRight size={16} strokeWidth={2} />
+        </button>
+      </div>
+
+      {/* Year selector */}
+      <div className="flex items-center gap-1">
+        <button onClick={() => changeYear(-1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronLeft size={16} strokeWidth={2} />
+        </button>
+        <span className="text-sm font-semibold text-slate-800 dark:text-white w-12 text-center">
+          {year}
+        </span>
+        <button onClick={() => changeYear(1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronRight size={16} strokeWidth={2} />
+        </button>
+      </div>
+
+      {/* Today button */}
+      <button onClick={() => onNavigate('TODAY')}
+        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 px-2 py-1 rounded hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+        Today
+      </button>
+    </div>
+  )
+}
+
 export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMoveWorkout, selectedIds }) {
-  const [view, setView] = useState('month')
   const [date, setDate] = useState(new Date())
 
   const events = workoutsToEvents(workouts)
-  const selSet = selectedIds || new Set()
 
   const eventStyleGetter = useCallback((event) => {
     const w = event.resource
     const color = SPORT_COLORS[w.sport] || '#6b7280'
-    const isDashed = w.status === 'planned'
     const isSkipped = w.status === 'skipped'
-    const isSelected = selSet.has(w.id)
+    const isCompleted = w.status === 'completed'
     return {
       style: {
         backgroundColor: color,
-        opacity: isSkipped ? 0.4 : isDashed ? 0.7 : 1,
-        border: isSelected ? '2px solid #fff' : isDashed ? '2px dashed rgba(255,255,255,0.7)' : 'none',
-        outline: isSelected ? '2px solid #6366f1' : 'none',
+        opacity: isSkipped ? 0.35 : isCompleted ? 1 : 0.75,
+        border: 'none',
+        borderLeft: isCompleted ? '3px solid rgba(255,255,255,0.8)' : '3px solid rgba(255,255,255,0.3)',
         textDecoration: isSkipped ? 'line-through' : 'none',
-        borderRadius: '6px',
-        fontSize: '0.75rem',
+        borderRadius: '4px',
+        fontSize: '0.7rem',
         cursor: 'grab',
+        padding: '1px 4px',
       },
     }
-  }, [selSet])
+  }, [])
 
   const handleSelectSlot = useCallback(({ start }) => {
     const dateStr = format(start, 'yyyy-MM-dd')
@@ -77,9 +135,9 @@ export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMove
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 600 }}
-        view={view}
-        onView={setView}
+        style={{ height: 550 }}
+        view="month"
+        onView={() => {}}
         date={date}
         onNavigate={setDate}
         selectable
@@ -87,10 +145,11 @@ export default function Calendar({ workouts, onSelectSlot, onSelectEvent, onMove
         onSelectEvent={handleSelectEvent}
         onEventDrop={handleEventDrop}
         eventPropGetter={eventStyleGetter}
-        views={['month', 'week']}
+        views={['month']}
         popup
         draggableAccessor={() => true}
         resizable={false}
+        components={{ toolbar: CustomToolbar }}
       />
     </div>
   )
