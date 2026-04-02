@@ -143,7 +143,7 @@ export default function PlanPage({ workouts, onRefresh }) {
         />
 
         {/* Day panel */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden lg:max-h-[590px] lg:overflow-y-auto">
           {selectedDate ? (
             <>
               <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
