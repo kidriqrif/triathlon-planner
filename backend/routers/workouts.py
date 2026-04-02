@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import date
@@ -73,3 +73,23 @@ def delete_workout(
         raise HTTPException(status_code=404, detail="Workout not found")
     db.delete(workout)
     db.commit()
+
+
+@router.delete("", status_code=200)
+def bulk_delete_workouts(
+    start: date = Query(...),
+    end: date = Query(...),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Delete all workouts in a date range."""
+    workouts = db.query(models.Workout).filter(
+        models.Workout.user_id == current_user.id,
+        models.Workout.date >= start,
+        models.Workout.date <= end,
+    ).all()
+    count = len(workouts)
+    for w in workouts:
+        db.delete(w)
+    db.commit()
+    return {"deleted": count}

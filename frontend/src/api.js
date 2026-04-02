@@ -69,6 +69,9 @@ export const updateWorkout = (id, data) =>
 export const deleteWorkout = (id) =>
   api.delete(`/workouts/${id}`)
 
+export const bulkDeleteWorkouts = (start, end) =>
+  api.delete('/workouts', { params: { start, end } }).then(r => r.data)
+
 // --- Races ---
 export const getRaces = () =>
   api.get('/races').then(r => r.data)

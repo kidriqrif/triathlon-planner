@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react'
 import Calendar from '../components/Calendar'
 import WorkoutForm from '../components/WorkoutForm'
-import { createWorkout, updateWorkout, deleteWorkout } from '../api'
-import { Waves, Bike, Footprints, Layers, Dumbbell, Trash2, X, Plus, GripVertical, ArrowRight, Pencil } from 'lucide-react'
+import { createWorkout, updateWorkout, deleteWorkout, bulkDeleteWorkouts } from '../api'
+import { Waves, Bike, Footprints, Layers, Dumbbell, Trash2, X, Plus, ArrowRight, Pencil, CalendarRange } from 'lucide-react'
 import { format } from 'date-fns'
 
 const SPORT_META = {
@@ -30,8 +30,12 @@ const LEGEND = [
 export default function PlanPage({ workouts, onRefresh }) {
   const [formState, setFormState] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const [movingWorkout, setMovingWorkout] = useState(null) // workout being moved to another day
+  const [movingWorkout, setMovingWorkout] = useState(null)
   const [localWorkouts, setLocalWorkouts] = useState(null)
+  const [showClearRange, setShowClearRange] = useState(false)
+  const [clearStart, setClearStart] = useState('')
+  const [clearEnd, setClearEnd] = useState('')
+  const [clearing, setClearing] = useState(false)
   const displayWorkouts = localWorkouts || workouts
 
   // Workouts for selected day
@@ -102,11 +106,22 @@ export default function PlanPage({ workouts, onRefresh }) {
               : 'Click a date to see workouts · drag events to move'}
           </p>
         </div>
-        <button
-          onClick={() => setFormState({ workout: null, defaultDate: selectedDate || new Date().toISOString().split('T')[0] })}
-          className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
-          + Add Workout
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={() => setShowClearRange(v => !v)}
+            className={`flex items-center gap-1.5 px-3 py-2.5 rounded-lg text-sm font-medium border transition-colors ${
+              showClearRange
+                ? 'bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800'
+                : 'text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300'
+            }`}>
+            <CalendarRange size={14} strokeWidth={2} />
+            <span className="hidden sm:inline">Clear range</span>
+          </button>
+          <button
+            onClick={() => setFormState({ workout: null, defaultDate: selectedDate || new Date().toISOString().split('T')[0] })}
+            className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
+            + Add Workout
+          </button>
+        </div>
       </div>
 
       {/* Moving mode banner */}
@@ -118,6 +133,40 @@ export default function PlanPage({ workouts, onRefresh }) {
           <button onClick={() => setMovingWorkout(null)}
             className="text-xs font-medium text-slate-500 hover:text-slate-700 flex items-center gap-1">
             <X size={13} /> Cancel
+          </button>
+        </div>
+      )}
+
+      {/* Clear range panel */}
+      {showClearRange && (
+        <div className="flex flex-wrap items-center gap-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3 mb-3">
+          <span className="text-sm text-red-700 dark:text-red-300 font-medium">Delete all workouts from</span>
+          <input type="date" value={clearStart} onChange={e => setClearStart(e.target.value)}
+            className="text-xs border border-red-200 dark:border-red-700 rounded-md px-2 py-1.5 bg-white dark:bg-slate-800 dark:text-white" />
+          <span className="text-sm text-red-700 dark:text-red-300">to</span>
+          <input type="date" value={clearEnd} onChange={e => setClearEnd(e.target.value)}
+            className="text-xs border border-red-200 dark:border-red-700 rounded-md px-2 py-1.5 bg-white dark:bg-slate-800 dark:text-white" />
+          <button
+            disabled={!clearStart || !clearEnd || clearing}
+            onClick={async () => {
+              const count = workouts.filter(w => w.date >= clearStart && w.date <= clearEnd).length
+              if (!count) { setShowClearRange(false); return }
+              if (!confirm(`Delete ${count} workout${count !== 1 ? 's' : ''} from ${clearStart} to ${clearEnd}?`)) return
+              setClearing(true)
+              await bulkDeleteWorkouts(clearStart, clearEnd)
+              setClearing(false)
+              setShowClearRange(false)
+              setClearStart('')
+              setClearEnd('')
+              setLocalWorkouts(null)
+              onRefresh()
+            }}
+            className="text-xs font-medium text-white bg-red-500 hover:bg-red-400 px-3 py-1.5 rounded-md transition-colors disabled:opacity-40">
+            {clearing ? 'Deleting...' : 'Delete'}
+          </button>
+          <button onClick={() => { setShowClearRange(false); setClearStart(''); setClearEnd('') }}
+            className="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
+            Cancel
           </button>
         </div>
       )}
