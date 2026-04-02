@@ -24,6 +24,12 @@ html {
   background: rgba(99, 102, 241, 0.15);
 }
 
+/* Float animation for landing page */
+@keyframes float {
+  0%, 100% { transform: translate(var(--tw-translate-x, 0), var(--tw-translate-y, 0)); }
+  50% { transform: translate(var(--tw-translate-x, 0), calc(var(--tw-translate-y, 0px) - 12px)); }
+}
+
 /* ── Range slider styling ── */
 input[type="range"] {
   -webkit-appearance: none;

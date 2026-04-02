@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ArrowRight, Waves, Bike, Footprints, Calendar, BarChart3, Zap, Target, Watch, BookOpen } from 'lucide-react'
 
-// AI-generated images via Pollinations (free, no API key, generated on page load)
-const HERO_IMG = 'https://image.pollinations.ai/prompt/sleek%203D%20render%20of%20triathlon%20equipment%20swim%20goggles%20road%20bicycle%20running%20shoes%20floating%20in%20dark%20space%20with%20blue%20orange%20and%20green%20neon%20accent%20lighting%20on%20pure%20dark%20background%20cinematic%20product%20shot%20high%20detail?width=1280&height=600&nologo=true&seed=strelo1&model=flux'
-const FEATURE_IMG = 'https://image.pollinations.ai/prompt/modern%20dark%20themed%20triathlon%20training%20dashboard%20UI%20showing%20weekly%20calendar%20with%20swim%20bike%20run%20sessions%20color%20coded%20blue%20orange%20green%20analytics%20charts%20minimalist%20design?width=1200&height=500&nologo=true&seed=strelo2&model=flux'
 
 function useInView(ref) {
   const [visible, setVisible] = useState(false)
@@ -27,8 +24,6 @@ function AnimatedSection({ children, className = '' }) {
 }
 
 export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
-  const [heroLoaded, setHeroLoaded] = useState(false)
-
   useEffect(() => {
     fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/health').catch(() => {})
   }, [])
@@ -99,22 +94,14 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               <p className="text-xs text-white/30 mt-4">No credit card. No spam. Syncs with Strava.</p>
             </div>
 
-            {/* Right — AI-generated hero image */}
-            <div className="mt-10 lg:mt-0 relative">
-              <div className="relative rounded-xl overflow-hidden">
-                <img
-                  src={HERO_IMG}
-                  alt="Triathlon equipment"
-                  onLoad={() => setHeroLoaded(true)}
-                  className={`w-full transition-all duration-1000 ${heroLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-                />
-                {/* Fallback gradient while image loads */}
-                {!heroLoaded && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-orange-500/10 to-emerald-500/20 animate-pulse rounded-xl" />
-                )}
-              </div>
-              {/* Glow */}
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-indigo-500/20 blur-[40px] rounded-full" />
+            {/* Right — floating sport icons */}
+            <div className="mt-10 lg:mt-0 relative hidden lg:flex items-center justify-center h-72">
+              <div className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[60px]" />
+              <div className="absolute w-36 h-36 rounded-full bg-orange-500/10 blur-[50px] translate-x-16" />
+              <div className="absolute w-40 h-40 rounded-full bg-emerald-500/10 blur-[50px] -translate-x-12 translate-y-8" />
+              <Waves size={48} strokeWidth={1} className="absolute text-blue-400/60 -translate-x-20 -translate-y-10 animate-[float_6s_ease-in-out_infinite]" />
+              <Bike size={56} strokeWidth={1} className="absolute text-orange-400/60 translate-x-8 -translate-y-4 animate-[float_7s_ease-in-out_infinite_1s]" />
+              <Footprints size={44} strokeWidth={1} className="absolute text-emerald-400/60 translate-x-24 translate-y-14 animate-[float_5s_ease-in-out_infinite_0.5s]" />
             </div>
           </div>
         </div>
@@ -179,13 +166,6 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               Everything a triathlete needs.<br className="hidden sm:block" />
               <span className="text-white/40">Nothing you don't.</span>
             </h2>
-          </AnimatedSection>
-
-          {/* AI-generated feature image */}
-          <AnimatedSection className="mb-10">
-            <div className="rounded-xl overflow-hidden border border-white/5">
-              <img src={FEATURE_IMG} alt="Strelo dashboard" className="w-full" loading="lazy" />
-            </div>
           </AnimatedSection>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
