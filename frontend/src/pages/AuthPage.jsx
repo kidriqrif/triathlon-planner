@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { register, login, forgotPassword, resetPassword } from '../api'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { register, login, forgotPassword, resetPassword, googleAuth } from '../api'
 import { Mail, Lock, User, ArrowRight, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'
+
+const GOOGLE_CLIENT_ID = '747259526376-0rcqt3hiq9t3t1ackpnmqt1nd5o4ade9.apps.googleusercontent.com'
 
 const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
 
@@ -9,12 +11,49 @@ export default function AuthPage({ onAuth, resetToken }) {
   const [form, setForm] = useState({ email: '', password: '', confirmPassword: '', name: '' })
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const googleBtnRef = useRef(null)
 
   // Wake up backend while user types credentials
   useEffect(() => {
     fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/health').catch(() => {})
   }, [])
-  const [loading, setLoading] = useState(false)
+
+  const handleGoogleResponse = useCallback(async (response) => {
+    setError(null)
+    setLoading(true)
+    try {
+      const res = await googleAuth(response.credential)
+      localStorage.setItem('strelo_token', res.token)
+      localStorage.setItem('strelo_user', JSON.stringify(res.user))
+      onAuth(res.user)
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Google sign-in failed')
+    } finally {
+      setLoading(false)
+    }
+  }, [onAuth])
+
+  // Initialize Google sign-in button
+  useEffect(() => {
+    if ((mode === 'login' || mode === 'register') && window.google?.accounts?.id) {
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleResponse,
+      })
+      if (googleBtnRef.current) {
+        googleBtnRef.current.innerHTML = ''
+        window.google.accounts.id.renderButton(googleBtnRef.current, {
+          type: 'standard',
+          shape: 'rectangular',
+          theme: 'outline',
+          size: 'large',
+          width: googleBtnRef.current.offsetWidth || 320,
+          text: mode === 'register' ? 'signup_with' : 'signin_with',
+        })
+      }
+    }
+  }, [mode, handleGoogleResponse])
 
   const set = (f) => (e) => setForm(p => ({ ...p, [f]: e.target.value }))
 
@@ -184,6 +223,18 @@ export default function AuthPage({ onAuth, resetToken }) {
               )}
             </button>
           </form>
+
+          {/* Google sign-in — only for login/register */}
+          {(mode === 'login' || mode === 'register') && (
+            <>
+              <div className="flex items-center gap-3 my-4">
+                <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+                <span className="text-xs text-slate-400 dark:text-slate-500">or</span>
+                <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+              </div>
+              <div ref={googleBtnRef} className="flex justify-center" />
+            </>
+          )}
 
           {/* Forgot password link */}
           {mode === 'login' && (

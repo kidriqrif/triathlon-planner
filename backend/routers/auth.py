@@ -132,6 +132,59 @@ def mark_onboarded(
     return {"ok": True}
 
 
+# ─── Google OAuth ───
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
+
+
+class GoogleAuthRequest(BaseModel):
+    credential: str  # Google ID token
+
+
+@router.post("/google", response_model=AuthResponse)
+@limiter.limit("10/minute")
+def google_auth(request: Request, payload: GoogleAuthRequest, db: Session = Depends(get_db)):
+    """Verify Google ID token and sign in or create account."""
+    try:
+        from google.oauth2 import id_token
+        from google.auth.transport import requests as google_requests
+
+        idinfo = id_token.verify_oauth2_token(
+            payload.credential,
+            google_requests.Request(),
+            GOOGLE_CLIENT_ID,
+        )
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid Google token")
+
+    email = idinfo.get("email", "").lower().strip()
+    name = idinfo.get("name", email.split("@")[0])
+
+    if not email:
+        raise HTTPException(status_code=400, detail="No email in Google token")
+
+    # Find or create user
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        # Create new user with a random password (they'll use Google to sign in)
+        user = models.User(
+            email=email,
+            password_hash=hash_password(secrets.token_urlsafe(32)),
+            name=name,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        # Auto-create athlete profile
+        athlete = models.Athlete(user_id=user.id, name=name)
+        db.add(athlete)
+        db.commit()
+
+    token = create_access_token(user.id)
+    return {"token": token, "user": _user_dict(user)}
+
+
 # ─── Password Reset ───
 
 @router.post("/forgot-password")
