@@ -5,87 +5,14 @@ import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
 import PersonalRecords from '../components/PersonalRecords'
 import WeatherWidget from '../components/WeatherWidget'
-import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp, Lock } from 'lucide-react'
+import { Lock } from 'lucide-react'
 
-function ProLock({ label, desc, onUpgrade }) {
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <Lock size={16} className="text-slate-300 dark:text-slate-600" />
-        <div>
-          <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500">{desc}</p>
-        </div>
-      </div>
-      <button onClick={onUpgrade}
-        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
-        Pro
-      </button>
-    </div>
-  )
-}
-
-const SPORT_META = {
-  swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20',    label: 'Swim'  },
-  bike:  { Icon: Bike,       color: 'text-orange-500',  bg: 'bg-orange-500/10 dark:bg-orange-500/20', border: 'border-orange-500/20', label: 'Bike'  },
-  run:   { Icon: Footprints, color: 'text-emerald-500', bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', border: 'border-emerald-500/20', label: 'Run'   },
-  gym:   { Icon: Dumbbell,   color: 'text-rose-500',    bg: 'bg-rose-500/10 dark:bg-rose-500/20',   border: 'border-rose-500/20',    label: 'Gym'   },
-  brick: { Icon: Layers,     color: 'text-violet-500',  bg: 'bg-violet-500/10 dark:bg-violet-500/20', border: 'border-violet-500/20', label: 'Brick' },
-}
-
-function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-white', icon }) {
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
-        {icon}
-      </div>
-      <p className={`text-2xl font-bold mt-1 ${valueColor}`}>{value}</p>
-      <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{sub}</p>
-    </div>
-  )
-}
-
-function SportBreakdown({ workouts }) {
-  const { t } = useI18n()
-  const thisMonday = (() => {
-    const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); d.setHours(0,0,0,0); return d
-  })()
-
-  const weekData = workouts.filter(w =>
-    new Date(w.date + 'T12:00:00') >= thisMonday && w.status === 'completed'
-  )
-
-  const totals = {}
-  for (const w of weekData) {
-    if (!totals[w.sport]) totals[w.sport] = { sessions: 0, minutes: 0 }
-    totals[w.sport].sessions++
-    totals[w.sport].minutes += w.duration_min || 0
-  }
-
-  const sports = Object.keys(totals)
-  if (sports.length === 0) return null
-
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-      <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">{t('sportBreakdown')}</p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {sports.map(sport => {
-          const meta = SPORT_META[sport] || SPORT_META.brick
-          const d = totals[sport]
-          return (
-            <div key={sport} className={`rounded-lg p-2.5 border ${meta.bg} ${meta.border} flex items-center gap-2.5`}>
-              <meta.Icon size={18} strokeWidth={1.5} className={meta.color} />
-              <div>
-                <p className={`text-sm font-semibold ${meta.color}`}>{meta.label}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{d.sessions}x · {Math.round(d.minutes)}min</p>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
+const SPORT_COLORS = {
+  swim: { bar: 'bg-blue-500', dot: 'bg-blue-500', label: 'Swim' },
+  bike: { bar: 'bg-orange-500', dot: 'bg-orange-500', label: 'Bike' },
+  run:  { bar: 'bg-emerald-500', dot: 'bg-emerald-500', label: 'Run' },
+  brick: { bar: 'bg-violet-500', dot: 'bg-violet-500', label: 'Brick' },
+  gym:  { bar: 'bg-rose-500', dot: 'bg-rose-500', label: 'Gym' },
 }
 
 export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNavigate }) {
@@ -102,6 +29,7 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
 
   const weekDone = completed.filter(w => new Date(w.date + 'T12:00:00') >= thisMonday)
   const weekHours = weekDone.reduce((s, w) => s + (w.duration_min || 0), 0) / 60
+  const weekPlanned = workouts.filter(w => w.status === 'planned' && new Date(w.date + 'T12:00:00') >= thisMonday).length
 
   const streak = (() => {
     const days = new Set(completed.map(w => w.date))
@@ -114,39 +42,94 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
     return count
   })()
 
+  // Sport breakdown
+  const sportTotals = {}
+  for (const w of weekDone) {
+    if (!sportTotals[w.sport]) sportTotals[w.sport] = { count: 0, min: 0 }
+    sportTotals[w.sport].count++
+    sportTotals[w.sport].min += w.duration_min || 0
+  }
+  const totalWeekMin = weekDone.reduce((s, w) => s + (w.duration_min || 0), 0)
+
   return (
-    <div className="space-y-3">
+    <div>
       <RaceCountdown races={races} />
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label={t('thisWeek')} sub={t('sessionsDone')} value={weekDone.length}
-          icon={<CheckCircle size={15} strokeWidth={1.5} className="text-emerald-400" />} />
-        <StatCard label={t('thisWeek')} sub={t('trainingHours')} value={`${weekHours.toFixed(1)}h`}
-          valueColor="text-blue-500"
-          icon={<Clock size={15} strokeWidth={1.5} className="text-blue-400" />} />
-        <StatCard label={t('streak')} sub={t('consecutiveDays')} value={`${streak}d`}
-          valueColor="text-orange-500"
-          icon={<Flame size={15} strokeWidth={1.5} className="text-orange-400" />} />
-        <StatCard label={t('allTime')} sub={t('hoursLogged')} value={`${Math.round(totalHours)}h`}
-          valueColor="text-violet-500"
-          icon={<TrendingUp size={15} strokeWidth={1.5} className="text-violet-400" />} />
+      {/* Stats strip — not cards, just numbers */}
+      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-2 py-3 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">{weekDone.length}<span className="text-sm font-normal text-slate-400 dark:text-slate-500 ml-1">/ {weekPlanned + weekDone.length}</span></p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{t('thisWeek')} — {t('sessionsDone')}</p>
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-blue-500">{weekHours.toFixed(1)}<span className="text-sm font-normal text-slate-400 dark:text-slate-500 ml-1">hrs</span></p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{t('trainingHours')}</p>
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-orange-500">{streak}<span className="text-sm font-normal text-slate-400 dark:text-slate-500 ml-1">d</span></p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{t('streak')}</p>
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-slate-700 dark:text-slate-300">{Math.round(totalHours)}<span className="text-sm font-normal text-slate-400 dark:text-slate-500 ml-1">hrs</span></p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{t('allTime')}</p>
+        </div>
       </div>
 
-      <SportBreakdown workouts={workouts} />
-      <WeatherWidget workouts={workouts} />
-      <PersonalRecords workouts={workouts} />
-
-      {user?.plan === 'pro' ? (
-        <>
-          <VolumeChart workouts={workouts} />
-          <AICoach onWorkoutsAdded={onWorkoutsAdded} />
-        </>
-      ) : (
-        <div className="space-y-2">
-          <ProLock label={t('weeklyVolumeTrends')} desc={t('seeTrainingLoad')} onUpgrade={() => onNavigate('upgrade')} />
-          <ProLock label={t('streloIQ')} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
+      {/* Sport bar — proportional, not cards */}
+      {Object.keys(sportTotals).length > 0 && (
+        <div className="py-3 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex h-2 rounded-sm overflow-hidden bg-slate-100 dark:bg-slate-800">
+            {Object.entries(sportTotals).map(([sport, d]) => (
+              <div
+                key={sport}
+                className={SPORT_COLORS[sport]?.bar || 'bg-slate-400'}
+                style={{ width: `${totalWeekMin > 0 ? (d.min / totalWeekMin) * 100 : 0}%` }}
+              />
+            ))}
+          </div>
+          <div className="flex gap-4 mt-1.5">
+            {Object.entries(sportTotals).map(([sport, d]) => (
+              <span key={sport} className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <span className={`w-1.5 h-1.5 rounded-full ${SPORT_COLORS[sport]?.dot || 'bg-slate-400'}`} />
+                {SPORT_COLORS[sport]?.label || sport} {d.count}× · {d.min}min
+              </span>
+            ))}
+          </div>
         </div>
       )}
+
+      {/* Weather + PRs side by side on desktop */}
+      <div className="grid md:grid-cols-2 gap-3 mt-3">
+        <WeatherWidget workouts={workouts} />
+        <PersonalRecords workouts={workouts} />
+      </div>
+
+      {/* Pro content or locks */}
+      <div className="mt-3">
+        {user?.plan === 'pro' ? (
+          <div className="space-y-3">
+            <VolumeChart workouts={workouts} />
+            <AICoach onWorkoutsAdded={onWorkoutsAdded} />
+          </div>
+        ) : (
+          <div className="py-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+            <div className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-2">
+                <Lock size={13} className="text-slate-300 dark:text-slate-600" />
+                <span className="text-sm text-slate-500 dark:text-slate-400">{t('weeklyVolumeTrends')}</span>
+              </div>
+              <button onClick={() => onNavigate('upgrade')} className="text-xs text-indigo-500 hover:text-indigo-400 font-medium">Pro</button>
+            </div>
+            <div className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-2">
+                <Lock size={13} className="text-slate-300 dark:text-slate-600" />
+                <span className="text-sm text-slate-500 dark:text-slate-400">StreloIQ</span>
+              </div>
+              <button onClick={() => onNavigate('upgrade')} className="text-xs text-indigo-500 hover:text-indigo-400 font-medium">Pro</button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
