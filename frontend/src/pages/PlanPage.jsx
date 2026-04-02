@@ -14,18 +14,26 @@ const LEGEND = [
 
 export default function PlanPage({ workouts, onRefresh }) {
   const [formState, setFormState] = useState(null)
-  const [selected, setSelected] = useState(new Set()) // multi-select workout IDs
+  const [selected, setSelected] = useState(new Set())
   const [deleting, setDeleting] = useState(false)
+  // Local workouts for optimistic updates on drag
+  const [localWorkouts, setLocalWorkouts] = useState(null)
+  const displayWorkouts = localWorkouts || workouts
 
   const openNew = (dateStr) => { clearSelection(); setFormState({ workout: null, defaultDate: dateStr }) }
-  const openEdit = (workout) => { clearSelection(); setFormState({ workout, defaultDate: null }) }
   const closeForm = () => setFormState(null)
   const clearSelection = () => setSelected(new Set())
+
+  const openEdit = useCallback((workout) => {
+    clearSelection()
+    setFormState({ workout, defaultDate: null })
+  }, [])
 
   const handleSave = async (payload) => {
     if (formState?.workout) await updateWorkout(formState.workout.id, payload)
     else await createWorkout(payload)
     closeForm()
+    setLocalWorkouts(null)
     onRefresh()
   }
 
@@ -33,15 +41,24 @@ export default function PlanPage({ workouts, onRefresh }) {
     if (!confirm('Delete this workout?')) return
     await deleteWorkout(id)
     closeForm()
+    setLocalWorkouts(null)
     onRefresh()
   }
 
-  const handleMoveWorkout = async (workoutId, newDate) => {
+  const handleMoveWorkout = useCallback(async (workoutId, newDate) => {
+    // Optimistic update — move it instantly in local state
+    setLocalWorkouts(prev => {
+      const base = prev || workouts
+      return base.map(w => w.id === workoutId ? { ...w, date: newDate } : w)
+    })
+    // Then persist to API
     await updateWorkout(workoutId, { date: newDate })
     onRefresh()
-  }
+    // Clear optimistic state after refresh
+    setTimeout(() => setLocalWorkouts(null), 500)
+  }, [workouts, onRefresh])
 
-  // Multi-select: Ctrl/Cmd+click toggles selection
+  // Multi-select: Ctrl/Cmd+click
   const handleEventClick = useCallback((workout, e) => {
     if (e?.ctrlKey || e?.metaKey) {
       setSelected(prev => {
@@ -53,7 +70,7 @@ export default function PlanPage({ workouts, onRefresh }) {
     } else {
       openEdit(workout)
     }
-  }, [])
+  }, [openEdit])
 
   const handleBulkDelete = async () => {
     if (!confirm(`Delete ${selected.size} selected workout${selected.size > 1 ? 's' : ''}?`)) return
@@ -63,6 +80,7 @@ export default function PlanPage({ workouts, onRefresh }) {
     }
     clearSelection()
     setDeleting(false)
+    setLocalWorkouts(null)
     onRefresh()
   }
 
@@ -71,7 +89,7 @@ export default function PlanPage({ workouts, onRefresh }) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Training Calendar</h1>
-          <p className="text-slate-400 text-sm mt-0.5">Click to add · click event to edit · Ctrl+click to multi-select · drag to move</p>
+          <p className="text-slate-400 text-sm mt-0.5">Click to add · click event to edit · Ctrl+click to select · drag to move</p>
         </div>
         <button
           onClick={() => openNew(new Date().toISOString().split('T')[0])}
@@ -80,14 +98,14 @@ export default function PlanPage({ workouts, onRefresh }) {
         </button>
       </div>
 
-      {/* Multi-select toolbar */}
+      {/* Multi-select toolbar — sticky so it's visible when scrolled */}
       {selected.size > 0 && (
-        <div className="flex items-center justify-between bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg px-4 py-2.5 mb-3">
+        <div className="sticky top-14 z-30 flex items-center justify-between bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg px-4 py-2.5 mb-3">
           <div className="flex items-center gap-2 text-sm text-indigo-700 dark:text-indigo-300">
             <CheckSquare size={15} strokeWidth={2} />
             <span className="font-medium">{selected.size} workout{selected.size > 1 ? 's' : ''} selected</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button onClick={handleBulkDelete} disabled={deleting}
               className="flex items-center gap-1 text-xs font-medium text-red-600 dark:text-red-400 hover:text-red-500 transition-colors disabled:opacity-50">
               <Trash2 size={13} strokeWidth={2} />
@@ -115,7 +133,7 @@ export default function PlanPage({ workouts, onRefresh }) {
       </div>
 
       <Calendar
-        workouts={workouts}
+        workouts={displayWorkouts}
         onSelectSlot={openNew}
         onSelectEvent={handleEventClick}
         onMoveWorkout={handleMoveWorkout}
