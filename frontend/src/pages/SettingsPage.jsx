@@ -32,9 +32,12 @@ function Alert({ type, message }) {
 export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDark }) {
   const { t, lang, setLang } = useI18n()
   // Name
-  const [name, setName] = useState(user.name)
+  const nameParts = (user.name || '').split(' ')
+  const [firstName, setFirstName] = useState(nameParts[0] || '')
+  const [lastName, setLastName] = useState(nameParts.slice(1).join(' ') || '')
   const [nameMsg, setNameMsg] = useState(null)
   const [nameSaving, setNameSaving] = useState(false)
+  const fullName = `${firstName} ${lastName}`.trim()
 
   // Password
   const [currentPw, setCurrentPw] = useState('')
@@ -89,7 +92,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
     setNameMsg(null)
     setNameSaving(true)
     try {
-      const updated = await updateName(name)
+      const updated = await updateName(fullName)
       onUserUpdate(updated)
       setNameMsg({ type: 'success', message: t('nameUpdated') })
     } catch (err) {
@@ -140,20 +143,24 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
           <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">{t('email')}</label>
           <p className="text-sm text-slate-600 dark:text-slate-400">{user.email}</p>
         </div>
-        <div>
-          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">{t('name')}</label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <User size={16} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input value={name} onChange={e => setName(e.target.value)}
-                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white" />
-            </div>
-            <button onClick={handleNameSave} disabled={nameSaving || name === user.name}
-              className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-600 transition-colors disabled:opacity-40">
-              {nameSaving ? '...' : t('save')}
-            </button>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">First name</label>
+            <input value={firstName} onChange={e => setFirstName(e.target.value)}
+              placeholder="First name"
+              className={inputCls} />
+          </div>
+          <div>
+            <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">Last name</label>
+            <input value={lastName} onChange={e => setLastName(e.target.value)}
+              placeholder="Last name"
+              className={inputCls} />
           </div>
         </div>
+        <button onClick={handleNameSave} disabled={nameSaving || fullName === user.name}
+          className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-600 transition-colors disabled:opacity-40">
+          {nameSaving ? '...' : t('save')}
+        </button>
         {nameMsg && <Alert {...nameMsg} />}
         <div>
           <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t('plan')}</label>
