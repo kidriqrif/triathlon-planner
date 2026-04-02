@@ -48,21 +48,6 @@ function CustomToolbar({ date, onNavigate }) {
 
   return (
     <div className="flex items-center justify-between mb-3">
-      {/* Month selector */}
-      <div className="flex items-center gap-1">
-        <button onClick={() => changeMonth(-1)}
-          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
-          <ChevronLeft size={16} strokeWidth={2} />
-        </button>
-        <span className="text-sm font-semibold text-slate-800 dark:text-white w-10 text-center">
-          {MONTHS[month]}
-        </span>
-        <button onClick={() => changeMonth(1)}
-          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
-          <ChevronRight size={16} strokeWidth={2} />
-        </button>
-      </div>
-
       {/* Year selector */}
       <div className="flex items-center gap-1">
         <button onClick={() => changeYear(-1)}
@@ -73,6 +58,21 @@ function CustomToolbar({ date, onNavigate }) {
           {year}
         </span>
         <button onClick={() => changeYear(1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronRight size={16} strokeWidth={2} />
+        </button>
+      </div>
+
+      {/* Month selector */}
+      <div className="flex items-center gap-1">
+        <button onClick={() => changeMonth(-1)}
+          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+          <ChevronLeft size={16} strokeWidth={2} />
+        </button>
+        <span className="text-sm font-semibold text-slate-800 dark:text-white w-10 text-center">
+          {MONTHS[month]}
+        </span>
+        <button onClick={() => changeMonth(1)}
           className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
           <ChevronRight size={16} strokeWidth={2} />
         </button>
