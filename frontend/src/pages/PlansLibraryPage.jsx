@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { getPlans, importPlan } from '../api'
-import { Waves, Bike, Footprints, Calendar, CheckCircle, AlertCircle } from 'lucide-react'
+import { getPlans, importPlan, undoPlanImport } from '../api'
+import { Waves, Bike, Footprints, Calendar, CheckCircle, AlertCircle, Undo2 } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 
 const DISTANCE_META = {
@@ -48,9 +48,21 @@ export default function PlansLibraryPage({ onRefresh }) {
       </div>
 
       {result && (
-        <div className="flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-sm rounded-lg px-4 py-3">
-          <CheckCircle size={15} strokeWidth={1.5} />
-          Imported {result.imported} workouts from "{result.plan}" — {result.start_date} to {result.end_date}
+        <div className="flex items-center justify-between bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-sm rounded-lg px-4 py-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle size={15} strokeWidth={1.5} />
+            <span>Imported {result.imported} workouts from "{result.plan}"</span>
+          </div>
+          <button onClick={async () => {
+            try {
+              await undoPlanImport(result.import_id)
+              setResult(null)
+              if (onRefresh) onRefresh()
+            } catch { setError('Failed to undo') }
+          }}
+            className="flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-400 transition-colors shrink-0 ml-3">
+            <Undo2 size={13} strokeWidth={2} /> Undo
+          </button>
         </div>
       )}
 

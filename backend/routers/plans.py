@@ -1,3 +1,4 @@
+import uuid
 from datetime import date, timedelta
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
@@ -193,18 +194,19 @@ def import_plan(
         today = date.today()
         start = today + timedelta(days=(7 - today.weekday()) % 7 or 7)
 
+    import_id = str(uuid.uuid4())[:8]
     total_weeks = plan["weeks"]
     weekly_templates = plan["weekly"]
     created = 0
 
     for week_num in range(total_weeks):
-        # Cycle through templates (plans have fewer templates than weeks, they repeat phases)
         template_idx = min(week_num * len(weekly_templates) // total_weeks, len(weekly_templates) - 1)
         week_template = weekly_templates[template_idx]
         week_start = start + timedelta(weeks=week_num)
 
         for session in week_template:
             workout_date = week_start + timedelta(days=session["day"])
+            note = session.get("note", "")
             workout = models.Workout(
                 user_id=current_user.id,
                 date=workout_date,
@@ -213,7 +215,7 @@ def import_plan(
                 status="planned",
                 duration_min=session["min"],
                 distance_km=session.get("km"),
-                notes=session.get("note", ""),
+                notes=f"plan:{import_id} {note}".strip(),
             )
             db.add(workout)
             created += 1
@@ -221,7 +223,28 @@ def import_plan(
     db.commit()
     return {
         "imported": created,
+        "import_id": import_id,
         "plan": plan["name"],
         "start_date": str(start),
         "end_date": str(start + timedelta(weeks=total_weeks - 1, days=6)),
     }
+
+
+@router.delete("/undo/{import_id}")
+def undo_import(
+    import_id: str,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Delete all workouts from a specific plan import."""
+    workouts = db.query(models.Workout).filter(
+        models.Workout.user_id == current_user.id,
+        models.Workout.notes.contains(f"plan:{import_id}"),
+    ).all()
+    if not workouts:
+        raise HTTPException(status_code=404, detail="No workouts found for this import")
+    count = len(workouts)
+    for w in workouts:
+        db.delete(w)
+    db.commit()
+    return {"deleted": count}

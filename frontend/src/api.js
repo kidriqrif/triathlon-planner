@@ -129,6 +129,9 @@ export const getPlans = () =>
 export const importPlan = (planId, startDate) =>
   api.post(`/plans/${planId}/import`, null, { params: { start_date: startDate } }).then(r => r.data)
 
+export const undoPlanImport = (importId) =>
+  api.delete(`/plans/undo/${importId}`).then(r => r.data)
+
 // --- Templates ---
 export const getTemplates = () =>
   api.get('/templates').then(r => r.data)
