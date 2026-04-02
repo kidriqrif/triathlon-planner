@@ -132,8 +132,8 @@ export default function PlanPage({ workouts, onRefresh }) {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-[1fr,320px] gap-4">
-        {/* Calendar */}
+      {/* Calendar — full width */}
+      <div className="relative">
         <Calendar
           workouts={displayWorkouts}
           onSelectSlot={handleDateClick}
@@ -142,84 +142,86 @@ export default function PlanPage({ workouts, onRefresh }) {
           selectedIds={new Set()}
         />
 
-        {/* Day panel */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden lg:max-h-[590px] lg:overflow-y-auto">
-          {selectedDate ? (
-            <>
-              <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        {/* Day panel overlay */}
+        {selectedDate && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedDate(null)}>
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="relative bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 w-full max-w-sm max-h-[70vh] overflow-hidden flex flex-col"
+              onClick={e => e.stopPropagation()}>
+              {/* Header */}
+              <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
                 <div>
                   <p className="text-sm font-semibold text-slate-800 dark:text-white">{selectedDateFormatted}</p>
                   <p className="text-xs text-slate-400">{dayWorkouts.length} workout{dayWorkouts.length !== 1 ? 's' : ''}</p>
                 </div>
-                <button onClick={() => setFormState({ workout: null, defaultDate: selectedDate })}
-                  className="p-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                  <Plus size={14} strokeWidth={2} />
-                </button>
-              </div>
-
-              {dayWorkouts.length === 0 ? (
-                <div className="px-4 py-10 text-center">
-                  <p className="text-sm text-slate-400 dark:text-slate-500">No workouts</p>
+                <div className="flex items-center gap-1">
                   <button onClick={() => setFormState({ workout: null, defaultDate: selectedDate })}
-                    className="text-xs text-indigo-500 hover:text-indigo-400 font-medium mt-1">
-                    Add one
+                    className="p-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <Plus size={14} strokeWidth={2} />
+                  </button>
+                  <button onClick={() => setSelectedDate(null)}
+                    className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+                    <X size={14} strokeWidth={2} />
                   </button>
                 </div>
-              ) : (
-                <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                  {dayWorkouts.map(w => {
-                    const meta = SPORT_META[w.sport] || SPORT_META.run
-                    return (
-                      <div key={w.id} className="px-4 py-3 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
-                        {/* Sport dot */}
-                        <div className={`w-8 h-8 rounded-md ${meta.color} flex items-center justify-center shrink-0`}>
-                          <meta.Icon size={14} strokeWidth={1.5} className="text-white" />
-                        </div>
+              </div>
 
-                        {/* Info */}
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 dark:text-white">
-                            {meta.label} · {TYPE_LABELS[w.workout_type] || w.workout_type}
-                          </p>
-                          <p className="text-xs text-slate-400 dark:text-slate-500">
-                            {w.duration_min ? `${w.duration_min}min` : ''}
-                            {w.duration_min && w.distance_km ? ' · ' : ''}
-                            {w.distance_km ? `${w.distance_km}km` : ''}
-                            {!w.duration_min && !w.distance_km ? w.status : ''}
-                          </p>
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto">
+                {dayWorkouts.length === 0 ? (
+                  <div className="px-4 py-10 text-center">
+                    <p className="text-sm text-slate-400 dark:text-slate-500">No workouts</p>
+                    <button onClick={() => setFormState({ workout: null, defaultDate: selectedDate })}
+                      className="text-xs text-indigo-500 hover:text-indigo-400 font-medium mt-1">
+                      Add one
+                    </button>
+                  </div>
+                ) : (
+                  <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {dayWorkouts.map(w => {
+                      const meta = SPORT_META[w.sport] || SPORT_META.run
+                      return (
+                        <div key={w.id} className="px-4 py-3 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                          <div className={`w-8 h-8 rounded-md ${meta.color} flex items-center justify-center shrink-0`}>
+                            <meta.Icon size={14} strokeWidth={1.5} className="text-white" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-slate-800 dark:text-white">
+                              {meta.label} · {TYPE_LABELS[w.workout_type] || w.workout_type}
+                            </p>
+                            <p className="text-xs text-slate-400 dark:text-slate-500">
+                              {w.duration_min ? `${w.duration_min}min` : ''}
+                              {w.duration_min && w.distance_km ? ' · ' : ''}
+                              {w.distance_km ? `${w.distance_km}km` : ''}
+                              {!w.duration_min && !w.distance_km ? w.status : ''}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={() => setFormState({ workout: w, defaultDate: null })}
+                              title="Edit"
+                              className="p-1.5 rounded text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+                              <Pencil size={12} strokeWidth={2} />
+                            </button>
+                            <button onClick={() => { setSelectedDate(null); setMovingWorkout(w) }}
+                              title="Move to another day"
+                              className="p-1.5 rounded text-slate-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950 transition-colors">
+                              <ArrowRight size={12} strokeWidth={2} />
+                            </button>
+                            <button onClick={() => handleDeleteSingle(w.id)}
+                              title="Delete"
+                              className="p-1.5 rounded text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950 transition-colors">
+                              <Trash2 size={12} strokeWidth={2} />
+                            </button>
+                          </div>
                         </div>
-
-                        {/* Actions — visible on hover */}
-                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => setFormState({ workout: w, defaultDate: null })}
-                            title="Edit"
-                            className="p-1.5 rounded text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
-                            <Pencil size={12} strokeWidth={2} />
-                          </button>
-                          <button onClick={() => setMovingWorkout(w)}
-                            title="Move to another day"
-                            className="p-1.5 rounded text-slate-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950 transition-colors">
-                            <ArrowRight size={12} strokeWidth={2} />
-                          </button>
-                          <button onClick={() => handleDeleteSingle(w.id)}
-                            title="Delete"
-                            className="p-1.5 rounded text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950 transition-colors">
-                            <Trash2 size={12} strokeWidth={2} />
-                          </button>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="px-4 py-16 text-center">
-              <p className="text-sm text-slate-400 dark:text-slate-500">Select a date</p>
-              <p className="text-xs text-slate-300 dark:text-slate-600 mt-1">Click any day on the calendar</p>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {formState !== null && (
