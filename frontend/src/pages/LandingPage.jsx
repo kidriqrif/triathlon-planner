@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Waves, Bike, Footprints, Calendar, BarChart3, Zap, Target, Watch, BookOpen } from 'lucide-react'
-
 
 function useInView(ref) {
   const [visible, setVisible] = useState(false)
@@ -55,21 +54,19 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Hero — image + text */}
       <section className="relative">
-        {/* Animated gradient blobs */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[120px] animate-[pulse_6s_ease-in-out_infinite]" />
         <div className="absolute top-20 right-1/4 w-80 h-80 bg-violet-500/15 rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite_1s]" />
-        <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-blue-500/10 rounded-full blur-[80px] animate-[pulse_7s_ease-in-out_infinite_2s]" />
 
-        <div className="relative max-w-6xl mx-auto px-5 pt-16 pb-10 sm:pt-24 sm:pb-16">
+        <div className="relative max-w-6xl mx-auto px-5 pt-16 pb-8 sm:pt-24 sm:pb-12">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
             {/* Left — text */}
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <Waves size={16} className="text-blue-400 animate-bounce" style={{ animationDelay: '0s', animationDuration: '3s' }} />
-                <Bike size={16} className="text-orange-400 animate-bounce" style={{ animationDelay: '0.5s', animationDuration: '3s' }} />
-                <Footprints size={16} className="text-emerald-400 animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }} />
+                <Waves size={16} className="text-blue-400" />
+                <Bike size={16} className="text-orange-400" />
+                <Footprints size={16} className="text-emerald-400" />
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
                 Your triathlon.<br />
@@ -94,75 +91,33 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               <p className="text-xs text-white/30 mt-4">No credit card. No spam. Syncs with Strava.</p>
             </div>
 
-            {/* Right — floating sport icons */}
-            <div className="mt-10 lg:mt-0 relative hidden lg:flex items-center justify-center h-72">
-              <div className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[60px]" />
-              <div className="absolute w-36 h-36 rounded-full bg-orange-500/10 blur-[50px] translate-x-16" />
-              <div className="absolute w-40 h-40 rounded-full bg-emerald-500/10 blur-[50px] -translate-x-12 translate-y-8" />
-              <Waves size={48} strokeWidth={1} className="absolute text-blue-400/60 -translate-x-20 -translate-y-10 animate-[float_6s_ease-in-out_infinite]" />
-              <Bike size={56} strokeWidth={1} className="absolute text-orange-400/60 translate-x-8 -translate-y-4 animate-[float_7s_ease-in-out_infinite_1s]" />
-              <Footprints size={44} strokeWidth={1} className="absolute text-emerald-400/60 translate-x-24 translate-y-14 animate-[float_5s_ease-in-out_infinite_0.5s]" />
+            {/* Right — hero image */}
+            <div className="mt-10 lg:mt-0">
+              <img src="/hero.png" alt="Triathlon equipment" className="w-full rounded-xl" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* App preview with animated bars */}
+      {/* Dashboard preview */}
       <AnimatedSection>
         <div className="max-w-6xl mx-auto px-5 pb-16">
-          <div className="bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl shadow-black/50">
-            <div className="bg-white/5 border-b border-white/5 px-4 py-2.5 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded bg-indigo-500/50" />
-                <span className="text-xs font-medium text-white/40">Strelo</span>
-              </div>
-              <div className="flex gap-4 text-xs text-white/25">
-                <span className="text-white/60">Dashboard</span>
-                <span>Calendar</span>
-                <span>Log</span>
-                <span>Races</span>
-              </div>
-            </div>
-            <div className="p-5 space-y-3">
-              <div className="grid grid-cols-4 gap-3">
-                {[
-                  { label: 'This week', value: '5', sub: 'sessions', color: 'text-emerald-400' },
-                  { label: 'Hours', value: '6.2h', sub: 'training', color: 'text-blue-400' },
-                  { label: 'Streak', value: '12d', sub: 'consecutive', color: 'text-orange-400' },
-                  { label: 'Total', value: '148h', sub: 'all time', color: 'text-violet-400' },
-                ].map((s, i) => (
-                  <div key={i} className="bg-white/5 rounded-lg p-3">
-                    <p className="text-[10px] text-white/30">{s.label}</p>
-                    <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
-                    <p className="text-[10px] text-white/20">{s.sub}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex h-2 rounded-full overflow-hidden">
-                <div className="bg-blue-500 w-[25%] transition-all duration-1000" />
-                <div className="bg-orange-500 w-[40%] transition-all duration-1000" />
-                <div className="bg-emerald-500 w-[35%] transition-all duration-1000" />
-              </div>
-              <div className="flex items-end gap-1.5 h-24 pt-4">
-                {[40, 55, 35, 65, 50, 70, 45, 60].map((h, i) => (
-                  <div key={i} className="flex-1 flex flex-col gap-0.5 animate-[grow_1.5s_ease-out_forwards]" style={{ animationDelay: `${i * 0.1}s` }}>
-                    <div className="bg-blue-500/60 rounded-sm" style={{ height: `${h * 0.3}%` }} />
-                    <div className="bg-orange-500/60 rounded-sm" style={{ height: `${h * 0.4}%` }} />
-                    <div className="bg-emerald-500/60 rounded-sm" style={{ height: `${h * 0.3}%` }} />
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+            <img src="/dashboard.png" alt="Strelo dashboard" className="w-full" />
           </div>
+          <div className="absolute left-1/2 -translate-x-1/2 w-3/4 h-16 bg-indigo-500/20 blur-[60px] rounded-full" />
         </div>
       </AnimatedSection>
 
-      {/* Features */}
-      <section id="features" className="relative border-t border-white/5 bg-slate-900/50 scroll-mt-16">
-        <div className="max-w-6xl mx-auto px-5 py-20">
+      {/* Features — with background image */}
+      <section id="features" className="relative border-t border-white/5 scroll-mt-16 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <img src="/feature-bg.png" alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="relative max-w-6xl mx-auto px-5 py-20">
           <AnimatedSection>
             <p className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-3">What you get</p>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-12">
               Everything a triathlete needs.<br className="hidden sm:block" />
               <span className="text-white/40">Nothing you don't.</span>
             </h2>
@@ -176,9 +131,9 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               { Icon: BarChart3, title: 'Dashboard', desc: 'Volume trends, sport balance, RPE, streak, and personal records.', color: 'text-emerald-400 bg-emerald-500/10' },
               { Icon: Watch, title: 'Device export', desc: '.FIT files for Garmin, COROS, Wahoo. Follow workouts on your wrist.', color: 'text-cyan-400 bg-cyan-500/10' },
               { Icon: BookOpen, title: 'Strava sync', desc: 'Import completed activities. No double logging.', color: 'text-rose-400 bg-rose-500/10' },
-            ].map(({ Icon, title, desc, color }, i) => (
+            ].map(({ Icon, title, desc, color }) => (
               <AnimatedSection key={title}>
-                <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5 hover:bg-white/[0.06] hover:border-white/10 transition-all group">
+                <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5 hover:bg-white/[0.06] hover:border-white/10 transition-all backdrop-blur-sm group">
                   <div className={`w-9 h-9 rounded-lg ${color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
                     <Icon size={18} strokeWidth={1.5} />
                   </div>
@@ -190,6 +145,34 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
           </div>
         </div>
       </section>
+
+      {/* Mobile preview + text */}
+      <AnimatedSection>
+        <section className="border-t border-white/5">
+          <div className="max-w-6xl mx-auto px-5 py-20">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-3">Train anywhere</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+                  Your plan on every device.
+                </h2>
+                <p className="text-sm text-white/40 leading-relaxed mb-6">
+                  Strelo works on desktop, tablet, and phone. Install it as a PWA for instant access
+                  from your home screen. Export workouts to your Garmin, COROS, or Wahoo watch.
+                </p>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Strava auto-sync</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> .FIT export to watch</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> PWA — install on phone</li>
+                </ul>
+              </div>
+              <div className="mt-10 lg:mt-0 flex justify-center">
+                <img src="/mobile.png" alt="Strelo on mobile" className="max-h-96 rounded-xl" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Pricing */}
       <section id="pricing" className="border-t border-white/5 scroll-mt-16">
@@ -224,12 +207,15 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative border-t border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent" />
-        <div className="relative max-w-6xl mx-auto px-5 py-20 text-center">
+      {/* CTA — with background image */}
+      <section className="relative border-t border-white/5 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/cta-bg.png" alt="" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950" />
+        </div>
+        <div className="relative max-w-6xl mx-auto px-5 py-24 text-center">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold">Race day won't wait.</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold">Race day won't wait.</h2>
             <p className="text-white/40 mt-3 max-w-md mx-auto text-sm">Set up your plan in under a minute.</p>
             <button onClick={onGetStarted}
               className="mt-8 font-medium bg-indigo-500 hover:bg-indigo-400 px-6 py-3 rounded-lg transition-all hover:scale-105 inline-flex items-center gap-2 text-sm shadow-lg shadow-indigo-500/25">
