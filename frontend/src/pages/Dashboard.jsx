@@ -21,12 +21,12 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 function StatCard({ headerBg, headerText, value, unit }) {
   return (
-    <div className="rounded-lg overflow-hidden border border-slate-700/50 dark:border-slate-700/30">
-      <div className={`${headerBg} px-3 py-1.5 text-center`}>
-        <p className="text-xs font-semibold text-white">{headerText}</p>
+    <div className="rounded-lg overflow-hidden border-2 border-slate-600/40 dark:border-slate-600/30 bg-slate-100 dark:bg-slate-800/90">
+      <div className={`${headerBg} px-3 py-2 text-center`}>
+        <p className="text-xs font-bold text-white tracking-wide">{headerText}</p>
       </div>
-      <div className="bg-slate-800/80 dark:bg-slate-900/80 px-3 py-4 text-center">
-        <p className="text-2xl sm:text-3xl font-bold text-white">{value}<span className="text-sm font-normal text-slate-400 ml-1">{unit}</span></p>
+      <div className="px-3 py-5 text-center">
+        <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">{value}<span className="text-base font-normal text-slate-400 ml-1">{unit}</span></p>
       </div>
     </div>
   )
@@ -63,20 +63,20 @@ function WeeklySchedule({ workouts }) {
   }))
 
   return (
-    <div className="bg-slate-800/60 dark:bg-slate-900/80 rounded-lg border border-slate-700/30 overflow-hidden">
-      <div className="px-4 py-2.5 border-b border-slate-700/30">
-        <p className="text-sm font-semibold text-white">Weekly Schedule</p>
+    <div className="bg-white dark:bg-slate-800/90 rounded-lg border-2 border-slate-200 dark:border-slate-600/30 overflow-hidden">
+      <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-600/30">
+        <p className="text-sm font-semibold text-slate-800 dark:text-white">Weekly Schedule</p>
       </div>
-      <div className="grid grid-cols-7 border-b border-slate-700/30">
+      <div className="grid grid-cols-7 border-b border-slate-200 dark:border-slate-600/30">
         {DAYS.map(d => (
-          <div key={d} className="text-center py-2 text-xs font-medium text-slate-400 border-r border-slate-700/20 last:border-r-0">
+          <div key={d} className="text-center py-2 text-xs font-medium text-slate-500 dark:text-slate-400 border-r border-slate-200 dark:border-slate-600/20 last:border-r-0">
             {d}
           </div>
         ))}
       </div>
       <div className="grid grid-cols-7 min-h-[80px]">
         {weekWorkouts.map(({ day, workouts: wks }) => (
-          <div key={day} className="border-r border-slate-700/20 last:border-r-0 p-1 space-y-1">
+          <div key={day} className="border-r border-slate-200 dark:border-slate-600/20 last:border-r-0 p-1 space-y-1">
             {wks.length === 0 ? (
               <div className="h-full" />
             ) : (
@@ -139,7 +139,7 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       <RaceCountdown races={races} />
 
       {/* Title */}
-      <h2 className="text-lg font-bold text-slate-800 dark:text-white text-center dark:block hidden">Training Analytics</h2>
+      <h2 className="text-lg font-bold text-slate-800 dark:text-white text-center">Training Analytics</h2>
 
       {/* Stat cards — colored headers like the image */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -151,8 +151,8 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
 
       {/* Performance Overview — 3 mini charts */}
       {hasChartData && (
-        <div className="bg-slate-800/60 dark:bg-slate-900/80 rounded-lg border border-slate-700/30 p-4">
-          <p className="text-sm font-semibold text-white dark:text-white text-slate-800 mb-3">Performance Overview</p>
+        <div className="bg-white dark:bg-slate-800/90 rounded-lg border-2 border-slate-200 dark:border-slate-600/30 p-4">
+          <p className="text-sm font-semibold text-slate-800 dark:text-white mb-3">Performance Overview</p>
           <div className="flex gap-3">
             <MiniChart data={chartData.swim} color="#3b82f6" label="Swim" />
             <MiniChart data={chartData.bike} color="#f97316" label="Bike" />
