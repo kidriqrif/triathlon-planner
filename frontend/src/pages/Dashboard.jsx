@@ -5,42 +5,31 @@ import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
 import PersonalRecords from '../components/PersonalRecords'
 import WeatherWidget from '../components/WeatherWidget'
-import { Waves, Bike, Footprints, Dumbbell, Layers, CheckCircle, Clock, Flame, TrendingUp, Lock } from 'lucide-react'
-
-function ProLock({ label, desc, onUpgrade }) {
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <Lock size={16} className="text-slate-300 dark:text-slate-600" />
-        <div>
-          <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500">{desc}</p>
-        </div>
-      </div>
-      <button onClick={onUpgrade}
-        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
-        Pro
-      </button>
-    </div>
-  )
-}
+import { Waves, Bike, Footprints, Dumbbell, Layers, Lock } from 'lucide-react'
 
 const SPORT_META = {
-  swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20',    label: 'Swim'  },
-  bike:  { Icon: Bike,       color: 'text-orange-500',  bg: 'bg-orange-500/10 dark:bg-orange-500/20', border: 'border-orange-500/20', label: 'Bike'  },
-  run:   { Icon: Footprints, color: 'text-emerald-500', bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', border: 'border-emerald-500/20', label: 'Run'   },
-  gym:   { Icon: Dumbbell,   color: 'text-rose-500',    bg: 'bg-rose-500/10 dark:bg-rose-500/20',   border: 'border-rose-500/20',    label: 'Gym'   },
-  brick: { Icon: Layers,     color: 'text-violet-500',  bg: 'bg-violet-500/10 dark:bg-violet-500/20', border: 'border-violet-500/20', label: 'Brick' },
+  swim:  { Icon: Waves,      color: 'text-blue-400',    bg: 'bg-blue-500/15 dark:bg-blue-500/25', border: 'border-blue-500/30', glow: 'shadow-blue-500/20', accent: 'border-t-blue-500', label: 'Swim'  },
+  bike:  { Icon: Bike,       color: 'text-orange-400',  bg: 'bg-orange-500/15 dark:bg-orange-500/25', border: 'border-orange-500/30', glow: 'shadow-orange-500/20', accent: 'border-t-orange-500', label: 'Bike'  },
+  run:   { Icon: Footprints, color: 'text-emerald-400', bg: 'bg-emerald-500/15 dark:bg-emerald-500/25', border: 'border-emerald-500/30', glow: 'shadow-emerald-500/20', accent: 'border-t-emerald-500', label: 'Run'   },
+  gym:   { Icon: Dumbbell,   color: 'text-rose-400',    bg: 'bg-rose-500/15 dark:bg-rose-500/25', border: 'border-rose-500/30', glow: 'shadow-rose-500/20', accent: 'border-t-rose-500', label: 'Gym'   },
+  brick: { Icon: Layers,     color: 'text-violet-400',  bg: 'bg-violet-500/15 dark:bg-violet-500/25', border: 'border-violet-500/30', glow: 'shadow-violet-500/20', accent: 'border-t-violet-500', label: 'Brick' },
 }
 
-function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-white', icon }) {
+const STAT_STYLES = [
+  { accent: 'border-t-blue-500', valueColor: 'text-blue-400', glowColor: 'dark:shadow-blue-500/10' },
+  { accent: 'border-t-orange-500', valueColor: 'text-orange-400', glowColor: 'dark:shadow-orange-500/10' },
+  { accent: 'border-t-emerald-500', valueColor: 'text-emerald-400', glowColor: 'dark:shadow-emerald-500/10' },
+  { accent: 'border-t-violet-500', valueColor: 'text-violet-400', glowColor: 'dark:shadow-violet-500/10' },
+]
+
+function StatCard({ label, sub, value, style, icon }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
+    <div className={`bg-white dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-700/50 border-t-[3px] ${style.accent} p-4 ${style.glowColor} dark:shadow-lg`}>
       <div className="flex items-center justify-between">
         <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
         {icon}
       </div>
-      <p className={`text-2xl font-bold mt-1 ${valueColor}`}>{value}</p>
+      <p className={`text-2xl font-bold mt-1 ${style.valueColor}`}>{value}</p>
       <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{sub}</p>
     </div>
   )
@@ -67,14 +56,14 @@ function SportBreakdown({ workouts }) {
   if (sports.length === 0) return null
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+    <div className="bg-white dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-700/50 p-4">
       <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">{t('sportBreakdown')}</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {sports.map(sport => {
           const meta = SPORT_META[sport] || SPORT_META.brick
           const d = totals[sport]
           return (
-            <div key={sport} className={`rounded-lg p-2.5 border ${meta.bg} ${meta.border} flex items-center gap-2.5`}>
+            <div key={sport} className={`rounded-lg p-2.5 border ${meta.bg} ${meta.border} flex items-center gap-2.5 dark:shadow-sm ${meta.glow}`}>
               <meta.Icon size={18} strokeWidth={1.5} className={meta.color} />
               <div>
                 <p className={`text-sm font-semibold ${meta.color}`}>{meta.label}</p>
@@ -120,16 +109,17 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard label={t('thisWeek')} sub={t('sessionsDone')} value={weekDone.length}
-          icon={<CheckCircle size={15} strokeWidth={1.5} className="text-emerald-400" />} />
+          style={STAT_STYLES[0]}
+          icon={<Waves size={15} strokeWidth={1.5} className="text-blue-400/50" />} />
         <StatCard label={t('thisWeek')} sub={t('trainingHours')} value={`${weekHours.toFixed(1)}h`}
-          valueColor="text-blue-500"
-          icon={<Clock size={15} strokeWidth={1.5} className="text-blue-400" />} />
+          style={STAT_STYLES[1]}
+          icon={<Bike size={15} strokeWidth={1.5} className="text-orange-400/50" />} />
         <StatCard label={t('streak')} sub={t('consecutiveDays')} value={`${streak}d`}
-          valueColor="text-orange-500"
-          icon={<Flame size={15} strokeWidth={1.5} className="text-orange-400" />} />
+          style={STAT_STYLES[2]}
+          icon={<Footprints size={15} strokeWidth={1.5} className="text-emerald-400/50" />} />
         <StatCard label={t('allTime')} sub={t('hoursLogged')} value={`${Math.round(totalHours)}h`}
-          valueColor="text-violet-500"
-          icon={<TrendingUp size={15} strokeWidth={1.5} className="text-violet-400" />} />
+          style={STAT_STYLES[3]}
+          icon={<Layers size={15} strokeWidth={1.5} className="text-violet-400/50" />} />
       </div>
 
       <SportBreakdown workouts={workouts} />
@@ -143,8 +133,32 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
         </>
       ) : (
         <div className="space-y-2">
-          <ProLock label={t('weeklyVolumeTrends')} desc={t('seeTrainingLoad')} onUpgrade={() => onNavigate('upgrade')} />
-          <ProLock label={t('streloIQ')} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
+          <div className="bg-white dark:bg-slate-900/80 rounded-lg border border-dashed border-slate-200 dark:border-slate-700/50 p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Lock size={16} className="text-slate-300 dark:text-slate-600" />
+              <div>
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('weeklyVolumeTrends')}</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500">{t('seeTrainingLoad')}</p>
+              </div>
+            </div>
+            <button onClick={() => onNavigate('upgrade')}
+              className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
+              Pro
+            </button>
+          </div>
+          <div className="bg-white dark:bg-slate-900/80 rounded-lg border border-dashed border-slate-200 dark:border-slate-700/50 p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Lock size={16} className="text-slate-300 dark:text-slate-600" />
+              <div>
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">StreloIQ</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500">{t('autoGenerate')}</p>
+              </div>
+            </div>
+            <button onClick={() => onNavigate('upgrade')}
+              className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
+              Pro
+            </button>
+          </div>
         </div>
       )}
     </div>

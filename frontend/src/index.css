@@ -59,10 +59,10 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 .dark input[type="range"] {
-  background: #334155;
+  background: #1e293b;
 }
 .dark input[type="range"]::-webkit-slider-thumb {
-  border-color: #0f172a;
+  border-color: #0a0f1a;
   box-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 .dark input[type="range"]::-moz-range-thumb {
