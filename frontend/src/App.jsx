@@ -83,7 +83,7 @@ export default function App() {
     else setLoading(false)
   }, [user, fetchAll])
 
-  const handleAuth = (userData) => { setUser(userData); setLoading(true) }
+  const handleAuth = (userData) => { setUser(userData); setLoading(true); setPage('dashboard') }
 
   const handleLogout = () => {
     localStorage.removeItem('strelo_token')
