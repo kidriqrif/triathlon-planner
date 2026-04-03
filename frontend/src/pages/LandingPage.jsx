@@ -99,16 +99,6 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
         </div>
       </section>
 
-      {/* Dashboard preview */}
-      <AnimatedSection>
-        <div className="max-w-6xl mx-auto px-5 pb-16">
-          <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
-            <img src="/dashboard.webp" alt="Strelo dashboard" className="w-full" loading="lazy" />
-          </div>
-          <div className="absolute left-1/2 -translate-x-1/2 w-3/4 h-16 bg-indigo-500/20 blur-[60px] rounded-full" />
-        </div>
-      </AnimatedSection>
-
       {/* Features — with background image */}
       <section id="features" className="relative border-t border-white/5 scroll-mt-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
