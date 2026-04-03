@@ -93,7 +93,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
 
             {/* Right — hero image */}
             <div className="mt-10 lg:mt-0">
-              <img src="/hero.png" alt="Triathlon equipment" className="w-full rounded-xl" />
+              <img src="/hero.webp" alt="Triathlon equipment" className="w-full rounded-xl" />
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       <AnimatedSection>
         <div className="max-w-6xl mx-auto px-5 pb-16">
           <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
-            <img src="/dashboard.png" alt="Strelo dashboard" className="w-full" />
+            <img src="/dashboard.webp" alt="Strelo dashboard" className="w-full" loading="lazy" />
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 w-3/4 h-16 bg-indigo-500/20 blur-[60px] rounded-full" />
         </div>
@@ -112,7 +112,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       {/* Features — with background image */}
       <section id="features" className="relative border-t border-white/5 scroll-mt-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <img src="/feature-bg.png" alt="" className="w-full h-full object-cover" />
+          <img src="/feature-bg.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="relative max-w-6xl mx-auto px-5 py-20">
           <AnimatedSection>
@@ -167,7 +167,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
                 </ul>
               </div>
               <div className="mt-10 lg:mt-0 flex justify-center">
-                <img src="/mobile.png" alt="Strelo on mobile" className="max-h-96 rounded-xl" />
+                <img src="/mobile.webp" alt="Strelo on mobile" className="max-h-96 rounded-xl" loading="lazy" />
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       {/* CTA — with background image */}
       <section className="relative border-t border-white/5 overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/cta-bg.png" alt="" className="w-full h-full object-cover opacity-20" />
+          <img src="/cta-bg.webp" alt="" className="w-full h-full object-cover opacity-20" loading="lazy" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950" />
         </div>
         <div className="relative max-w-6xl mx-auto px-5 py-24 text-center">
