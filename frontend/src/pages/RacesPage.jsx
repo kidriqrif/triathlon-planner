@@ -8,7 +8,7 @@ import { useI18n } from '../i18n/I18nContext'
 const RACE_CATEGORIES = {
   triathlon: {
     label: 'Triathlon', Icon: Activity,
-    gradient: 'from-indigo-500 to-violet-600',
+    gradient: 'from-slate-700 to-slate-900',
     badge: 'bg-indigo-100 text-indigo-700 border-indigo-200',
     types: {
       sprint:  'Sprint  ·  750m / 20km / 5km',
@@ -63,7 +63,7 @@ const RACE_CATEGORIES = {
   },
   other: {
     label: 'Other', Icon: Medal,
-    gradient: 'from-violet-400 to-purple-600',
+    gradient: 'from-rose-500 to-pink-600',
     badge: 'bg-violet-100 text-violet-700 border-violet-200',
     types: {
       duathlon:  'Duathlon',
