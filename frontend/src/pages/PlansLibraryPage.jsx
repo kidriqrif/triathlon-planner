@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getPlans, importPlan, undoPlanImport } from '../api'
-import { Waves, Bike, Footprints, Calendar, CheckCircle, AlertCircle, Undo2 } from 'lucide-react'
+import { Waves, Bike, Footprints, Calendar, CheckCircle, AlertCircle, Undo2, Sparkles, Lock } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 
 const DISTANCE_META = {
@@ -12,8 +12,9 @@ const DISTANCE_META = {
 
 const LEVEL_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' }
 
-export default function PlansLibraryPage({ onRefresh }) {
+export default function PlansLibraryPage({ onRefresh, user }) {
   const { t } = useI18n()
+  const isPro = user?.plan === 'pro'
   const [plans, setPlans] = useState([])
   const [importing, setImporting] = useState(null)
   const [result, setResult] = useState(null)
@@ -47,11 +48,29 @@ export default function PlansLibraryPage({ onRefresh }) {
         </p>
       </div>
 
+      {/* Pro personalization banner */}
+      {isPro ? (
+        <div className="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 text-xs font-medium rounded-lg px-4 py-2.5">
+          <Sparkles size={14} strokeWidth={1.5} />
+          Plans are personalized to your profile — paces, volume, and fitness level
+        </div>
+      ) : (
+        <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5">
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <Lock size={13} strokeWidth={1.5} />
+            Upgrade to Pro for plans personalized to your paces and fitness level
+          </div>
+        </div>
+      )}
+
       {result && (
         <div className="flex items-center justify-between bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-sm rounded-lg px-4 py-3">
           <div className="flex items-center gap-2">
             <CheckCircle size={15} strokeWidth={1.5} />
-            <span>Imported {result.imported} workouts from "{result.plan}"</span>
+            <span>
+              Imported {result.imported} workouts from "{result.plan}"
+              {result.personalized && ' — personalized for you'}
+            </span>
           </div>
           <button onClick={async () => {
             try {
@@ -76,7 +95,7 @@ export default function PlansLibraryPage({ onRefresh }) {
         {plans.map(plan => {
           const meta = DISTANCE_META[plan.distance] || DISTANCE_META.sprint
           return (
-            <div key={plan.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+            <div key={plan.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
               <div className="flex items-start gap-4">
                 <div className={`w-12 h-12 rounded-lg ${meta.bg} flex flex-col items-center justify-center shrink-0`}>
                   <Waves size={10} className={meta.color} />

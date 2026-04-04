@@ -131,7 +131,7 @@ export default function App() {
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />
       case 'log':       return <LogPage workouts={workouts} onRefresh={fetchAll} user={user} />
       case 'races':     return <RacesPage races={races} onRefresh={fetchAll} />
-      case 'plans':     return <PlansLibraryPage onRefresh={fetchAll} />
+      case 'plans':     return <PlansLibraryPage onRefresh={fetchAll} user={user} />
       case 'journal':   return <JournalPage workouts={workouts} />
       case 'body':      return <BodyLogPage />
       case 'saved':     return <SavedPage user={user} onRefresh={fetchAll} />

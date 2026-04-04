@@ -20,9 +20,9 @@ PLAN_LIBRARY = [
         "distance": "sprint",
         "weeks": 8,
         "level": "beginner",
+        "assumed_hours": 5.0,
         "desc": "Get race-ready for a sprint tri. 4-5 sessions/week, builds from base to taper.",
         "weekly": [
-            # week 1-2: base
             [
                 {"day": 0, "sport": "swim", "type": "easy", "min": 30, "km": 1.0, "note": "Technique focus, relaxed pace"},
                 {"day": 1, "sport": "run", "type": "easy", "min": 25, "km": 4.0, "note": "Easy conversational pace"},
@@ -30,7 +30,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "swim", "type": "easy", "min": 30, "km": 1.2, "note": "Drills + steady swim"},
                 {"day": 6, "sport": "run", "type": "long", "min": 35, "km": 5.0, "note": "Long easy run"},
             ],
-            # week 3-4: build
             [
                 {"day": 0, "sport": "swim", "type": "tempo", "min": 35, "km": 1.4, "note": "4x100m tempo with rest"},
                 {"day": 1, "sport": "run", "type": "tempo", "min": 30, "km": 5.0, "note": "10min warm-up, 15min tempo, cool-down"},
@@ -39,7 +38,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "bike", "type": "tempo", "min": 50, "km": 22.0, "note": "Include 3x5min at race effort"},
                 {"day": 6, "sport": "run", "type": "long", "min": 40, "km": 6.0, "note": "Long run, negative split last 10min"},
             ],
-            # week 5-6: peak
             [
                 {"day": 0, "sport": "swim", "type": "interval", "min": 40, "km": 1.6, "note": "8x50m fast + 200m steady"},
                 {"day": 1, "sport": "run", "type": "interval", "min": 35, "km": 6.0, "note": "6x400m intervals, jog recovery"},
@@ -48,7 +46,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "brick", "type": "tempo", "min": 60, "km": None, "note": "30min bike + 15min run at race pace"},
                 {"day": 6, "sport": "swim", "type": "long", "min": 40, "km": 1.8, "note": "Race distance practice"},
             ],
-            # week 7-8: taper
             [
                 {"day": 0, "sport": "swim", "type": "easy", "min": 25, "km": 0.8, "note": "Short and sharp, stay loose"},
                 {"day": 1, "sport": "run", "type": "easy", "min": 20, "km": 3.0, "note": "Legs fresh, easy effort"},
@@ -63,9 +60,9 @@ PLAN_LIBRARY = [
         "distance": "olympic",
         "weeks": 12,
         "level": "intermediate",
+        "assumed_hours": 7.0,
         "desc": "Structured 12-week build for Olympic distance. 5-6 sessions/week with periodisation.",
         "weekly": [
-            # base (week 1-3)
             [
                 {"day": 0, "sport": "swim", "type": "easy", "min": 40, "km": 1.5, "note": "Technique drills + steady swim"},
                 {"day": 1, "sport": "run", "type": "easy", "min": 35, "km": 6.0, "note": "Aerobic base, zone 2"},
@@ -74,7 +71,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "run", "type": "easy", "min": 30, "km": 5.0, "note": "Easy recovery run"},
                 {"day": 6, "sport": "bike", "type": "long", "min": 70, "km": 30.0, "note": "Long ride, practice nutrition"},
             ],
-            # build 1 (week 4-6)
             [
                 {"day": 0, "sport": "swim", "type": "tempo", "min": 45, "km": 1.8, "note": "6x150m at threshold pace"},
                 {"day": 1, "sport": "run", "type": "tempo", "min": 40, "km": 7.0, "note": "20min tempo block"},
@@ -83,7 +79,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "swim", "type": "interval", "min": 45, "km": 2.0, "note": "10x100m on tight intervals"},
                 {"day": 6, "sport": "bike", "type": "long", "min": 80, "km": 35.0, "note": "Long ride with 20min tempo finish"},
             ],
-            # build 2 (week 7-9)
             [
                 {"day": 0, "sport": "swim", "type": "interval", "min": 50, "km": 2.2, "note": "Race pace 1500m broken sets"},
                 {"day": 1, "sport": "run", "type": "interval", "min": 45, "km": 8.0, "note": "5x1km at 10k pace"},
@@ -92,7 +87,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "brick", "type": "tempo", "min": 75, "km": None, "note": "45min ride at race effort + 20min run"},
                 {"day": 6, "sport": "run", "type": "long", "min": 55, "km": 10.0, "note": "Long run with negative split"},
             ],
-            # peak (week 10-11)
             [
                 {"day": 0, "sport": "swim", "type": "tempo", "min": 45, "km": 2.0, "note": "Race simulation: continuous 1500m"},
                 {"day": 1, "sport": "bike", "type": "interval", "min": 60, "km": 28.0, "note": "Race pace simulation 40km effort"},
@@ -100,7 +94,6 @@ PLAN_LIBRARY = [
                 {"day": 4, "sport": "swim", "type": "easy", "min": 30, "km": 1.2, "note": "Easy recovery swim"},
                 {"day": 5, "sport": "brick", "type": "interval", "min": 70, "km": None, "note": "Full race rehearsal: bike 30min + run 15min hard"},
             ],
-            # taper (week 12)
             [
                 {"day": 0, "sport": "swim", "type": "easy", "min": 25, "km": 0.8, "note": "Short openers, race feel"},
                 {"day": 1, "sport": "bike", "type": "easy", "min": 30, "km": 15.0, "note": "Spin, few race-pace surges"},
@@ -115,9 +108,9 @@ PLAN_LIBRARY = [
         "distance": "70.3",
         "weeks": 16,
         "level": "intermediate",
+        "assumed_hours": 8.0,
         "desc": "Comprehensive 16-week plan for 70.3. Builds volume then sharpens. 6-8 hours/week.",
         "weekly": [
-            # base (week 1-4)
             [
                 {"day": 0, "sport": "swim", "type": "easy", "min": 40, "km": 1.5, "note": "CSS pace work + drills"},
                 {"day": 1, "sport": "bike", "type": "easy", "min": 60, "km": 25.0, "note": "Zone 2 endurance"},
@@ -126,7 +119,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "bike", "type": "long", "min": 90, "km": 40.0, "note": "Long ride, practice fueling"},
                 {"day": 6, "sport": "run", "type": "long", "min": 50, "km": 9.0, "note": "Long slow run"},
             ],
-            # build (week 5-8)
             [
                 {"day": 0, "sport": "swim", "type": "tempo", "min": 50, "km": 2.0, "note": "Threshold sets"},
                 {"day": 1, "sport": "bike", "type": "tempo", "min": 75, "km": 35.0, "note": "Sweetspot intervals"},
@@ -135,7 +127,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "brick", "type": "long", "min": 120, "km": None, "note": "75min ride + 30min run"},
                 {"day": 6, "sport": "run", "type": "long", "min": 65, "km": 12.0, "note": "Progressive long run"},
             ],
-            # peak (week 9-12)
             [
                 {"day": 0, "sport": "swim", "type": "interval", "min": 55, "km": 2.4, "note": "Race-pace continuous sets"},
                 {"day": 1, "sport": "bike", "type": "interval", "min": 80, "km": 40.0, "note": "Race simulation effort"},
@@ -145,7 +136,6 @@ PLAN_LIBRARY = [
                 {"day": 5, "sport": "bike", "type": "long", "min": 120, "km": 55.0, "note": "Long ride with race-pace block"},
                 {"day": 6, "sport": "run", "type": "long", "min": 75, "km": 14.0, "note": "Longest run of the block"},
             ],
-            # sharpen + taper (week 13-16)
             [
                 {"day": 0, "sport": "swim", "type": "tempo", "min": 40, "km": 1.6, "note": "Short race-pace work"},
                 {"day": 1, "sport": "bike", "type": "tempo", "min": 60, "km": 28.0, "note": "Openers, few hard surges"},
@@ -157,6 +147,95 @@ PLAN_LIBRARY = [
     },
 ]
 
+
+# ─── Personalization helpers ──────────────────────────────────────────────────
+
+LEVEL_FACTOR = {"beginner": 0.85, "intermediate": 1.0, "advanced": 1.15}
+
+RUN_PACE_FACTOR = {
+    "easy": 1.15, "long": 1.10, "tempo": 1.0, "interval": 0.90, "recovery": 1.25,
+}
+SWIM_PACE_FACTOR = {
+    "easy": 1.15, "long": 1.10, "tempo": 1.0, "interval": 0.90, "recovery": 1.20,
+}
+BIKE_POWER_FACTOR = {
+    "easy": 0.65, "long": 0.70, "tempo": 0.85, "interval": 1.05, "recovery": 0.55,
+}
+
+
+def _parse_pace(pace_str):
+    """Parse 'M:SS' pace string to float minutes. e.g. '5:30' → 5.5"""
+    if not pace_str:
+        return None
+    try:
+        parts = pace_str.strip().split(":")
+        return int(parts[0]) + int(parts[1]) / 60
+    except (ValueError, IndexError):
+        return None
+
+
+def _format_pace(minutes):
+    """Float minutes → 'M:SS' string. e.g. 5.5 → '5:30'"""
+    m = int(minutes)
+    s = round((minutes - m) * 60)
+    return f"{m}:{s:02d}"
+
+
+def _parse_swim_pace(pace_str):
+    """Parse 'M:SS' swim pace to seconds per 100m. e.g. '1:45' → 105"""
+    if not pace_str:
+        return None
+    try:
+        parts = pace_str.strip().split(":")
+        return int(parts[0]) * 60 + int(parts[1])
+    except (ValueError, IndexError):
+        return None
+
+
+def _format_swim_pace(seconds):
+    """Seconds → 'M:SS'. e.g. 105 → '1:45'"""
+    m = int(seconds // 60)
+    s = round(seconds % 60)
+    return f"{m}:{s:02d}"
+
+
+def _personalize_session(session, athlete, volume_scale):
+    """Scale a template session based on athlete profile. Returns new dict."""
+    s = dict(session)
+
+    # Scale duration by volume factor and fitness level
+    fitness = LEVEL_FACTOR.get(athlete.fitness_level, 1.0)
+    scale = volume_scale * fitness
+    s["min"] = max(10, round(s["min"] * scale))
+
+    # Run: recalculate distance from actual pace
+    if s["sport"] == "run" and athlete.run_pace_km:
+        pace = _parse_pace(athlete.run_pace_km)
+        if pace and s.get("km"):
+            factor = RUN_PACE_FACTOR.get(s["type"], 1.0)
+            target_pace = pace * factor
+            s["km"] = round(s["min"] / target_pace, 1)
+            s["note"] = f"Target: {_format_pace(target_pace)}/km — {s.get('note', '')}"
+
+    # Swim: recalculate distance from actual pace
+    elif s["sport"] == "swim" and athlete.swim_pace_100m:
+        pace_sec = _parse_swim_pace(athlete.swim_pace_100m)
+        if pace_sec and s.get("km"):
+            factor = SWIM_PACE_FACTOR.get(s["type"], 1.0)
+            target_pace = pace_sec * factor
+            s["km"] = round((s["min"] * 60 / target_pace) * 0.1, 1)
+            s["note"] = f"Target: {_format_swim_pace(round(target_pace))}/100m — {s.get('note', '')}"
+
+    # Bike: add power target to notes
+    elif s["sport"] == "bike" and athlete.bike_ftp_watts:
+        factor = BIKE_POWER_FACTOR.get(s["type"], 0.75)
+        target_w = round(athlete.bike_ftp_watts * factor)
+        s["note"] = f"Target: ~{target_w}W — {s.get('note', '')}"
+
+    return s
+
+
+# ─── API ──────────────────────────────────────────────────────────────────────
 
 class PlanSummary(BaseModel):
     id: str
@@ -194,6 +273,21 @@ def import_plan(
         today = date.today()
         start = today + timedelta(days=(7 - today.weekday()) % 7 or 7)
 
+    # Pro users get personalized plans
+    personalized = False
+    athlete = None
+    volume_scale = 1.0
+
+    if current_user.plan == "pro":
+        athlete = db.query(models.Athlete).filter(
+            models.Athlete.user_id == current_user.id
+        ).first()
+        if athlete:
+            personalized = True
+            if athlete.weekly_hours_target and plan.get("assumed_hours"):
+                volume_scale = athlete.weekly_hours_target / plan["assumed_hours"]
+                volume_scale = max(0.6, min(1.4, volume_scale))
+
     import_id = str(uuid.uuid4())[:8]
     total_weeks = plan["weeks"]
     weekly_templates = plan["weekly"]
@@ -205,16 +299,21 @@ def import_plan(
         week_start = start + timedelta(weeks=week_num)
 
         for session in week_template:
-            workout_date = week_start + timedelta(days=session["day"])
-            note = session.get("note", "")
+            if personalized:
+                s = _personalize_session(session, athlete, volume_scale)
+            else:
+                s = session
+
+            workout_date = week_start + timedelta(days=s["day"])
+            note = s.get("note", "")
             workout = models.Workout(
                 user_id=current_user.id,
                 date=workout_date,
-                sport=session["sport"],
-                workout_type=session["type"],
+                sport=s["sport"],
+                workout_type=s["type"],
                 status="planned",
-                duration_min=session["min"],
-                distance_km=session.get("km"),
+                duration_min=s["min"],
+                distance_km=s.get("km"),
                 notes=f"plan:{import_id} {note}".strip(),
             )
             db.add(workout)
@@ -227,6 +326,7 @@ def import_plan(
         "plan": plan["name"],
         "start_date": str(start),
         "end_date": str(start + timedelta(weeks=total_weeks - 1, days=6)),
+        "personalized": personalized,
     }
 
 
