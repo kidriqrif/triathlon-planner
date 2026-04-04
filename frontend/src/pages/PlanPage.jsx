@@ -99,7 +99,7 @@ export default function PlanPage({ workouts, onRefresh }) {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Training Calendar</h1>
+          <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-white">Training Calendar</h1>
           <p className="text-slate-400 text-sm mt-0.5">
             {movingWorkout
               ? 'Click a date to move the workout there'

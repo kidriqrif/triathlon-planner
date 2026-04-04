@@ -40,7 +40,7 @@ function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-wh
         <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
         {icon}
       </div>
-      <p className={`text-2xl font-bold mt-1 ${valueColor}`}>{value}</p>
+      <p className={`font-display text-2xl font-bold mt-1 ${valueColor}`}>{value}</p>
       <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{sub}</p>
     </div>
   )

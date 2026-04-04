@@ -135,11 +135,7 @@ export default function ShareCard({ type, data }) {
       {/* Card */}
       <div ref={cardRef}
         className="relative rounded-lg overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/50 shadow-md">
-        {/* Decorative accents */}
-        <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -ml-8 -mb-8 pointer-events-none" />
-
-        <div className="relative p-4">
+        <div className="p-4">
           {type === 'week' ? <WeekContent data={data} /> : <RaceContent data={data} />}
 
           {/* Branding */}

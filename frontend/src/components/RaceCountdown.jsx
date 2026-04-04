@@ -37,7 +37,7 @@ function Ring({ daysToRace, phase }) {
           strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-bold text-white leading-none">{Math.max(0, daysToRace)}</span>
+        <span className="font-display text-2xl font-bold text-white leading-none">{Math.max(0, daysToRace)}</span>
         <span className="text-[10px] text-white/60 uppercase tracking-widest mt-0.5">days</span>
       </div>
     </div>
@@ -105,7 +105,7 @@ export default function RaceCountdown({ races }) {
               {phase} Phase
             </span>
           </div>
-          <p className="text-white font-bold text-xl leading-tight mt-2 truncate">{activeRace.name}</p>
+          <p className="font-display text-white font-bold text-xl leading-tight mt-2 truncate">{activeRace.name}</p>
           <div className="flex items-center gap-1.5 text-white/70 text-sm mt-0.5">
             <CategoryIcon size={13} strokeWidth={1.5} />
             <span>{activeRace.date}</span>

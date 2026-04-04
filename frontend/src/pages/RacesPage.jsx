@@ -318,7 +318,7 @@ export default function RacesPage({ races, onRefresh }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('races')}</h1>
+          <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-white">{t('races')}</h1>
           <p className="text-slate-400 text-sm mt-0.5">{races.length} {t('racesPlanned')}</p>
         </div>
         <button onClick={() => setFormState({ race: null })}

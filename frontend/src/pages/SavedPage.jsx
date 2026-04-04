@@ -107,7 +107,7 @@ export default function SavedPage({ user, onRefresh }) {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-800 dark:text-white">{t('savedWorkouts')}</h1>
+          <h1 className="font-display text-xl font-bold text-slate-800 dark:text-white">{t('savedWorkouts')}</h1>
           <p className="text-sm text-slate-400 dark:text-slate-500 mt-0.5">
             {templates.length}{!isPro && `/${limit}`} {templates.length !== 1 ? t('templates') : t('template')}
             {!isPro && ` — ${t('upgradeUnlimited')}`}

@@ -93,7 +93,7 @@ export default function OnboardingPage({ user, onComplete }) {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Welcome to Strelo, {user.name}!</h2>
+        <h2 className="font-display text-2xl font-bold text-slate-800 dark:text-white">Welcome to Strelo, {user.name}!</h2>
         <p className="text-slate-400 mt-2 max-w-sm mx-auto">
           Let's set up your training profile in under a minute so we can personalise your experience.
         </p>

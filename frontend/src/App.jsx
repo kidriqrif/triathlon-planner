@@ -159,7 +159,7 @@ export default function App() {
                 <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="font-bold text-slate-900 dark:text-white text-sm">Strelo</span>
+            <span className="font-display font-bold text-slate-900 dark:text-white text-sm">Strelo</span>
           </button>
 
           <div className="flex items-center gap-1.5">

@@ -135,7 +135,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
 
   return (
     <div className="space-y-3 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('accountSettings')}</h1>
+      <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-white">{t('accountSettings')}</h1>
 
       {/* Name */}
       <Section title={t('profile')}>
