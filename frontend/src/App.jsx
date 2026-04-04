@@ -253,7 +253,7 @@ export default function App() {
         {renderPage()}
       </main>
 
-      {user.plan === 'pro' && <SupportChat />}
+      <SupportChat />
     </div>
   )
 }
