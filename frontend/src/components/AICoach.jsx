@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import { suggestWeek, createWorkout } from '../api'
+import React, { useState, useRef, useEffect } from 'react'
+import { aiChat, createWorkout } from '../api'
 import { addDays, nextMonday, format } from 'date-fns'
-import { Bot, Waves, Bike, Footprints } from 'lucide-react'
-
-const SPORT_COLORS = {
-  swim: 'border-blue-300 bg-blue-50',
-  bike: 'border-orange-300 bg-orange-50',
-  run: 'border-green-300 bg-green-50',
-  brick: 'border-purple-300 bg-purple-50',
-}
-
-const SPORT_BADGE = {
-  swim: 'bg-blue-100 text-blue-800',
-  bike: 'bg-orange-100 text-orange-800',
-  run: 'bg-green-100 text-green-800',
-  brick: 'bg-purple-100 text-purple-800',
-}
+import { Bot, Send, User, Waves, Bike, Footprints, CalendarPlus, Check, Layers } from 'lucide-react'
 
 const DAY_OFFSETS = {
   Monday: 0, Tuesday: 1, Wednesday: 2, Thursday: 3,
   Friday: 4, Saturday: 5, Sunday: 6,
+}
+
+const SPORT_ICON = { swim: Waves, bike: Bike, run: Footprints, brick: Layers }
+const SPORT_COLOR = {
+  swim:  'border-blue-400 bg-blue-50 dark:bg-blue-950',
+  bike:  'border-orange-400 bg-orange-50 dark:bg-orange-950',
+  run:   'border-emerald-400 bg-emerald-50 dark:bg-emerald-950',
+  brick: 'border-violet-400 bg-violet-50 dark:bg-violet-950',
+}
+const SPORT_BADGE = {
+  swim:  'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+  bike:  'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300',
+  run:   'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300',
+  brick: 'bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300',
 }
 
 function getNextWeekDate(dayName) {
@@ -28,26 +28,96 @@ function getNextWeekDate(dayName) {
   return format(addDays(monday, offset), 'yyyy-MM-dd')
 }
 
+function PlanCard({ plan, onAdd, addedIds, addingId }) {
+  return (
+    <div className="space-y-2 mt-2">
+      {plan.week_focus && (
+        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{plan.week_focus}</p>
+      )}
+      {plan.workouts?.map((w, i) => {
+        const Icon = SPORT_ICON[w.sport] || Footprints
+        const added = addedIds.has(i)
+        return (
+          <div key={i} className={`rounded-lg border-l-[3px] p-2.5 ${SPORT_COLOR[w.sport] || 'border-slate-300 bg-slate-50 dark:bg-slate-800'}`}>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <Icon size={13} strokeWidth={1.5} className="text-slate-500 shrink-0" />
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{w.day}</span>
+                <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full capitalize ${SPORT_BADGE[w.sport] || 'bg-slate-100 text-slate-600'}`}>
+                  {w.sport}
+                </span>
+                <span className="text-[10px] text-slate-400 capitalize">{w.workout_type}</span>
+              </div>
+              <button
+                onClick={() => onAdd(w, i)}
+                disabled={added || addingId === i}
+                className={`shrink-0 p-1 rounded-md transition-colors ${
+                  added
+                    ? 'text-emerald-500'
+                    : 'text-slate-400 hover:text-indigo-500 hover:bg-white dark:hover:bg-slate-800'
+                }`}
+                title={added ? 'Added' : 'Add to calendar'}
+              >
+                {added ? <Check size={14} strokeWidth={2} /> : <CalendarPlus size={14} strokeWidth={1.5} />}
+              </button>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{w.description}</p>
+            <div className="flex gap-3 mt-0.5 text-[10px] text-slate-400">
+              {w.duration_min && <span>{w.duration_min}min</span>}
+              {w.distance_km && <span>{w.distance_km}km</span>}
+            </div>
+          </div>
+        )
+      })}
+      {plan.workouts?.length > 0 && (
+        <button
+          onClick={() => plan.workouts.forEach((w, i) => { if (!addedIds.has(i)) onAdd(w, i) })}
+          className="w-full text-xs font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-lg py-2 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+          Add all to calendar
+        </button>
+      )}
+    </div>
+  )
+}
+
 export default function AICoach({ onWorkoutsAdded }) {
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [plan, setPlan] = useState(null)
-  const [error, setError] = useState(null)
+  const [latestPlan, setLatestPlan] = useState(null)
   const [addedIds, setAddedIds] = useState(new Set())
   const [addingId, setAddingId] = useState(null)
+  const scrollRef = useRef(null)
 
-  const handleGenerate = async () => {
-    setLoading(true)
-    setError(null)
-    setPlan(null)
-    setAddedIds(new Set())
-    try {
-      const result = await suggestWeek()
-      setPlan(result)
-    } catch (e) {
-      setError(e.response?.data?.detail || 'Failed to generate plan. Is the backend running?')
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
+  }, [messages, loading])
+
+  const handleSend = async (e) => {
+    e.preventDefault()
+    const text = input.trim()
+    if (!text || loading) return
+
+    const userMsg = { role: 'user', content: text }
+    const updated = [...messages, userMsg]
+    setMessages(updated)
+    setInput('')
+    setLoading(true)
+
+    try {
+      const { reply, plan } = await aiChat(updated)
+      setMessages(prev => [...prev, { role: 'assistant', content: reply, plan }])
+      if (plan) {
+        setLatestPlan(plan)
+        setAddedIds(new Set())
+      }
+    } catch (err) {
+      const detail = err.response?.data?.detail || 'Failed to get a response.'
+      setMessages(prev => [...prev, { role: 'assistant', content: detail }])
+    }
+    setLoading(false)
   }
 
   const handleAdd = async (workout, idx) => {
@@ -64,111 +134,108 @@ export default function AICoach({ onWorkoutsAdded }) {
       })
       setAddedIds(prev => new Set([...prev, idx]))
       onWorkoutsAdded?.()
-    } catch (e) {
-      alert('Failed to add workout')
+    } catch {
+      // silently fail
     } finally {
       setAddingId(null)
     }
   }
 
-  const handleAddAll = async () => {
-    if (!plan?.workouts) return
-    for (let i = 0; i < plan.workouts.length; i++) {
-      if (!addedIds.has(i)) await handleAdd(plan.workouts[i], i)
-    }
-  }
+  const isEmpty = messages.length === 0
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
-            <Bot size={18} strokeWidth={1.5} className="text-indigo-500" />
-            StreloIQ
-          </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Your intelligent training engine — personalised plans based on your history</p>
-        </div>
-        <button
-          onClick={handleGenerate}
-          disabled={loading}
-          className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2 text-sm">
-          {loading ? (
-            <>
-              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-              </svg>
-              Thinking…
-            </>
-          ) : 'Generate Next Week\'s Plan'}
-        </button>
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden"
+      style={{ height: isEmpty ? 'auto' : '520px' }}>
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
+        <h2 className="font-display text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <Bot size={16} strokeWidth={1.5} className="text-indigo-500" />
+          StreloIQ
+        </h2>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
 
-      {error && (
-        <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-xl p-4 text-sm mb-4">
-          {error}
-        </div>
-      )}
-
-      {plan && (
-        <div className="space-y-3">
-          <div className="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-xl p-4">
-            <p className="font-semibold text-indigo-900 dark:text-indigo-200">{plan.week_focus}</p>
-            <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">{plan.rationale}</p>
+      {/* Messages */}
+      {isEmpty ? (
+        <div className="px-4 py-10 text-center">
+          <div className="flex justify-center gap-2 mb-3 text-slate-200 dark:text-slate-700">
+            <Waves size={22} strokeWidth={1.5} />
+            <Bike size={22} strokeWidth={1.5} />
+            <Footprints size={22} strokeWidth={1.5} />
           </div>
-
-          <div className="grid gap-3">
-            {plan.workouts?.map((w, i) => (
-              <div key={i}
-                className={`rounded-xl border-2 p-4 flex items-start justify-between gap-3 ${SPORT_COLORS[w.sport] || 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'}`}>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{w.day}</span>
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${SPORT_BADGE[w.sport] || 'bg-slate-100 text-slate-700'}`}>
-                      {w.sport}
-                    </span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400 capitalize">{w.workout_type}</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">{w.description}</p>
-                  <div className="flex gap-3 mt-1 text-xs text-slate-400">
-                    {w.duration_min && <span>{w.duration_min} min</span>}
-                    {w.distance_km && <span>{w.distance_km} km</span>}
-                  </div>
-                </div>
-                <button
-                  onClick={() => handleAdd(w, i)}
-                  disabled={addedIds.has(i) || addingId === i}
-                  className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                    addedIds.has(i)
-                      ? 'bg-green-100 text-green-700 border-green-300 cursor-default'
-                      : 'bg-white dark:bg-slate-800 text-indigo-600 border-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
-                  }`}>
-                  {addedIds.has(i) ? '✓ Added' : addingId === i ? '…' : 'Add'}
-                </button>
-              </div>
+          <p className="text-sm text-slate-400 dark:text-slate-500">Tell StreloIQ how you're feeling, what you want to focus on, or just ask for next week's plan.</p>
+          <div className="flex flex-wrap justify-center gap-1.5 mt-4">
+            {['Plan my next week', 'I want to focus on the bike', "I'm feeling tired, keep it easy"].map(q => (
+              <button key={q} onClick={() => { setInput(q) }}
+                className="text-xs text-indigo-500 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-full px-3 py-1.5 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+                {q}
+              </button>
             ))}
           </div>
-
-          {plan.workouts?.length > 0 && (
-            <button
-              onClick={handleAddAll}
-              className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition-colors">
-              Add All to Calendar
-            </button>
+        </div>
+      ) : (
+        <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3 min-h-0">
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {msg.role === 'assistant' && (
+                <div className="w-6 h-6 rounded-md bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center shrink-0 mt-0.5">
+                  <Bot size={13} strokeWidth={2} className="text-indigo-500 dark:text-indigo-400" />
+                </div>
+              )}
+              <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
+                <div className={`text-sm leading-relaxed px-3 py-2 rounded-lg ${
+                  msg.role === 'user'
+                    ? 'bg-indigo-500 text-white rounded-br-sm'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-bl-sm'
+                }`}>
+                  {msg.content}
+                </div>
+                {msg.plan && (
+                  <PlanCard
+                    plan={msg.plan}
+                    onAdd={handleAdd}
+                    addedIds={addedIds}
+                    addingId={addingId}
+                  />
+                )}
+              </div>
+              {msg.role === 'user' && (
+                <div className="w-6 h-6 rounded-md bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <User size={13} strokeWidth={2} className="text-slate-500 dark:text-slate-400" />
+                </div>
+              )}
+            </div>
+          ))}
+          {loading && (
+            <div className="flex gap-2">
+              <div className="w-6 h-6 rounded-md bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center shrink-0">
+                <Bot size={13} strokeWidth={2} className="text-indigo-500 dark:text-indigo-400" />
+              </div>
+              <div className="bg-slate-100 dark:bg-slate-800 text-slate-400 text-sm px-3 py-2 rounded-lg rounded-bl-sm">
+                <span className="flex gap-1">
+                  <span className="w-1.5 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </span>
+              </div>
+            </div>
           )}
         </div>
       )}
 
-      {!plan && !loading && !error && (
-        <div className="text-center py-10 text-slate-400">
-          <div className="flex justify-center gap-3 mb-3 text-slate-200">
-            <Waves size={28} strokeWidth={1.5} />
-            <Bike size={28} strokeWidth={1.5} />
-            <Footprints size={28} strokeWidth={1.5} />
-          </div>
-          <p className="text-sm">Click the button above to get AI-generated training suggestions</p>
-        </div>
-      )}
+      {/* Input */}
+      <form onSubmit={handleSend} className="px-3 py-3 border-t border-slate-100 dark:border-slate-800 flex gap-2 shrink-0">
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="Ask StreloIQ about your week..."
+          className="flex-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none"
+        />
+        <button type="submit" disabled={loading || !input.trim()}
+          className="w-9 h-9 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white flex items-center justify-center transition-colors disabled:opacity-40 shrink-0">
+          <Send size={15} strokeWidth={2} />
+        </button>
+      </form>
     </div>
   )
 }

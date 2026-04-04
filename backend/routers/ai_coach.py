@@ -41,6 +41,27 @@ def _build_training_summary(workouts: list) -> str:
     return "\n".join(lines)
 
 
+CHAT_SYSTEM_PROMPT = """You are StreloIQ, an expert triathlon coach inside the Strelo training app. You help athletes plan their upcoming training week through conversation.
+
+RULES:
+- You have the athlete's profile, race target, and recent training history below. Use this context to give specific, personalised advice.
+- Be conversational and concise — 2-4 sentences per response. Sound like a real coach, not a robot.
+- When you're ready to propose workouts (either because the athlete asked or you have enough context), include them as a JSON block wrapped in ```json fences.
+- The JSON block must use this exact structure:
+```json
+{"week_focus":"...","rationale":"...","workouts":[{"day":"Monday","sport":"run","workout_type":"easy","duration_min":40,"distance_km":7.0,"description":"..."}]}
+```
+- Allowed sport values: swim, bike, run, brick
+- Allowed workout_type values: easy, tempo, interval, long, recovery
+- Use day names: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+- If the athlete asks to adjust the plan (swap days, change intensity, drop a session, etc.), output an updated JSON block with the changes.
+- If the athlete asks something unrelated to training, briefly redirect them.
+- Do NOT include the JSON block unless you're proposing or updating a plan. Normal coaching chat doesn't need it.
+- Include 5-7 workouts per week unless the athlete specifies otherwise.
+
+{athlete_context}"""
+
+
 MOCK_RESPONSE = {
     "week_focus": "Aerobic base building",
     "rationale": (
@@ -246,3 +267,140 @@ Include 5-7 workouts spread across the week."""
         raise HTTPException(
             status_code=500, detail=f"AI suggestion failed: {str(e)}"
         )
+
+
+# ─── Conversational chat endpoint ────────────────────────────────────────────
+
+from pydantic import BaseModel
+from typing import List, Optional
+
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    messages: List[ChatMessage]
+
+
+def _build_athlete_context(athlete, active_race, today, training_summary):
+    """Build the athlete context string for the system prompt."""
+    parts = [f"Fitness level: {athlete.fitness_level}"]
+    parts.append(f"Weekly hours target: {athlete.weekly_hours_target}h")
+    if athlete.age:
+        parts.append(f"Age: {athlete.age}")
+    if athlete.weight_kg:
+        parts.append(f"Weight: {athlete.weight_kg} kg")
+    if athlete.swim_pace_100m:
+        parts.append(f"Swim pace: {athlete.swim_pace_100m} per 100m")
+    if athlete.bike_ftp_watts:
+        parts.append(f"Bike FTP: {athlete.bike_ftp_watts} W")
+    if athlete.run_pace_km:
+        parts.append(f"Run pace: {athlete.run_pace_km} per km")
+    if athlete.preferred_days:
+        parts.append(f"Available training days: {athlete.preferred_days}")
+    if athlete.injuries_notes:
+        parts.append(f"Injuries / limitations: {athlete.injuries_notes}")
+    if athlete.goal_description:
+        parts.append(f"Goal: {athlete.goal_description}")
+
+    race_info = "No upcoming race set."
+    phase = "Base"
+    if active_race:
+        days_to_race = (active_race.date - today).days
+        phase = _get_training_phase(days_to_race)
+        race_info = f"{active_race.name} ({active_race.distance}) on {active_race.date} — {days_to_race} days away. Phase: {phase}"
+
+    context = f"""ATHLETE PROFILE:
+{chr(10).join(parts)}
+
+RACE TARGET: {race_info}
+
+LAST 4 WEEKS OF TRAINING:
+{training_summary}"""
+    return context
+
+
+@router.post("/chat")
+@limiter.limit("15/hour")
+def ai_chat(
+    request: Request,
+    payload: ChatRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    if current_user.plan != "pro":
+        raise HTTPException(status_code=403, detail="StreloIQ requires a Pro subscription")
+
+    api_key = os.getenv("GROQ_API_KEY", "")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="AI not configured")
+
+    # Gather athlete context
+    athlete = db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).first()
+    if not athlete:
+        athlete = models.Athlete(user_id=current_user.id)
+
+    active_race = (
+        db.query(models.Race)
+        .filter(models.Race.user_id == current_user.id, models.Race.is_active == True)
+        .order_by(models.Race.date)
+        .first()
+    )
+
+    today = date.today()
+    four_weeks_ago = today - timedelta(weeks=4)
+    recent_workouts = (
+        db.query(models.Workout)
+        .filter(
+            models.Workout.user_id == current_user.id,
+            models.Workout.date >= four_weeks_ago,
+            models.Workout.date <= today,
+        )
+        .order_by(models.Workout.date)
+        .all()
+    )
+
+    training_summary = _build_training_summary(recent_workouts)
+    athlete_context = _build_athlete_context(athlete, active_race, today, training_summary)
+    system = CHAT_SYSTEM_PROMPT.replace("{athlete_context}", athlete_context)
+
+    try:
+        from groq import Groq
+        client = Groq(api_key=api_key)
+
+        messages = [{"role": "system", "content": system}]
+        for msg in payload.messages[-12:]:
+            messages.append({"role": msg.role, "content": msg.content})
+
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=messages,
+            max_tokens=1500,
+            temperature=0.7,
+        )
+
+        reply_text = response.choices[0].message.content.strip()
+
+        # Extract JSON plan if present in response
+        plan = None
+        if "```json" in reply_text:
+            try:
+                json_start = reply_text.index("```json") + 7
+                json_end = reply_text.index("```", json_start)
+                json_str = reply_text[json_start:json_end].strip()
+                plan = json.loads(json_str)
+                # Remove the JSON block from the text reply
+                reply_text = (
+                    reply_text[:reply_text.index("```json")].strip()
+                    + "\n\n"
+                    + reply_text[json_end + 3:].strip()
+                ).strip()
+            except (ValueError, json.JSONDecodeError):
+                pass  # Failed to parse, just return raw text
+
+        return {"reply": reply_text, "plan": plan}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")

@@ -96,6 +96,9 @@ export const updateAthlete = (data) =>
 export const suggestWeek = () =>
   api.post('/ai/suggest-week').then(r => r.data)
 
+export const aiChat = (messages) =>
+  api.post('/ai/chat', { messages }).then(r => r.data)
+
 // --- Billing ---
 export const createCheckout = (plan = 'monthly') =>
   api.post('/billing/checkout', null, { params: { plan } }).then(r => r.data)
