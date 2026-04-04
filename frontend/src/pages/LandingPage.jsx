@@ -85,7 +85,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
 
       {/* How it works */}
       <section className="border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-5 py-20">
+        <div className="max-w-5xl mx-auto px-5 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
             <motion.p variants={fade} className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">How it works</motion.p>
             <motion.h2 variants={fade} className="font-display text-2xl font-bold mb-14">Three steps to race-ready.</motion.h2>
@@ -109,7 +109,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
 
       {/* Features — asymmetric layout */}
       <section id="features" className="border-t border-white/5 scroll-mt-16">
-        <div className="max-w-5xl mx-auto px-5 py-20">
+        <div className="max-w-5xl mx-auto px-5 pt-24 pb-20">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
             <motion.p variants={fade} className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Features</motion.p>
             <motion.h2 variants={fade} className="font-display text-2xl font-bold mb-10">What you get.</motion.h2>
@@ -208,7 +208,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
 
       {/* Pricing */}
       <section id="pricing" className="border-t border-white/5 scroll-mt-16">
-        <div className="max-w-5xl mx-auto px-5 py-20">
+        <div className="max-w-5xl mx-auto px-5 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
             <div className="sm:flex items-start gap-12">
               <motion.div variants={fade} className="mb-8 sm:mb-0 sm:w-1/3">
