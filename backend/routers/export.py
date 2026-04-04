@@ -9,12 +9,6 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
-from fit_tool.fit_file_builder import FitFileBuilder
-from fit_tool.profile.messages.file_id_message import FileIdMessage
-from fit_tool.profile.messages.workout_message import WorkoutMessage
-from fit_tool.profile.messages.workout_step_message import WorkoutStepMessage
-from fit_tool.profile.profile_type import Sport, Intensity, WorkoutStepDuration, WorkoutStepTarget, FileType, Manufacturer
-
 from database import get_db
 from auth_utils import get_current_user
 import models
@@ -25,13 +19,6 @@ router = APIRouter(prefix="/export", tags=["export"])
 
 # In-memory store for download tokens (short-lived, cleaned on use)
 _download_tokens = {}
-
-SPORT_MAP = {
-    "swim": Sport.SWIMMING,
-    "bike": Sport.CYCLING,
-    "run": Sport.RUNNING,
-    "brick": Sport.MULTISPORT,
-}
 
 WORKOUT_TYPE_LABELS = {
     "easy": "Easy",
@@ -82,6 +69,19 @@ def export_workout_fit(
     db: Session = Depends(get_db),
 ):
     """Export a single workout as a .FIT file for Garmin/COROS/Wahoo."""
+    from fit_tool.fit_file_builder import FitFileBuilder
+    from fit_tool.profile.messages.file_id_message import FileIdMessage
+    from fit_tool.profile.messages.workout_message import WorkoutMessage
+    from fit_tool.profile.messages.workout_step_message import WorkoutStepMessage
+    from fit_tool.profile.profile_type import Sport, Intensity, WorkoutStepDuration, WorkoutStepTarget, FileType, Manufacturer
+
+    SPORT_MAP = {
+        "swim": Sport.SWIMMING,
+        "bike": Sport.CYCLING,
+        "run": Sport.RUNNING,
+        "brick": Sport.MULTISPORT,
+    }
+
     user_id = _validate_download_token(token)
 
     workout = db.query(models.Workout).filter(

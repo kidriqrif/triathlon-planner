@@ -8,30 +8,8 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-from database import engine, Base
 import models  # noqa: F401 — registers models with Base
 from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export, support, templates, plans, bodylog, digest
-
-Base.metadata.create_all(bind=engine)
-
-# Migrate: add new columns if missing (safe to run repeatedly)
-from sqlalchemy import inspect, text
-with engine.connect() as conn:
-    user_cols = {c["name"] for c in inspect(engine).get_columns("users")}
-    new_user_cols = {
-        "plan": "VARCHAR NOT NULL DEFAULT 'free'",
-        "onboarded": "BOOLEAN NOT NULL DEFAULT FALSE",
-        "lemon_customer_id": "VARCHAR",
-        "lemon_subscription_id": "VARCHAR",
-        "strava_athlete_id": "VARCHAR",
-        "strava_access_token": "VARCHAR",
-        "strava_refresh_token": "VARCHAR",
-        "strava_token_expires": "INTEGER",
-    }
-    for col, dtype in new_user_cols.items():
-        if col not in user_cols:
-            conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {dtype}"))
-    conn.commit()
 
 # Rate limiter
 limiter = Limiter(key_func=get_remote_address, default_limits=["120/minute"])
