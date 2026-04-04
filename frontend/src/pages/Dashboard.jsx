@@ -144,7 +144,7 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       ) : (
         <div className="space-y-2">
           <ProLock label={t('weeklyVolumeTrends')} desc={t('seeTrainingLoad')} onUpgrade={() => onNavigate('upgrade')} />
-          <ProLock label={t('streloIQ')} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
+          <ProLock label={<>Strelo<span className="text-indigo-500">IQ</span></>} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
         </div>
       )}
     </div>
