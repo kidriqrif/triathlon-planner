@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        display: ['Outfit', 'DM Sans', 'system-ui', 'sans-serif'],
       },
     },
   },
