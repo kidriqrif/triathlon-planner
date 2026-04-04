@@ -10,7 +10,7 @@ const SPORT_META = {
   bike:  { Icon: Bike,       label: 'Bike',  color: 'bg-orange-500', text: 'text-orange-600 dark:text-orange-400' },
   run:   { Icon: Footprints, label: 'Run',   color: 'bg-green-500',  text: 'text-green-600 dark:text-green-400' },
   brick: { Icon: Layers,     label: 'Brick', color: 'bg-violet-500', text: 'text-violet-600 dark:text-violet-400' },
-  gym:   { Icon: Dumbbell,   label: 'Gym',   color: 'bg-rose-500',   text: 'text-rose-600 dark:text-rose-400' },
+  gym:   { Icon: Dumbbell,   label: 'Gym',   color: 'bg-pink-500',   text: 'text-pink-600 dark:text-pink-400' },
 }
 
 const TYPE_LABELS = {
@@ -24,7 +24,7 @@ const LEGEND = [
   { color: 'bg-orange-500', label: 'Bike',  Icon: Bike       },
   { color: 'bg-green-500',  label: 'Run',   Icon: Footprints },
   { color: 'bg-violet-500', label: 'Brick', Icon: Layers     },
-  { color: 'bg-rose-500',   label: 'Gym',   Icon: Dumbbell   },
+  { color: 'bg-pink-500',   label: 'Gym',   Icon: Dumbbell   },
 ]
 
 export default function PlanPage({ workouts, onRefresh }) {
@@ -221,7 +221,7 @@ export default function PlanPage({ workouts, onRefresh }) {
                   <div className="px-4 py-10 text-center">
                     <p className="text-sm text-slate-400 dark:text-slate-500">No workouts</p>
                     <button onClick={() => setFormState({ workout: null, defaultDate: selectedDate })}
-                      className="text-xs text-indigo-500 hover:text-indigo-400 font-medium mt-1">
+                      className="text-xs text-rose-500 hover:text-rose-400 font-medium mt-1">
                       Add one
                     </button>
                   </div>
@@ -248,7 +248,7 @@ export default function PlanPage({ workouts, onRefresh }) {
                           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button onClick={() => setFormState({ workout: w, defaultDate: null })}
                               title="Edit"
-                              className="p-1.5 rounded text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+                              className="p-1.5 rounded text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
                               <Pencil size={12} strokeWidth={2} />
                             </button>
                             <button onClick={() => { setSelectedDate(null); setMovingWorkout(w) }}

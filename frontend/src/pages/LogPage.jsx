@@ -11,7 +11,7 @@ const SPORT_CONFIG = {
   bike:  { Icon: Bike,       label: 'Bike',  border: 'border-l-orange-400', badge: 'bg-orange-50 text-orange-700 border-orange-200' },
   run:   { Icon: Footprints, label: 'Run',   border: 'border-l-green-400',  badge: 'bg-green-50 text-green-700 border-green-200'    },
   brick: { Icon: Layers,     label: 'Brick', border: 'border-l-violet-400', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
-  gym:   { Icon: Dumbbell,   label: 'Gym',   border: 'border-l-rose-400',   badge: 'bg-rose-50 text-rose-700 border-rose-200'       },
+  gym:   { Icon: Dumbbell,   label: 'Gym',   border: 'border-l-pink-400',   badge: 'bg-pink-50 text-pink-700 border-pink-200'       },
 }
 
 const STATUS_CONFIG = {
@@ -153,7 +153,7 @@ export default function LogPage({ workouts, onRefresh, user }) {
                     <button
                       onClick={e => { e.stopPropagation(); exportFit(w.id) }}
                       title="Download .FIT file"
-                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-all shrink-0"
+                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950 transition-all shrink-0"
                     >
                       <Download size={14} strokeWidth={2} />
                     </button>

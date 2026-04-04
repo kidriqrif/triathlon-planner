@@ -32,7 +32,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
   return (
     <div className="space-y-2 mt-2">
       {plan.week_focus && (
-        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{plan.week_focus}</p>
+        <p className="text-xs font-semibold text-rose-600 dark:text-rose-400">{plan.week_focus}</p>
       )}
       {plan.workouts?.map((w, i) => {
         const Icon = SPORT_ICON[w.sport] || Footprints
@@ -54,7 +54,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
                 className={`shrink-0 p-1 rounded-md transition-colors ${
                   added
                     ? 'text-emerald-500'
-                    : 'text-slate-400 hover:text-indigo-500 hover:bg-white dark:hover:bg-slate-800'
+                    : 'text-slate-400 hover:text-rose-500 hover:bg-white dark:hover:bg-slate-800'
                 }`}
                 title={added ? 'Added' : 'Add to calendar'}
               >
@@ -72,7 +72,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
       {plan.workouts?.length > 0 && (
         <button
           onClick={() => plan.workouts.forEach((w, i) => { if (!addedIds.has(i)) onAdd(w, i) })}
-          className="w-full text-xs font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-lg py-2 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+          className="w-full text-xs font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg py-2 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
           Add all to calendar
         </button>
       )}
@@ -149,8 +149,8 @@ export default function AICoach({ onWorkoutsAdded }) {
       {/* Header */}
       <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
         <h2 className="font-display text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-          <Bot size={16} strokeWidth={1.5} className="text-indigo-500" />
-          Strelo<span className="text-indigo-500">IQ</span>
+          <Bot size={16} strokeWidth={1.5} className="text-rose-500" />
+          Strelo<span className="text-rose-500">IQ</span>
         </h2>
         <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
@@ -167,7 +167,7 @@ export default function AICoach({ onWorkoutsAdded }) {
           <div className="flex flex-wrap justify-center gap-1.5 mt-4">
             {['Plan my next week', 'I want to focus on the bike', "I'm feeling tired, keep it easy"].map(q => (
               <button key={q} onClick={() => { setInput(q) }}
-                className="text-xs text-indigo-500 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-full px-3 py-1.5 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors">
+                className="text-xs text-rose-500 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-full px-3 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
                 {q}
               </button>
             ))}
@@ -178,14 +178,14 @@ export default function AICoach({ onWorkoutsAdded }) {
           {messages.map((msg, i) => (
             <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'assistant' && (
-                <div className="w-6 h-6 rounded-md bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center shrink-0 mt-0.5">
-                  <Bot size={13} strokeWidth={2} className="text-indigo-500 dark:text-indigo-400" />
+                <div className="w-6 h-6 rounded-md bg-rose-100 dark:bg-rose-900 flex items-center justify-center shrink-0 mt-0.5">
+                  <Bot size={13} strokeWidth={2} className="text-rose-500 dark:text-rose-400" />
                 </div>
               )}
               <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
                 <div className={`text-sm leading-relaxed px-3 py-2 rounded-lg ${
                   msg.role === 'user'
-                    ? 'bg-indigo-500 text-white rounded-br-sm'
+                    ? 'bg-rose-500 text-white rounded-br-sm'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-bl-sm'
                 }`}>
                   {msg.content}
@@ -208,8 +208,8 @@ export default function AICoach({ onWorkoutsAdded }) {
           ))}
           {loading && (
             <div className="flex gap-2">
-              <div className="w-6 h-6 rounded-md bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center shrink-0">
-                <Bot size={13} strokeWidth={2} className="text-indigo-500 dark:text-indigo-400" />
+              <div className="w-6 h-6 rounded-md bg-rose-100 dark:bg-rose-900 flex items-center justify-center shrink-0">
+                <Bot size={13} strokeWidth={2} className="text-rose-500 dark:text-rose-400" />
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 text-slate-400 text-sm px-3 py-2 rounded-lg rounded-bl-sm">
                 <span className="flex gap-1">
@@ -229,10 +229,10 @@ export default function AICoach({ onWorkoutsAdded }) {
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Ask StreloIQ about your week..."
-          className="flex-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none"
+          className="flex-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none"
         />
         <button type="submit" disabled={loading || !input.trim()}
-          className="w-9 h-9 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white flex items-center justify-center transition-colors disabled:opacity-40 shrink-0">
+          className="w-9 h-9 rounded-lg bg-rose-500 hover:bg-rose-400 text-white flex items-center justify-center transition-colors disabled:opacity-40 shrink-0">
           <Send size={15} strokeWidth={2} />
         </button>
       </form>

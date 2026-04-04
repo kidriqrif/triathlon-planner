@@ -45,7 +45,7 @@ export default function UpgradePage({ user }) {
         {isPro ? 'You\'re on Pro' : 'Upgrade to Pro'}
       </h1>
       <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 mb-4">
-        {isPro ? 'All premium features are unlocked.' : <>Unlock Strelo<span className="text-indigo-500">IQ</span> and let the engine write your training week.</>}
+        {isPro ? 'All premium features are unlocked.' : <>Unlock Strelo<span className="text-rose-500">IQ</span> and let the engine write your training week.</>}
       </p>
 
       {error && (
@@ -58,7 +58,7 @@ export default function UpgradePage({ user }) {
       {isPro ? (
         <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-900">
           <p className="font-bold text-slate-900 dark:text-white">Pro Plan Active</p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">You have access to all features including Strelo<span className="text-indigo-500">IQ</span>.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">You have access to all features including Strelo<span className="text-rose-500">IQ</span>.</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-5">
@@ -79,7 +79,7 @@ export default function UpgradePage({ user }) {
             </button>
           </div>
 
-          <div className="border-2 border-indigo-500 rounded-xl p-4 bg-white dark:bg-slate-900">
+          <div className="border-2 border-rose-500 rounded-xl p-4 bg-white dark:bg-slate-900">
             <p className="text-sm font-bold text-slate-900 dark:text-white">Pro</p>
             <div className="flex items-baseline gap-2 mt-1">
               <p className="text-3xl font-extrabold text-slate-900 dark:text-white">$12.99</p>
@@ -89,13 +89,13 @@ export default function UpgradePage({ user }) {
             <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
               {PRO_FEATURES.map(f => (
                 <li key={f} className="flex items-start gap-2">
-                  <Check size={15} strokeWidth={2.5} className="text-indigo-500 mt-0.5 shrink-0" />{f}
+                  <Check size={15} strokeWidth={2.5} className="text-rose-500 mt-0.5 shrink-0" />{f}
                 </li>
               ))}
             </ul>
             <div className="mt-4 space-y-2">
               <button onClick={() => handleUpgrade('monthly')} disabled={!!loading}
-                className="w-full py-2.5 rounded-lg text-sm font-semibold bg-indigo-500 text-white hover:bg-indigo-400 transition-colors disabled:opacity-50">
+                className="w-full py-2.5 rounded-lg text-sm font-semibold bg-rose-500 text-white hover:bg-rose-400 transition-colors disabled:opacity-50">
                 {loading === 'monthly' ? 'Redirecting...' : 'Monthly — $12.99/mo'}
               </button>
               <button onClick={() => handleUpgrade('yearly')} disabled={!!loading}

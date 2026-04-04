@@ -8,7 +8,7 @@ import {
 import useDark from '../utils/useDark'
 import { useI18n } from '../i18n/I18nContext'
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white'
 
 const QUALITY_LABELS = ['', 'Poor', 'Fair', 'OK', 'Good', 'Great']
 
@@ -97,7 +97,7 @@ export default function BodyLogPage() {
       <form onSubmit={handleSubmit}
         className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
         <div className="flex items-center gap-2 mb-1">
-          <Plus size={16} strokeWidth={2} className="text-indigo-500" />
+          <Plus size={16} strokeWidth={2} className="text-rose-500" />
           <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('newEntry')}</p>
         </div>
 
@@ -143,7 +143,7 @@ export default function BodyLogPage() {
                   onClick={() => setForm(f => ({ ...f, sleep_quality: f.sleep_quality === String(q) ? '' : String(q) }))}
                   className={`flex-1 py-2.5 rounded-xl text-xs font-bold border-2 transition-all ${
                     form.sleep_quality === String(q)
-                      ? 'bg-indigo-600 text-white border-indigo-600'
+                      ? 'bg-rose-600 text-white border-rose-600'
                       : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}
                   title={QUALITY_LABELS[q]}>
@@ -166,7 +166,7 @@ export default function BodyLogPage() {
         </div>
 
         <button type="submit" disabled={saving}
-          className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 transition-colors disabled:opacity-50">
+          className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 dark:bg-rose-600 hover:bg-slate-800 dark:hover:bg-rose-500 transition-colors disabled:opacity-50">
           {saving ? t('saving') : t('logEntry')}
         </button>
       </form>

@@ -50,7 +50,7 @@ export default function JournalPage({ workouts }) {
           <button key={key} onClick={() => setFilter(key)}
             className={`px-4 py-1.5 rounded-xl text-sm font-bold border-2 transition-all ${
               filter === key
-                ? 'bg-slate-800 dark:bg-indigo-600 text-white border-slate-800 dark:border-indigo-600'
+                ? 'bg-slate-800 dark:bg-rose-600 text-white border-slate-800 dark:border-rose-600'
                 : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
             }`}>
             {t(tKey)}

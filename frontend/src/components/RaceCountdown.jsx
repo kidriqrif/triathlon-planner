@@ -3,7 +3,7 @@ import { differenceInDays } from 'date-fns'
 import { Activity, Footprints, Bike, Waves, Medal, Flag, Trophy } from 'lucide-react'
 
 const PHASES = {
-  Base:  { color: '#6366f1', bg: 'from-slate-700 to-slate-900',      badge: 'bg-indigo-100 text-indigo-700 border-indigo-200', desc: 'Foundation — build consistency' },
+  Base:  { color: '#6366f1', bg: 'from-slate-700 to-slate-900',      badge: 'bg-rose-100 text-rose-700 border-rose-200', desc: 'Foundation — build consistency' },
   Build: { color: '#f59e0b', bg: 'from-amber-400 to-orange-500',    badge: 'bg-amber-100 text-amber-700 border-amber-200',   desc: 'Build — raise fitness & speed' },
   Peak:  { color: '#f97316', bg: 'from-orange-400 to-red-500',      badge: 'bg-orange-100 text-orange-700 border-orange-200', desc: 'Peak — sharpen for race day' },
   Taper: { color: '#22c55e', bg: 'from-green-400 to-emerald-500',   badge: 'bg-green-100 text-green-700 border-green-200',   desc: 'Taper — rest up, you\'re ready' },

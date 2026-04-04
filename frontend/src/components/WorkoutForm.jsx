@@ -8,7 +8,7 @@ const SPORT_CONFIG = {
   bike:  { Icon: Bike,       label: 'Bike',  color: 'bg-orange-500', types: ['easy','tempo','interval','long','recovery'] },
   run:   { Icon: Footprints, label: 'Run',   color: 'bg-green-500',  types: ['easy','tempo','interval','long','recovery'] },
   brick: { Icon: Layers,     label: 'Brick', color: 'bg-violet-500', types: ['easy','race-sim','long','recovery'] },
-  gym:   { Icon: Dumbbell,   label: 'Gym',   color: 'bg-rose-500',   types: ['strength','mobility','hiit','circuit','yoga'] },
+  gym:   { Icon: Dumbbell,   label: 'Gym',   color: 'bg-pink-500',   types: ['strength','mobility','hiit','circuit','yoga'] },
 }
 
 const TYPE_LABELS = {
@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
   skipped:   { icon: '✗', active: 'bg-red-400 text-white border-red-400' },
 }
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
 
 export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, onClose }) {
   const today = defaultDate || new Date().toISOString().split('T')[0]
@@ -147,8 +147,8 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
                   <button key={t} type="button" onClick={() => handleTypeChange(t)}
                     className={`px-3 py-1.5 rounded-xl text-sm font-semibold border transition-all ${
                       form.workout_type === t
-                        ? 'bg-indigo-600 text-white border-indigo-600'
-                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-rose-300'
                     }`}>
                     {TYPE_LABELS[t] || t}
                   </button>

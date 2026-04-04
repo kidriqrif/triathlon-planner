@@ -18,7 +18,7 @@ function ProLock({ label, desc, onUpgrade }) {
         </div>
       </div>
       <button onClick={onUpgrade}
-        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:border-indigo-400 transition-colors">
+        className="text-xs font-medium text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 px-3 py-1.5 rounded-md hover:bg-rose-50 dark:hover:bg-rose-950 hover:border-rose-400 transition-colors">
         Pro
       </button>
     </div>
@@ -29,7 +29,7 @@ const SPORT_META = {
   swim:  { Icon: Waves,      color: 'text-blue-500',    bg: 'bg-blue-500/10 dark:bg-blue-500/20',   border: 'border-blue-500/20',    label: 'Swim'  },
   bike:  { Icon: Bike,       color: 'text-orange-500',  bg: 'bg-orange-500/10 dark:bg-orange-500/20', border: 'border-orange-500/20', label: 'Bike'  },
   run:   { Icon: Footprints, color: 'text-emerald-500', bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', border: 'border-emerald-500/20', label: 'Run'   },
-  gym:   { Icon: Dumbbell,   color: 'text-rose-500',    bg: 'bg-rose-500/10 dark:bg-rose-500/20',   border: 'border-rose-500/20',    label: 'Gym'   },
+  gym:   { Icon: Dumbbell,   color: 'text-pink-500',    bg: 'bg-pink-500/10 dark:bg-pink-500/20',   border: 'border-pink-500/20',    label: 'Gym'   },
   brick: { Icon: Layers,     color: 'text-violet-500',  bg: 'bg-violet-500/10 dark:bg-violet-500/20', border: 'border-violet-500/20', label: 'Brick' },
 }
 
@@ -144,7 +144,7 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
       ) : (
         <div className="space-y-2">
           <ProLock label={t('weeklyVolumeTrends')} desc={t('seeTrainingLoad')} onUpgrade={() => onNavigate('upgrade')} />
-          <ProLock label={<>Strelo<span className="text-indigo-500">IQ</span></>} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
+          <ProLock label={<>Strelo<span className="text-rose-500">IQ</span></>} desc={t('autoGenerate')} onUpgrade={() => onNavigate('upgrade')} />
         </div>
       )}
     </div>

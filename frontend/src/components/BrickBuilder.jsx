@@ -54,7 +54,7 @@ function SegmentCard({ seg, index, total, onChange, onDelete, onMove }) {
   const setNum = (field) => (e) =>
     onChange({ ...seg, [field]: e.target.value === '' ? '' : +e.target.value })
 
-  const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
+  const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none'
 
   return (
     <div className={`rounded-lg border-2 ${meta.border} ${meta.bg} w-36 flex-shrink-0 overflow-hidden flex flex-col`}>
@@ -88,12 +88,12 @@ function SegmentCard({ seg, index, total, onChange, onDelete, onMove }) {
       {/* reorder */}
       <div className="flex border-t-2 border-slate-200 dark:border-slate-700">
         <button type="button" onClick={() => onMove(index, -1)} disabled={index === 0}
-          className="flex-1 py-1.5 text-slate-400 hover:text-indigo-500 disabled:opacity-20 text-sm font-bold hover:bg-white/60 transition-all">
+          className="flex-1 py-1.5 text-slate-400 hover:text-rose-500 disabled:opacity-20 text-sm font-bold hover:bg-white/60 transition-all">
           ←
         </button>
         <div className="w-px bg-slate-200 dark:bg-slate-700" />
         <button type="button" onClick={() => onMove(index, 1)} disabled={index === total - 1}
-          className="flex-1 py-1.5 text-slate-400 hover:text-indigo-500 disabled:opacity-20 text-sm font-bold hover:bg-white/60 transition-all">
+          className="flex-1 py-1.5 text-slate-400 hover:text-rose-500 disabled:opacity-20 text-sm font-bold hover:bg-white/60 transition-all">
           →
         </button>
       </div>
@@ -130,7 +130,7 @@ export default function BrickBuilder({ value, onChange }) {
       <div className="flex flex-wrap gap-2">
         {Object.entries(BRICK_SPORTS).map(([sport, meta]) => (
           <button key={sport} type="button" onClick={() => add(sport)}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all">
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-all">
             <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}

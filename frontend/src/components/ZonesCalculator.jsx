@@ -95,7 +95,7 @@ export default function ZonesCalculator() {
   const hrZones = maxHR > 0 ? computeHRZones(Number(maxHR)) : null
   const powerZones = ftp > 0 ? computePowerZones(Number(ftp)) : null
 
-  const inputCls = 'w-24 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
+  const inputCls = 'w-24 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none'
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
@@ -113,7 +113,7 @@ export default function ZonesCalculator() {
           onClick={() => setTab('hr')}
           className={`flex-1 px-4 py-2 font-medium transition-colors flex items-center justify-center gap-1.5 ${
             tab === 'hr'
-              ? 'bg-indigo-600 text-white'
+              ? 'bg-rose-600 text-white'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
           }`}
         >
@@ -124,7 +124,7 @@ export default function ZonesCalculator() {
           onClick={() => setTab('power')}
           className={`flex-1 px-4 py-2 font-medium transition-colors flex items-center justify-center gap-1.5 ${
             tab === 'power'
-              ? 'bg-indigo-600 text-white'
+              ? 'bg-rose-600 text-white'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
           }`}
         >

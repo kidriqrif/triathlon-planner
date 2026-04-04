@@ -152,7 +152,7 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
           <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-indigo-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-md bg-rose-600 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
@@ -199,7 +199,7 @@ export default function App() {
                 <button key={id} onClick={() => navigate(id)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     page === id
-                      ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400'
+                      ? 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400'
                       : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}>
                   <Icon size={16} strokeWidth={1.5} />

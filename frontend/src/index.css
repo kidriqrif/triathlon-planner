@@ -21,7 +21,7 @@ html {
 
 /* Selection colour */
 ::selection {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(244, 63, 94, 0.15);
 }
 
 /* Subtle grain texture — removes the flat digital feel */
@@ -54,7 +54,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 18px;
   height: 18px;
   border-radius: 9999px;
-  background: #6366f1;
+  background: #f43f5e;
   cursor: pointer;
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -63,7 +63,7 @@ input[type="range"]::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 9999px;
-  background: #6366f1;
+  background: #f43f5e;
   cursor: pointer;
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -104,13 +104,13 @@ input[type="range"]::-moz-range-thumb {
 .rbc-header { padding: 8px 4px; font-size: 0.75rem; font-weight: 600; color: #64748b; }
 .rbc-date-cell { padding: 4px 6px; font-size: 0.75rem; color: #64748b; }
 .rbc-off-range-bg { background-color: #f8fafc; }
-.rbc-today { background-color: #eef2ff !important; }
+.rbc-today { background-color: #fff1f2 !important; }
 .rbc-toolbar { margin-bottom: 12px; }
 .rbc-toolbar button { color: #334155; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 12px; font-size: 0.8rem; font-weight: 500; }
 .rbc-toolbar button:hover { background-color: #f1f5f9; }
-.rbc-toolbar button.rbc-active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+.rbc-toolbar button.rbc-active { background-color: #e11d48; color: white; border-color: #e11d48; }
 .rbc-toolbar .rbc-toolbar-label { font-weight: 700; font-size: 1rem; color: #0f172a; }
-.rbc-show-more { color: #6366f1; font-size: 0.7rem; font-weight: 600; }
+.rbc-show-more { color: #f43f5e; font-size: 0.7rem; font-weight: 600; }
 
 /* ── Dark mode calendar ── */
 .dark .rbc-calendar,
@@ -118,14 +118,14 @@ input[type="range"]::-moz-range-thumb {
 .dark .rbc-header { color: #94a3b8; background-color: #0f172a; }
 .dark .rbc-day-bg { background-color: #0f172a; }
 .dark .rbc-off-range-bg { background-color: #020617 !important; }
-.dark .rbc-today { background-color: #1e1b4b !important; }
+.dark .rbc-today { background-color: #4c0519 !important; }
 .dark .rbc-date-cell { color: #94a3b8; }
 .dark .rbc-off-range .rbc-date-cell { color: #334155; }
 .dark .rbc-toolbar button { color: #cbd5e1; border-color: #334155; background-color: transparent; }
 .dark .rbc-toolbar button:hover { background-color: #1e293b; }
-.dark .rbc-toolbar button.rbc-active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+.dark .rbc-toolbar button.rbc-active { background-color: #e11d48; color: white; border-color: #e11d48; }
 .dark .rbc-toolbar .rbc-toolbar-label { color: #f1f5f9; }
-.dark .rbc-show-more { color: #818cf8; }
+.dark .rbc-show-more { color: #fb7185; }
 .dark .rbc-agenda-view table.rbc-agenda-table { border-color: #1e293b; }
 .dark .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td { border-left-color: #1e293b; }
 .dark .rbc-agenda-view table.rbc-agenda-table thead > tr > th { border-bottom-color: #1e293b; color: #94a3b8; }

@@ -120,7 +120,7 @@ function Field({ label, children }) {
   )
 }
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none'
 const selectCls = inputCls
 
 // Rest duration: side-by-side min + sec inputs
@@ -270,7 +270,7 @@ export default function WorkoutBuilder({ value, onChange }) {
       <div className="flex flex-wrap gap-2">
         {Object.entries(BLOCK_META).map(([type, meta]) => (
           <button key={type} type="button" onClick={() => addBlock(type)}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all">
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-all">
             <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}

@@ -10,7 +10,7 @@ function formatHours(hours) {
 function WeekContent({ data }) {
   return (
     <>
-      <p className="text-xs font-medium uppercase tracking-wider text-indigo-400">Week Summary</p>
+      <p className="text-xs font-medium uppercase tracking-wider text-rose-400">Week Summary</p>
       <p className="text-3xl font-bold text-white mt-2">
         {data.sessions} <span className="text-lg font-semibold text-slate-400">sessions</span>
       </p>
@@ -41,7 +41,7 @@ function RaceContent({ data }) {
 
   return (
     <>
-      <p className="text-xs font-medium uppercase tracking-wider text-indigo-400">Race Day</p>
+      <p className="text-xs font-medium uppercase tracking-wider text-rose-400">Race Day</p>
       <p className="text-2xl font-bold text-white mt-2">{data.name || 'Upcoming Race'}</p>
       {formattedDate && (
         <p className="text-sm font-medium text-slate-400 mt-1">{formattedDate}</p>
@@ -140,7 +140,7 @@ export default function ShareCard({ type, data }) {
 
           {/* Branding */}
           <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-indigo-600 flex items-center justify-center">
+            <div className="w-5 h-5 rounded bg-rose-600 flex items-center justify-center">
               <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
@@ -155,7 +155,7 @@ export default function ShareCard({ type, data }) {
       {/* Action buttons */}
       <div className="flex gap-2">
         <button onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition-colors">
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-rose-600 hover:bg-rose-500 text-white transition-colors">
           <Share2 size={15} strokeWidth={2} />
           Share
         </button>

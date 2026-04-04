@@ -4,7 +4,7 @@ import { Mail, Lock, User, ArrowRight, ArrowLeft, AlertCircle, CheckCircle } fro
 
 const GOOGLE_CLIENT_ID = '747259526376-0rcqt3hiq9t3t1ackpnmqt1nd5o4ade9.apps.googleusercontent.com'
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 pl-10 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
 
 export default function AuthPage({ onAuth, resetToken }) {
   const [mode, setMode] = useState(resetToken ? 'reset' : 'login') // 'login' | 'register' | 'forgot' | 'reset'
@@ -239,7 +239,7 @@ export default function AuthPage({ onAuth, resetToken }) {
           {/* Forgot password link */}
           {mode === 'login' && (
             <button onClick={() => switchMode('forgot')}
-              className="block w-full text-center text-xs text-slate-400 hover:text-indigo-500 mt-3 transition-colors">
+              className="block w-full text-center text-xs text-slate-400 hover:text-rose-500 mt-3 transition-colors">
               Forgot your password?
             </button>
           )}
@@ -249,7 +249,7 @@ export default function AuthPage({ onAuth, resetToken }) {
           <p className="text-center text-xs text-slate-400 mt-4">
             {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
             <button onClick={() => switchMode(mode === 'login' ? 'register' : 'login')}
-              className="text-indigo-500 font-semibold hover:underline">
+              className="text-rose-500 font-semibold hover:underline">
               {mode === 'login' ? 'Sign up free' : 'Sign in'}
             </button>
           </p>

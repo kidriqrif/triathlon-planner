@@ -22,7 +22,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       <header className="border-b border-white/5">
         <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-indigo-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-md bg-rose-500 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
@@ -35,7 +35,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             <a href="#features" className="text-white/40 hover:text-white transition-colors hidden sm:block">Features</a>
             <a href="#pricing" className="text-white/40 hover:text-white transition-colors hidden sm:block">Pricing</a>
             <button onClick={onSignIn} className="text-white/50 hover:text-white transition-colors">Log in</button>
-            <button onClick={onGetStarted} className="font-medium bg-indigo-500 hover:bg-indigo-400 px-3.5 py-1.5 rounded-md transition-colors">
+            <button onClick={onGetStarted} className="font-medium bg-rose-500 hover:bg-rose-400 px-3.5 py-1.5 rounded-md transition-colors">
               Sign up free
             </button>
           </div>
@@ -57,11 +57,11 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             </motion.h1>
             <motion.p variants={fade} className="text-white/45 mt-5 leading-relaxed max-w-md">
               Strelo structures your swim, bike, and run week around your race date,
-              fitness level, and available hours. Strelo<span className="text-indigo-400">IQ</span> handles the periodisation.
+              fitness level, and available hours. Strelo<span className="text-rose-400">IQ</span> handles the periodisation.
             </motion.p>
             <motion.div variants={fade} className="flex items-center gap-3 mt-8">
               <motion.button onClick={onGetStarted} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                className="font-semibold bg-indigo-500 hover:bg-indigo-400 px-5 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
+                className="font-semibold bg-rose-500 hover:bg-rose-400 px-5 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
                 Get started free <ArrowRight size={15} />
               </motion.button>
               <button onClick={onSignIn}
@@ -226,8 +226,8 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
                   <p className="text-xs text-white/30 mt-3 leading-relaxed">Calendar, workout log, basic stats, 1 race, 3 templates, Strava sync</p>
                 </motion.div>
                 <motion.div variants={fade} whileHover={{ y: -3 }}
-                  className="border border-indigo-500/40 rounded-xl p-5 bg-indigo-500/[0.04] relative">
-                  <div className="absolute -top-2.5 right-4 bg-indigo-500 text-[10px] font-bold px-2 py-0.5 rounded-full">POPULAR</div>
+                  className="border border-rose-500/40 rounded-xl p-5 bg-rose-500/[0.04] relative">
+                  <div className="absolute -top-2.5 right-4 bg-rose-500 text-[10px] font-bold px-2 py-0.5 rounded-full">POPULAR</div>
                   <div className="flex items-baseline justify-between">
                     <p className="font-semibold text-sm">Pro</p>
                     <p className="font-display font-bold text-lg">$12.99<span className="text-xs font-normal text-white/40">/mo</span></p>
@@ -251,7 +251,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
           <h2 className="font-display text-3xl sm:text-4xl font-bold">Start planning your race.</h2>
           <p className="text-white/40 mt-3 max-w-sm mx-auto text-sm">Set up in under a minute. Free forever, upgrade when you want more.</p>
           <motion.button onClick={onGetStarted} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-            className="mt-8 font-semibold bg-indigo-500 hover:bg-indigo-400 px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
+            className="mt-8 font-semibold bg-rose-500 hover:bg-rose-400 px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
             Create free account <ArrowRight size={15} />
           </motion.button>
         </div>
@@ -270,7 +270,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               <motion.div variants={fade} className="sm:flex-1 space-y-3">
                 <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 hover:bg-white/[0.05] transition-colors">
                   <p className="text-sm font-medium mb-1">Email</p>
-                  <a href="mailto:support@strelo.app" className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">support@strelo.app</a>
+                  <a href="mailto:support@strelo.app" className="text-sm text-rose-400 hover:text-rose-300 transition-colors">support@strelo.app</a>
                 </div>
                 <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 hover:bg-white/[0.05] transition-colors">
                   <p className="text-sm font-medium mb-1">Partnerships</p>

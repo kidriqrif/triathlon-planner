@@ -62,7 +62,7 @@ export default function VolumeChart({ workouts }) {
             {['distance', 'hours'].map(t => (
               <button key={t}
                 onClick={() => setChartType(t)}
-                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                 {t === 'distance' ? 'Distance (km)' : 'Hours'}
               </button>
             ))}
@@ -71,7 +71,7 @@ export default function VolumeChart({ workouts }) {
             {[4, 8, 12].map(w => (
               <button key={w}
                 onClick={() => setRange(w)}
-                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                 {w}w
               </button>
             ))}
