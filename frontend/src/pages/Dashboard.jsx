@@ -18,7 +18,7 @@ function ProLock({ label, desc, onUpgrade }) {
         </div>
       </div>
       <button onClick={onUpgrade}
-        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:border-indigo-400 transition-colors">
+        className="text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:border-indigo-400 transition-colors">
         Pro
       </button>
     </div>
@@ -35,7 +35,7 @@ const SPORT_META = {
 
 function StatCard({ label, sub, value, valueColor = 'text-slate-800 dark:text-white', icon }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
+    <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
       <div className="flex items-center justify-between">
         <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
         {icon}

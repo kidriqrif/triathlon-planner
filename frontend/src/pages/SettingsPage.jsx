@@ -261,7 +261,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
       <Section title={t('dangerZone')}>
         {!showDelete ? (
           <button onClick={() => setShowDelete(true)}
-            className="flex items-center gap-2 text-sm font-semibold text-red-500 hover:text-red-600 transition-colors">
+            className="flex items-center gap-2 text-sm font-semibold text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950 px-3 py-1.5 rounded-lg -ml-3 transition-colors">
             <Trash2 size={16} strokeWidth={1.5} />
             {t('deleteAccount')}
           </button>
