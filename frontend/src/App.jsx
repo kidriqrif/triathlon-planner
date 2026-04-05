@@ -165,9 +165,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 transition-colors">
+    <div className="min-h-screen transition-colors">
       {/* Top bar — slim, just logo + hamburger */}
-      <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+      <header className="sticky top-0 z-40 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl backdrop-saturate-150 border-b border-rose-200/50 dark:border-rose-900/30">
         <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
           <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-md bg-rose-600 flex items-center justify-center">

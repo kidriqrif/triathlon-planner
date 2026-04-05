@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Premium polish ────────────────────────────────────────────────────────── */
+/* ── Vista Red design system ──────────────────────────────────────────────── */
 
 /* Crisp, anti-aliased text */
 html {
@@ -10,6 +10,163 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+/* Body: subtle rose-tinted Aero background */
+body {
+  background:
+    radial-gradient(ellipse 800px 600px at 10% -10%, rgba(253, 164, 175, 0.25), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 90% 110%, rgba(253, 164, 175, 0.2), transparent 60%),
+    linear-gradient(180deg, #fef7f7 0%, #fff1f2 50%, #fef2f2 100%);
+  min-height: 100vh;
+}
+.dark body {
+  background:
+    radial-gradient(ellipse 800px 600px at 10% -10%, rgba(159, 18, 57, 0.25), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 90% 110%, rgba(159, 18, 57, 0.2), transparent 60%),
+    linear-gradient(180deg, #0f0a0a 0%, #1a0e11 50%, #0f0a0a 100%);
+}
+
+/* Aero glass panel */
+.vista-panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(244, 63, 94, 0.04),
+    0 1px 2px rgba(159, 18, 57, 0.04),
+    0 8px 24px -4px rgba(159, 18, 57, 0.08);
+}
+.dark .vista-panel {
+  background: rgba(30, 15, 20, 0.6);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 24px -4px rgba(0, 0, 0, 0.5);
+}
+
+/* Glossy gel button — the Vista signature */
+.vista-btn {
+  position: relative;
+  background: linear-gradient(to bottom,
+    #fb7185 0%,
+    #f43f5e 48%,
+    #e11d48 52%,
+    #be123c 100%
+  );
+  border: 1px solid #9f1239;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(159, 18, 57, 0.3),
+    0 2px 8px rgba(244, 63, 94, 0.25);
+  transition: all 0.15s ease;
+}
+.vista-btn:hover {
+  background: linear-gradient(to bottom,
+    #fda4af 0%,
+    #fb7185 48%,
+    #f43f5e 52%,
+    #e11d48 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(159, 18, 57, 0.4),
+    0 4px 16px rgba(244, 63, 94, 0.4);
+}
+.vista-btn:active {
+  background: linear-gradient(to bottom,
+    #e11d48 0%,
+    #be123c 100%
+  );
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.25),
+    0 1px 1px rgba(159, 18, 57, 0.3);
+}
+.vista-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Secondary glass button */
+.vista-btn-ghost {
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 48%,
+    rgba(254, 226, 226, 0.6) 52%,
+    rgba(254, 205, 211, 0.5) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  color: #9f1239;
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(159, 18, 57, 0.1),
+    0 2px 6px rgba(244, 63, 94, 0.08);
+  transition: all 0.15s ease;
+}
+.vista-btn-ghost:hover {
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(254, 226, 226, 0.9) 100%
+  );
+  border-color: rgba(244, 63, 94, 0.4);
+  color: #881337;
+}
+.dark .vista-btn-ghost {
+  background: linear-gradient(to bottom,
+    rgba(68, 25, 35, 0.9) 0%,
+    rgba(48, 18, 25, 0.9) 100%
+  );
+  border-color: rgba(244, 63, 94, 0.3);
+  color: #fda4af;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Input with inset depth */
+.vista-input {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  box-shadow:
+    inset 0 1px 2px rgba(159, 18, 57, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.15s ease;
+}
+.vista-input:focus {
+  outline: none;
+  border-color: rgba(244, 63, 94, 0.5);
+  box-shadow:
+    inset 0 1px 2px rgba(159, 18, 57, 0.1),
+    0 0 0 3px rgba(244, 63, 94, 0.15),
+    0 0 12px rgba(244, 63, 94, 0.2);
+}
+.dark .vista-input {
+  background: rgba(30, 15, 20, 0.6);
+  border-color: rgba(244, 63, 94, 0.25);
+  color: white;
+}
+
+/* Vista divider — thin horizontal line with glow */
+.vista-divider {
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent,
+    rgba(244, 63, 94, 0.3),
+    transparent
+  );
+}
+
 
 /* Custom scrollbar — thin, blends with the UI */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
