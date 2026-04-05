@@ -150,7 +150,7 @@ export default function AICoach({ onWorkoutsAdded }) {
       <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
         <h2 className="font-display text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
           <Bot size={16} strokeWidth={1.5} className="text-rose-500" />
-          <span className="font-logo font-extrabold tracking-tight uppercase text-[13px]">Strelo<span className="text-rose-500">IQ</span></span>
+          <span className="font-logo font-extrabold tracking-wide uppercase text-[13px]">Strelo<span className="text-rose-500">IQ</span></span>
         </h2>
         <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
