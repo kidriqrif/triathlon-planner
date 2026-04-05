@@ -4,8 +4,8 @@
   "description": "AI-powered triathlon training planner. Plan, track, and optimise your swim, bike, and run.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#1e1b4b",
+  "background_color": "#fff1f2",
+  "theme_color": "#be123c",
   "orientation": "portrait-primary",
   "icons": [
     {

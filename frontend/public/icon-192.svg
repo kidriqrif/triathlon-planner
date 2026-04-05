@@ -1,12 +1,20 @@
 <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="192" height="192" rx="40" fill="url(#grad)"/>
-  <path d="M56 140L86 52" stroke="white" stroke-width="14" stroke-linecap="round"/>
-  <path d="M78 140L108 52" stroke="rgba(255,255,255,0.6)" stroke-width="14" stroke-linecap="round"/>
-  <path d="M100 140L130 52" stroke="rgba(255,255,255,0.3)" stroke-width="14" stroke-linecap="round"/>
   <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="192" y2="192">
-      <stop stop-color="#6366f1"/>
-      <stop offset="1" stop-color="#7c3aed"/>
+    <radialGradient id="orb" cx="0.3" cy="0.25" r="0.9">
+      <stop offset="0%" stop-color="#fda4af"/>
+      <stop offset="40%" stop-color="#f43f5e"/>
+      <stop offset="85%" stop-color="#be123c"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </radialGradient>
+    <linearGradient id="shine" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/>
+      <stop offset="70%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
   </defs>
+  <circle cx="96" cy="96" r="90" fill="url(#orb)" stroke="#881337" stroke-width="3"/>
+  <ellipse cx="96" cy="48" rx="64" ry="26" fill="url(#shine)"/>
+  <path d="M56 140L86 52" stroke="white" stroke-width="14" stroke-linecap="round"/>
+  <path d="M78 140L108 52" stroke="white" stroke-opacity="0.7" stroke-width="14" stroke-linecap="round"/>
+  <path d="M100 140L130 52" stroke="white" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
 </svg>
