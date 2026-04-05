@@ -22,7 +22,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
       <header className="border-b border-white/5">
         <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-rose-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full vista-orb flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>

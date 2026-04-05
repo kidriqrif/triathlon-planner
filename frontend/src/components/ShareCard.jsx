@@ -140,7 +140,7 @@ export default function ShareCard({ type, data }) {
 
           {/* Branding */}
           <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-rose-600 flex items-center justify-center">
+            <div className="w-5 h-5 rounded-full vista-orb flex items-center justify-center">
               <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>

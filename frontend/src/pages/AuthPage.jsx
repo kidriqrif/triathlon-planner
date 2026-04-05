@@ -112,7 +112,7 @@ export default function AuthPage({ onAuth, resetToken }) {
         {/* Brand */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
-            <div className="w-11 h-11 rounded-xl bg-slate-900 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-full vista-orb flex items-center justify-center">
               <svg width="22" height="22" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>

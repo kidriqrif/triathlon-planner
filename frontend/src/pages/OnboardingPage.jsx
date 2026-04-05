@@ -85,7 +85,7 @@ export default function OnboardingPage({ user, onComplete }) {
     () => (
       <div className="text-center py-8">
         <div className="flex justify-center mb-4">
-          <div className="w-14 h-14 rounded-xl bg-slate-900 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full vista-orb flex items-center justify-center">
             <svg width="28" height="28" viewBox="0 0 18 18" fill="none">
               <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
               <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>

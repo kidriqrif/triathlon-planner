@@ -170,7 +170,7 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl backdrop-saturate-150 border-b border-rose-200/50 dark:border-rose-900/30">
         <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
           <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-rose-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full vista-orb flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                 <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
                 <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
