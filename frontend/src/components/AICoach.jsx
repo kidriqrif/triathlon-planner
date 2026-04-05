@@ -144,15 +144,15 @@ export default function AICoach({ onWorkoutsAdded }) {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden"
+    <div className="vista-panel rounded-2xl flex flex-col overflow-hidden"
       style={{ height: isEmpty ? 'auto' : '520px' }}>
       {/* Header */}
-      <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
-        <h2 className="font-display text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+      <div className="px-4 py-3 border-b border-rose-200/40 dark:border-rose-900/30 shrink-0 bg-gradient-to-b from-white/50 to-transparent dark:from-rose-900/10">
+        <h2 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
           <Bot size={16} strokeWidth={1.5} className="text-rose-500" />
           <span className="font-logo font-extrabold tracking-wider uppercase text-rose-500">Ace</span>
         </h2>
-        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Discuss your week, then push it to your calendar</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
 
       {/* Messages */}
@@ -167,7 +167,7 @@ export default function AICoach({ onWorkoutsAdded }) {
           <div className="flex flex-wrap justify-center gap-1.5 mt-4">
             {['Plan my next week', 'I want to focus on the bike', "I'm feeling tired, keep it easy"].map(q => (
               <button key={q} onClick={() => { setInput(q) }}
-                className="text-xs text-rose-500 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-full px-3 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
+                className="vista-btn-ghost text-xs rounded-full px-3 py-1.5">
                 {q}
               </button>
             ))}
@@ -185,8 +185,8 @@ export default function AICoach({ onWorkoutsAdded }) {
               <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
                 <div className={`text-sm leading-relaxed px-3 py-2 rounded-lg ${
                   msg.role === 'user'
-                    ? 'bg-rose-500 text-white rounded-br-sm'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-bl-sm'
+                    ? 'vista-btn text-white rounded-br-sm !font-normal'
+                    : 'bg-white/70 dark:bg-slate-800/70 backdrop-blur text-slate-700 dark:text-slate-300 rounded-bl-sm border border-rose-200/40 dark:border-rose-900/20 shadow-sm'
                 }`}>
                   {msg.content}
                 </div>
@@ -224,15 +224,15 @@ export default function AICoach({ onWorkoutsAdded }) {
       )}
 
       {/* Input */}
-      <form onSubmit={handleSend} className="px-3 py-3 border-t border-slate-100 dark:border-slate-800 flex gap-2 shrink-0">
+      <form onSubmit={handleSend} className="px-3 py-3 border-t border-rose-200/40 dark:border-rose-900/30 flex gap-2 shrink-0 bg-gradient-to-t from-white/40 to-transparent dark:from-rose-900/10">
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Ask Ace about your week..."
-          className="flex-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none"
+          className="vista-input flex-1 text-sm rounded-lg px-3 py-2 dark:text-white"
         />
         <button type="submit" disabled={loading || !input.trim()}
-          className="w-9 h-9 rounded-lg bg-rose-500 hover:bg-rose-400 text-white flex items-center justify-center transition-colors disabled:opacity-40 shrink-0">
+          className="vista-btn w-9 h-9 rounded-lg flex items-center justify-center shrink-0">
           <Send size={15} strokeWidth={2} />
         </button>
       </form>

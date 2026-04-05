@@ -54,24 +54,31 @@ export default function VolumeChart({ workouts }) {
   const tooltipBorder = dark ? '#334155' : '#e2e8f0'
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+    <div className="vista-panel rounded-2xl p-4">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white">Weekly Volume</h2>
+        <div>
+          <p className="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-[0.25em]">Weekly volume</p>
+          <h2 className="font-display text-lg font-bold text-slate-800 dark:text-white">Training load</h2>
+        </div>
         <div className="flex gap-2">
-          <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm">
+          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-rose-200/50 dark:border-rose-900/30 shadow-inner">
             {['distance', 'hours'].map(t => (
               <button key={t}
                 onClick={() => setChartType(t)}
-                className={`px-3 py-1.5 font-medium transition-colors ${chartType === t ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                {t === 'distance' ? 'Distance (km)' : 'Hours'}
+                className={`px-3 py-1.5 font-semibold transition-all ${chartType === t
+                  ? 'vista-btn rounded-md m-0.5'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400'}`}>
+                {t === 'distance' ? 'km' : 'hrs'}
               </button>
             ))}
           </div>
-          <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-sm">
+          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-rose-200/50 dark:border-rose-900/30 shadow-inner">
             {[4, 8, 12].map(w => (
               <button key={w}
                 onClick={() => setRange(w)}
-                className={`px-3 py-1.5 font-medium transition-colors ${range === w ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                className={`px-3 py-1.5 font-semibold transition-all ${range === w
+                  ? 'vista-btn rounded-md m-0.5'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400'}`}>
                 {w}w
               </button>
             ))}
@@ -111,8 +118,8 @@ export default function VolumeChart({ workouts }) {
               contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 8, fontSize: 12 }}
               labelStyle={{ color: textColor }}
             />
-            <Line type="monotone" dataKey="hours" name="Hours" stroke="#6366f1" strokeWidth={2}
-              dot={{ r: 4, fill: '#6366f1' }} activeDot={{ r: 6 }} />
+            <Line type="monotone" dataKey="hours" name="Hours" stroke="#f43f5e" strokeWidth={2}
+              dot={{ r: 4, fill: '#f43f5e' }} activeDot={{ r: 6 }} />
           </LineChart>
         </ResponsiveContainer>
       )}
