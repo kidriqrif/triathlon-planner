@@ -100,7 +100,7 @@ export default function SupportChat() {
               className="flex-1 text-sm border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none"
             />
             <button type="submit" disabled={loading || !input.trim()}
-              className="w-9 h-9 rounded-xl bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center transition-colors disabled:opacity-40 shrink-0">
+              className="vista-btn w-9 h-9 rounded-xl flex items-center justify-center disabled:opacity-40 shrink-0">
               <Send size={15} strokeWidth={2} />
             </button>
           </form>

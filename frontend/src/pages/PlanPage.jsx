@@ -118,7 +118,7 @@ export default function PlanPage({ workouts, onRefresh }) {
           </button>
           <button
             onClick={() => setFormState({ workout: null, defaultDate: selectedDate || new Date().toISOString().split('T')[0] })}
-            className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
+            className="vista-btn px-4 py-2.5 rounded-lg text-sm">
             + Add Workout
           </button>
         </div>
@@ -195,7 +195,7 @@ export default function PlanPage({ workouts, onRefresh }) {
         {selectedDate && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedDate(null)}>
             <div className="absolute inset-0 bg-black/30" />
-            <div className="relative bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 w-full max-w-sm max-h-[70vh] overflow-hidden flex flex-col"
+            <div className="relative vista-panel rounded-xl w-full max-w-sm max-h-[70vh] overflow-hidden flex flex-col"
               onClick={e => e.stopPropagation()}>
               {/* Header */}
               <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">

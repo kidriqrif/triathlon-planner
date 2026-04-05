@@ -63,7 +63,7 @@ export default function RaceCountdown({ races }) {
 
   if (!activeRace) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4 flex items-center gap-4">
+      <div className="vista-panel rounded-xl p-4 flex items-center gap-4">
         <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
           <Flag size={22} strokeWidth={1.5} className="text-slate-400" />
         </div>

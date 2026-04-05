@@ -125,7 +125,7 @@ export default function WeatherWidget({ workouts = [] }) {
   // ── Location denied / error states ──
   if (error === 'location') {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex items-center gap-3">
+      <div className="vista-panel rounded-2xl p-4 flex items-center gap-3">
         <MapPin size={16} strokeWidth={1.5} className="text-slate-400 dark:text-slate-500 shrink-0" />
         <p className="text-sm text-slate-500 dark:text-slate-400">Enable location for weather</p>
       </div>
@@ -134,7 +134,7 @@ export default function WeatherWidget({ workouts = [] }) {
 
   if (error === 'fetch') {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex items-center gap-3">
+      <div className="vista-panel rounded-2xl p-4 flex items-center gap-3">
         <Cloud size={16} strokeWidth={1.5} className="text-slate-400 dark:text-slate-500 shrink-0" />
         <p className="text-sm text-slate-500 dark:text-slate-400">Weather unavailable right now</p>
       </div>
@@ -144,7 +144,7 @@ export default function WeatherWidget({ workouts = [] }) {
   // ── Loading skeleton ──
   if (loading || !forecast) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 animate-pulse">
+      <div className="vista-panel rounded-2xl p-4 animate-pulse">
         <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-24 mb-3" />
         <div className="flex gap-3">
           {[1, 2, 3, 4].map(i => (
@@ -183,7 +183,7 @@ export default function WeatherWidget({ workouts = [] }) {
   const SPORT_LABEL = { run: 'Run', bike: 'Bike', brick: 'Brick' }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+    <div className="vista-panel rounded-2xl p-4">
       <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-3">Weather forecast</p>
 
       <div className="flex gap-2 overflow-x-auto">

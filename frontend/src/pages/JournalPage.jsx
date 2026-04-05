@@ -75,7 +75,7 @@ export default function JournalPage({ workouts }) {
 
             return (
               <div key={w.id}
-                className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                className="vista-panel rounded-xl overflow-hidden">
                 {/* Entry header */}
                 <div className="px-4 pt-4 pb-2 flex items-center gap-3">
                   {/* Sport icon */}

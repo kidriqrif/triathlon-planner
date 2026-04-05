@@ -95,7 +95,7 @@ export default function PlansLibraryPage({ onRefresh, user }) {
         {plans.map(plan => {
           const meta = DISTANCE_META[plan.distance] || DISTANCE_META.sprint
           return (
-            <div key={plan.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
+            <div key={plan.id} className="vista-panel rounded-2xl p-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
               <div className="flex items-start gap-4">
                 <div className={`w-12 h-12 rounded-lg ${meta.bg} flex flex-col items-center justify-center shrink-0`}>
                   <Waves size={10} className={meta.color} />

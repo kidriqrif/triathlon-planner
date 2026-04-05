@@ -12,7 +12,7 @@ const FITNESS_LEVELS = [
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white'
 
 export default function ProfilePage() {
   const { t } = useI18n()
@@ -112,7 +112,7 @@ export default function ProfilePage() {
 
       <form onSubmit={handleSubmit} className="space-y-3">
         {/* Name + basics */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
+        <div className="vista-panel rounded-xl p-3.5 space-y-3">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('basics')}</p>
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('name')}</label>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Fitness level */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
+        <div className="vista-panel rounded-xl p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">{t('fitnessLevel')}</label>
           <div className="space-y-2">
             {FITNESS_LEVELS.map(({ key, label, desc, Icon }) => (
@@ -161,7 +161,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Current paces / thresholds */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
+        <div className="vista-panel rounded-xl p-3.5 space-y-3">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('currentBenchmarks')}</p>
             <p className="text-xs text-slate-400 mt-0.5">{t('benchmarksDesc')}</p>
@@ -186,7 +186,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Weekly hours */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
+        <div className="vista-panel rounded-xl p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
             {t('weeklyHoursTarget')}
           </label>
@@ -210,7 +210,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Preferred training days */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
+        <div className="vista-panel rounded-xl p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
             {t('availableTrainingDays')}
           </label>
@@ -232,7 +232,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Goal */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
+        <div className="vista-panel rounded-xl p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceGoal')}</label>
           <textarea value={form.goal_description} onChange={set('goal_description')} rows={2}
             placeholder="e.g. Sub-6hr Olympic tri, finish first Ironman, qualify for Worlds..."
@@ -240,7 +240,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Injuries */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5">
+        <div className="vista-panel rounded-xl p-3.5">
           <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
             {t('injuriesLimitations')}
           </label>

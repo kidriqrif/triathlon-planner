@@ -32,7 +32,7 @@ export default class ErrorBoundary extends React.Component {
             <p className="text-sm text-slate-400 mt-2">An unexpected error occurred. Please try refreshing the page.</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors">
+              className="vista-btn mt-4 px-5 py-2.5 rounded-lg text-sm">
               Refresh Page
             </button>
           </div>

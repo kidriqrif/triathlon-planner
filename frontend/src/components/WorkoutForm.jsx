@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
   skipped:   { icon: '✗', active: 'bg-red-400 text-white border-red-400' },
 }
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white'
 
 export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, onClose }) {
   const today = defaultDate || new Date().toISOString().split('T')[0]

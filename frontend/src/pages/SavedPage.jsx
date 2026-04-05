@@ -19,7 +19,7 @@ const TYPE_LABELS = {
   strength: 'Strength', mobility: 'Mobility', hiit: 'HIIT', circuit: 'Circuit', yoga: 'Yoga',
 }
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white'
 
 export default function SavedPage({ user, onRefresh }) {
   const { t } = useI18n()
@@ -130,7 +130,7 @@ export default function SavedPage({ user, onRefresh }) {
 
       {/* Template builder form — mirrors WorkoutForm style */}
       {showForm && (
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="vista-panel rounded-xl overflow-hidden">
           {/* Colored header */}
           <div className={`${sportMeta.color} px-5 py-3 flex items-center justify-between`}>
             <div className="flex items-center gap-2">
@@ -248,7 +248,7 @@ export default function SavedPage({ user, onRefresh }) {
           {templates.map(tpl => {
             const meta = SPORT_CONFIG[tpl.sport] || SPORT_CONFIG.run
             return (
-              <div key={tpl.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <div key={tpl.id} className="vista-panel rounded-2xl overflow-hidden">
                 <div className={`h-1 ${meta.color}`} />
                 <div className="p-3 flex items-center gap-3">
                   <div className={`w-9 h-9 rounded-lg ${meta.color} flex items-center justify-center shrink-0`}>

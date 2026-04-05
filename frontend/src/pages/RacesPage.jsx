@@ -322,7 +322,7 @@ export default function RacesPage({ races, onRefresh }) {
           <p className="text-slate-400 text-sm mt-0.5">{races.length} {t('racesPlanned')}</p>
         </div>
         <button onClick={() => setFormState({ race: null })}
-          className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
+          className="vista-btn px-4 py-2.5 rounded-lg text-sm">
           {t('addRace')}
         </button>
       </div>

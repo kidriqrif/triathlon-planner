@@ -17,7 +17,7 @@ const RACE_DISTANCES = [
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white'
 
 export default function OnboardingPage({ user, onComplete }) {
   const [step, setStep] = useState(0)
@@ -289,7 +289,7 @@ export default function OnboardingPage({ user, onComplete }) {
         </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 p-4 min-h-[380px] flex flex-col">
+        <div className="vista-panel rounded-xl p-4 min-h-[380px] flex flex-col">
           <div className="flex-1">
             {steps[step]()}
           </div>
@@ -305,12 +305,12 @@ export default function OnboardingPage({ user, onComplete }) {
 
             {isLast ? (
               <button onClick={handleFinish} disabled={saving}
-                className="flex items-center gap-2 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all disabled:opacity-60">
+                className="flex items-center gap-2 text-sm font-bold text-white vista-btn px-5 py-2.5 rounded-xl disabled:opacity-60">
                 {saving ? 'Saving...' : <>Go to Dashboard <Sparkles size={14} strokeWidth={2} /></>}
               </button>
             ) : (
               <button onClick={() => setStep(s => s + 1)}
-                className="flex items-center gap-1 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-5 py-2.5 rounded-xl hover:opacity-90 transition-all">
+                className="flex items-center gap-1 text-sm font-bold text-white vista-btn px-5 py-2.5 rounded-xl">
                 {isFirst ? 'Let\'s Go' : 'Next'} <ArrowRight size={14} strokeWidth={2} />
               </button>
             )}

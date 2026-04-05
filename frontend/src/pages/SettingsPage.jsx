@@ -4,12 +4,12 @@ import { User, Lock, Trash2, AlertCircle, CheckCircle, Link, Unlink, RefreshCw, 
 import { useI18n } from '../i18n/I18nContext'
 import { LANGUAGES } from '../i18n/translations'
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white'
 const inputWithIconCls = inputCls + ' pl-10'
 
 function Section({ title, children }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
+    <div className="vista-panel rounded-xl p-3.5 space-y-3">
       <h3 className="font-bold text-slate-800 dark:text-white">{title}</h3>
       {children}
     </div>
@@ -158,7 +158,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
           </div>
         </div>
         <button onClick={handleNameSave} disabled={nameSaving || fullName === user.name}
-          className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-rose-500 hover:bg-rose-600 transition-colors disabled:opacity-40">
+          className="vista-btn px-4 py-2.5 rounded-xl text-sm disabled:opacity-40">
           {nameSaving ? '...' : t('save')}
         </button>
         {nameMsg && <Alert {...nameMsg} />}
@@ -211,7 +211,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
           </div>
           {pwMsg && <Alert {...pwMsg} />}
           <button type="submit" disabled={pwSaving}
-            className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-rose-500 hover:bg-rose-600 transition-colors disabled:opacity-40">
+            className="vista-btn px-4 py-2.5 rounded-xl text-sm disabled:opacity-40">
             {pwSaving ? t('updating') : t('updatePassword')}
           </button>
         </form>

@@ -209,7 +209,7 @@ export default function AuthPage({ onAuth, resetToken }) {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
+              className="vista-btn w-full py-3 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50">
               {loading ? (
                 <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
