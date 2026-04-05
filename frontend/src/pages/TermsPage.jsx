@@ -8,9 +8,9 @@ export default function TermsPage({ onBack }) {
           <button onClick={onBack} className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M10 6 L13 3 L16 6" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5.5 11 L9 6 L12.5 11" stroke="rgba(255,255,255,0.65)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 15 L4.5 12 L7 15" stroke="rgba(255,255,255,0.35)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <span className="font-black text-slate-800 text-lg tracking-tight">Strelo</span>
@@ -33,7 +33,7 @@ export default function TermsPage({ onBack }) {
           <section>
             <h2 className="text-lg font-bold text-slate-800">2. Description of Service</h2>
             <p className="text-slate-600 leading-relaxed">
-              Strelo is a triathlon training planner that allows users to log workouts, track races, manage athlete profiles, and receive StreloIQ-generated training plans. The service is provided on a free tier with optional paid upgrades.
+              Strelo is a triathlon training planner that allows users to log workouts, track races, manage athlete profiles, and receive Ace-generated training plans. The service is provided on a free tier with optional paid upgrades.
             </p>
           </section>
 
@@ -52,15 +52,15 @@ export default function TermsPage({ onBack }) {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-slate-800">5. StreloIQ Training Plans</h2>
+            <h2 className="text-lg font-bold text-slate-800">5. Ace Training Plans</h2>
             <p className="text-slate-600 leading-relaxed">
-              StreloIQ-generated training plans are provided for informational purposes only. They do not constitute medical advice, professional coaching, or a substitute for consultation with qualified health and fitness professionals. You acknowledge that:
+              Ace-generated training plans are provided for informational purposes only. They do not constitute medical advice, professional coaching, or a substitute for consultation with qualified health and fitness professionals. You acknowledge that:
             </p>
             <ul className="list-disc pl-5 text-slate-600 space-y-1">
-              <li>StreloIQ suggestions may not be suitable for your specific health conditions</li>
+              <li>Ace suggestions may not be suitable for your specific health conditions</li>
               <li>You should consult a doctor before starting any training programme</li>
-              <li>You follow StreloIQ suggestions at your own risk</li>
-              <li>Strelo is not liable for injuries or health issues arising from StreloIQ suggestions</li>
+              <li>You follow Ace suggestions at your own risk</li>
+              <li>Strelo is not liable for injuries or health issues arising from Ace suggestions</li>
             </ul>
           </section>
 

@@ -24,9 +24,9 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-md bg-rose-500 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M10 6 L13 3 L16 6" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5.5 11 L9 6 L12.5 11" stroke="rgba(255,255,255,0.65)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 15 L4.5 12 L7 15" stroke="rgba(255,255,255,0.35)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <span className="font-display font-bold text-sm">Strelo</span>
@@ -57,7 +57,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             </motion.h1>
             <motion.p variants={fade} className="text-white/45 mt-5 leading-relaxed max-w-md">
               Strelo structures your swim, bike, and run week around your race date,
-              fitness level, and available hours. <span className="font-logo font-extrabold tracking-wide uppercase">Strelo<span className="text-rose-400">IQ</span></span> handles the periodisation.
+              fitness level, and available hours. <span className="font-logo font-extrabold tracking-wide uppercase text-rose-400">Ace</span> handles the periodisation.
             </motion.p>
             <motion.div variants={fade} className="flex items-center gap-3 mt-8">
               <motion.button onClick={onGetStarted} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
@@ -93,7 +93,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             <div className="grid sm:grid-cols-3 gap-10 sm:gap-8">
               {[
                 { n: '01', title: 'Set your race', desc: 'Pick a distance and date. Strelo maps base, build, peak, and taper phases from day one.' },
-                { n: '02', title: 'Build your week', desc: 'Drag sessions onto the calendar yourself, or let StreloIQ generate a balanced week for you.' },
+                { n: '02', title: 'Build your week', desc: 'Drag sessions onto the calendar yourself, or let Ace generate a balanced week for you.' },
                 { n: '03', title: 'Train and adapt', desc: 'Log results, sync from Strava, and export structured workouts to your Garmin or COROS.' },
               ].map(({ n, title, desc }) => (
                 <motion.div key={n} variants={fade}>
@@ -125,7 +125,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             >
               <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 h-full hover:bg-white/[0.05] hover:border-white/[0.1] transition-colors">
                 <Zap size={20} strokeWidth={1.5} className="text-violet-400 mb-3" />
-                <h3 className="text-lg font-bold mb-2"><span className="font-logo font-extrabold tracking-wide uppercase">Strelo<span className="text-rose-400">IQ</span></span> writes your training week</h3>
+                <h3 className="text-lg font-bold mb-2"><span className="font-logo font-extrabold tracking-wide uppercase text-rose-400">Ace</span> writes your training week</h3>
                 <p className="text-sm text-white/40 leading-relaxed max-w-md">
                   Tell it your goal race, available hours, and fitness level. It builds swim, bike, and run
                   sessions with the right mix of easy, tempo, and intervals — adjusted as your race approaches.
@@ -214,7 +214,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               <motion.div variants={fade} className="mb-8 sm:mb-0 sm:w-1/3">
                 <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Pricing</p>
                 <h2 className="font-display text-xl font-bold">Free to start.<br />Pro when you're ready.</h2>
-                <p className="text-sm text-white/40 mt-2">Most features work forever on Free. Pro unlocks StreloIQ and advanced stats.</p>
+                <p className="text-sm text-white/40 mt-2">Most features work forever on Free. Pro unlocks Ace and advanced stats.</p>
               </motion.div>
               <div className="sm:flex-1 grid sm:grid-cols-2 gap-4">
                 <motion.div variants={fade}
@@ -232,7 +232,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
                     <p className="font-semibold text-sm">Pro</p>
                     <p className="font-display font-bold text-lg">$12.99<span className="text-xs font-normal text-white/40">/mo</span></p>
                   </div>
-                  <p className="text-xs text-white/30 mt-3 leading-relaxed">StreloIQ, volume trends, FIT/CSV export, unlimited races & templates, support chat</p>
+                  <p className="text-xs text-white/30 mt-3 leading-relaxed">Ace, volume trends, FIT/CSV export, unlimited races & templates, support chat</p>
                   <p className="text-xs text-white/30 mt-1.5">Annual: $123.99 <span className="text-emerald-400 font-medium">(save 20%)</span></p>
                 </motion.div>
               </div>

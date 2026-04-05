@@ -150,7 +150,7 @@ export default function AICoach({ onWorkoutsAdded }) {
       <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
         <h2 className="font-display text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
           <Bot size={16} strokeWidth={1.5} className="text-rose-500" />
-          <span className="font-logo font-extrabold tracking-wide uppercase text-[13px]">Strelo<span className="text-rose-500">IQ</span></span>
+          <span className="font-logo font-extrabold tracking-wider uppercase text-rose-500">Ace</span>
         </h2>
         <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
@@ -163,7 +163,7 @@ export default function AICoach({ onWorkoutsAdded }) {
             <Bike size={22} strokeWidth={1.5} />
             <Footprints size={22} strokeWidth={1.5} />
           </div>
-          <p className="text-sm text-slate-400 dark:text-slate-500">Tell StreloIQ how you're feeling, what you want to focus on, or just ask for next week's plan.</p>
+          <p className="text-sm text-slate-400 dark:text-slate-500">Tell Ace how you're feeling, what you want to focus on, or just ask for next week's plan.</p>
           <div className="flex flex-wrap justify-center gap-1.5 mt-4">
             {['Plan my next week', 'I want to focus on the bike', "I'm feeling tired, keep it easy"].map(q => (
               <button key={q} onClick={() => { setInput(q) }}
@@ -228,7 +228,7 @@ export default function AICoach({ onWorkoutsAdded }) {
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Ask StreloIQ about your week..."
+          placeholder="Ask Ace about your week..."
           className="flex-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none"
         />
         <button type="submit" disabled={loading || !input.trim()}

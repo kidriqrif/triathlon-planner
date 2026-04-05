@@ -41,7 +41,7 @@ def _build_training_summary(workouts: list) -> str:
     return "\n".join(lines)
 
 
-CHAT_SYSTEM_PROMPT = """You are StreloIQ, an expert triathlon coach inside the Strelo training app. You help athletes plan their upcoming training week through conversation.
+CHAT_SYSTEM_PROMPT = """You are Ace, an expert triathlon coach inside the Strelo training app. You help athletes plan their upcoming training week through conversation.
 
 RULES:
 - You have the athlete's profile, race target, and recent training history below. Use this context to give specific, personalised advice.
@@ -129,7 +129,7 @@ def suggest_week(
     current_user: models.User = Depends(get_current_user),
 ):
     if current_user.plan != "pro":
-        raise HTTPException(status_code=403, detail="StreloIQ requires a Pro subscription")
+        raise HTTPException(status_code=403, detail="Ace requires a Pro subscription")
 
     # Gather context scoped to the current user
     athlete = db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).first()
@@ -331,7 +331,7 @@ def ai_chat(
     current_user: models.User = Depends(get_current_user),
 ):
     if current_user.plan != "pro":
-        raise HTTPException(status_code=403, detail="StreloIQ requires a Pro subscription")
+        raise HTTPException(status_code=403, detail="Ace requires a Pro subscription")
 
     api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key:

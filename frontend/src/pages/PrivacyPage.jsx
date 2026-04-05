@@ -8,9 +8,9 @@ export default function PrivacyPage({ onBack }) {
           <button onClick={onBack} className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M10 6 L13 3 L16 6" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5.5 11 L9 6 L12.5 11" stroke="rgba(255,255,255,0.65)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 15 L4.5 12 L7 15" stroke="rgba(255,255,255,0.35)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <span className="font-black text-slate-800 text-lg tracking-tight">Strelo</span>
@@ -35,7 +35,7 @@ export default function PrivacyPage({ onBack }) {
             <p className="text-slate-600 leading-relaxed">We use your information to:</p>
             <ul className="list-disc pl-5 text-slate-600 space-y-1">
               <li>Provide and maintain your Strelo account and training data</li>
-              <li>Generate personalised StreloIQ training plans (Pro plan)</li>
+              <li>Generate personalised Ace training plans (Pro plan)</li>
               <li>Process payments through our payment provider (LemonSqueezy)</li>
               <li>Send essential account-related communications</li>
               <li>Improve and develop our services</li>
@@ -64,7 +64,7 @@ export default function PrivacyPage({ onBack }) {
               <li><strong>Render</strong> — application hosting</li>
               <li><strong>Vercel</strong> — frontend hosting</li>
               <li><strong>LemonSqueezy</strong> — payment processing</li>
-              <li><strong>Groq</strong> — StreloIQ training engine (Pro plan only)</li>
+              <li><strong>Groq</strong> — Ace training engine (Pro plan only)</li>
             </ul>
             <p className="text-slate-600 leading-relaxed mt-2">
               Each provider has their own privacy policy governing their handling of data.

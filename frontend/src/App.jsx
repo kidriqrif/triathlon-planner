@@ -172,9 +172,9 @@ export default function App() {
           <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-md bg-rose-600 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M10 6 L13 3 L16 6" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5.5 11 L9 6 L12.5 11" stroke="rgba(255,255,255,0.65)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 15 L4.5 12 L7 15" stroke="rgba(255,255,255,0.35)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <span className="font-display font-bold text-slate-900 dark:text-white text-sm">Strelo</span>

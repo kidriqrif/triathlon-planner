@@ -12,7 +12,7 @@ const FREE_FEATURES = [
 
 const PRO_FEATURES = [
   'Everything in Free, plus:',
-  'StreloIQ — auto-generated weekly plans',
+  'Ace — auto-generated weekly plans',
   'Weekly volume trends & RPE analysis',
   'FIT export to Garmin / COROS / Wahoo',
   'CSV data export',
@@ -45,7 +45,7 @@ export default function UpgradePage({ user }) {
         {isPro ? 'You\'re on Pro' : 'Upgrade to Pro'}
       </h1>
       <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 mb-4">
-        {isPro ? 'All premium features are unlocked.' : <>Unlock <span className="font-logo font-extrabold tracking-wide uppercase">Strelo<span className="text-rose-500">IQ</span></span> and let the engine write your training week.</>}
+        {isPro ? 'All premium features are unlocked.' : <>Unlock <span className="font-logo font-extrabold tracking-wide uppercase text-rose-500">Ace</span> and let the engine write your training week.</>}
       </p>
 
       {error && (
@@ -58,7 +58,7 @@ export default function UpgradePage({ user }) {
       {isPro ? (
         <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-900">
           <p className="font-bold text-slate-900 dark:text-white">Pro Plan Active</p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">You have access to all features including <span className="font-logo font-extrabold tracking-wide uppercase">Strelo<span className="text-rose-500">IQ</span></span>.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">You have access to all features including <span className="font-logo font-extrabold tracking-wide uppercase text-rose-500">Ace</span>.</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-5">

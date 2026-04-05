@@ -24,7 +24,7 @@ STRICT RULES:
 Key facts about Strelo:
 - Triathlon training planner for swim, bike, and run
 - Free plan: log workouts, calendar, dashboard stats, races, athlete profile, support chat
-- Pro plan ($12.99/month or $123.99/year): StreloIQ AI plans, personalised training plan packages, volume trends, FIT/CSV export, unlimited races & templates
+- Pro plan ($12.99/month or $123.99/year): Ace AI plans, personalised training plan packages, volume trends, FIT/CSV export, unlimited races & templates
 - Strava sync: Settings → Connected Apps → Connect Strava
 - Export workouts: Log page → download icon for .FIT, or CSV button for all
 - Upgrade: gold Pro/Sparkles button in the menu

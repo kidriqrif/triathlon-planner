@@ -58,7 +58,7 @@ const translations = {
     weeklyVolumeTrends: 'Weekly volume trends',
     seeTrainingLoad: 'See training load over time',
     autoGenerate: 'Auto-generate your training week',
-    streloIQ: 'StreloIQ',
+    streloIQ: 'Ace',
 
     // Sports
     swim: 'Swim',
@@ -171,7 +171,7 @@ const translations = {
 
     // Profile
     athleteProfile: 'Athlete Profile',
-    profileDesc: 'Your details are used by StreloIQ to personalise training plans',
+    profileDesc: 'Your details are used by Ace to personalise training plans',
     saveProfile: 'Save Profile',
     saved: 'Saved',
     basics: 'Basics',
@@ -316,7 +316,7 @@ const translations = {
     racesPlanned: 'carreras planificadas',
     addRace: '+ Añadir Carrera',
     athleteProfile: 'Perfil del Atleta',
-    profileDesc: 'StreloIQ usa tus datos para personalizar los planes de entrenamiento',
+    profileDesc: 'Ace usa tus datos para personalizar los planes de entrenamiento',
     saveProfile: 'Guardar Perfil',
     accountSettings: 'Ajustes de Cuenta',
     changePassword: 'Cambiar Contraseña',
@@ -392,7 +392,7 @@ const translations = {
     racesPlanned: 'courses prévues',
     addRace: '+ Ajouter Course',
     athleteProfile: "Profil de l'Athlète",
-    profileDesc: "Vos données sont utilisées par StreloIQ pour personnaliser vos plans d'entraînement",
+    profileDesc: "Vos données sont utilisées par Ace pour personnaliser vos plans d'entraînement",
     saveProfile: 'Enregistrer le Profil',
     accountSettings: 'Paramètres du Compte',
     changePassword: 'Changer le Mot de Passe',
@@ -468,7 +468,7 @@ const translations = {
     racesPlanned: 'Wettkämpfe geplant',
     addRace: '+ Wettkampf hinzufügen',
     athleteProfile: 'Athletenprofil',
-    profileDesc: 'Deine Daten werden von StreloIQ verwendet, um Trainingspläne zu personalisieren',
+    profileDesc: 'Deine Daten werden von Ace verwendet, um Trainingspläne zu personalisieren',
     saveProfile: 'Profil speichern',
     accountSettings: 'Kontoeinstellungen',
     changePassword: 'Passwort ändern',
@@ -544,7 +544,7 @@ const translations = {
     racesPlanned: 'provas planeadas',
     addRace: '+ Adicionar Prova',
     athleteProfile: 'Perfil do Atleta',
-    profileDesc: 'Os seus dados são usados pelo StreloIQ para personalizar planos de treino',
+    profileDesc: 'Os seus dados são usados pelo Ace para personalizar planos de treino',
     saveProfile: 'Guardar Perfil',
     accountSettings: 'Definições da Conta',
     changePassword: 'Alterar Palavra-passe',
@@ -620,7 +620,7 @@ const translations = {
     racesPlanned: 'gare pianificate',
     addRace: '+ Aggiungi Gara',
     athleteProfile: "Profilo dell'Atleta",
-    profileDesc: "I tuoi dati vengono utilizzati da StreloIQ per personalizzare i piani d'allenamento",
+    profileDesc: "I tuoi dati vengono utilizzati da Ace per personalizzare i piani d'allenamento",
     saveProfile: 'Salva Profilo',
     accountSettings: 'Impostazioni Account',
     changePassword: 'Cambia Password',
@@ -696,7 +696,7 @@ const translations = {
     racesPlanned: 'wedstrijden gepland',
     addRace: '+ Wedstrijd toevoegen',
     athleteProfile: 'Atletenprofiel',
-    profileDesc: 'Je gegevens worden door StreloIQ gebruikt om trainingsplannen te personaliseren',
+    profileDesc: 'Je gegevens worden door Ace gebruikt om trainingsplannen te personaliseren',
     saveProfile: 'Profiel opslaan',
     accountSettings: 'Accountinstellingen',
     changePassword: 'Wachtwoord wijzigen',
@@ -780,7 +780,7 @@ const translations = {
     addRace: '+ 添加比赛',
 
     athleteProfile: '运动员资料',
-    profileDesc: 'StreloIQ 会根据你的资料定制训练计划',
+    profileDesc: 'Ace 会根据你的资料定制训练计划',
     saveProfile: '保存资料',
 
     accountSettings: '账号设置',
@@ -865,7 +865,7 @@ const translations = {
     addRace: '+ Tambah Perlumbaan',
 
     athleteProfile: 'Profil Atlet',
-    profileDesc: 'StreloIQ menggunakan butiran anda untuk menyesuaikan pelan latihan',
+    profileDesc: 'Ace menggunakan butiran anda untuk menyesuaikan pelan latihan',
     saveProfile: 'Simpan Profil',
 
     accountSettings: 'Tetapan Akaun',
@@ -950,7 +950,7 @@ const translations = {
     addRace: '+ レースを追加',
 
     athleteProfile: 'アスリートプロフィール',
-    profileDesc: 'StreloIQがトレーニングプランをカスタマイズするためにあなたの情報を使用します',
+    profileDesc: 'Aceがトレーニングプランをカスタマイズするためにあなたの情報を使用します',
     saveProfile: 'プロフィールを保存',
 
     accountSettings: 'アカウント設定',
@@ -1035,7 +1035,7 @@ const translations = {
     addRace: '+ 대회 추가',
 
     athleteProfile: '선수 프로필',
-    profileDesc: 'StreloIQ가 맞춤 훈련 계획을 위해 회원님의 정보를 사용합니다',
+    profileDesc: 'Ace가 맞춤 훈련 계획을 위해 회원님의 정보를 사용합니다',
     saveProfile: '프로필 저장',
 
     accountSettings: '계정 설정',
@@ -1120,7 +1120,7 @@ const translations = {
     addRace: '+ เพิ่มการแข่งขัน',
 
     athleteProfile: 'โปรไฟล์นักกีฬา',
-    profileDesc: 'StreloIQ ใช้ข้อมูลของคุณเพื่อปรับแต่งแผนฝึกซ้อม',
+    profileDesc: 'Ace ใช้ข้อมูลของคุณเพื่อปรับแต่งแผนฝึกซ้อม',
     saveProfile: 'บันทึกโปรไฟล์',
 
     accountSettings: 'ตั้งค่าบัญชี',
@@ -1205,7 +1205,7 @@ const translations = {
     addRace: '+ Tambah Lomba',
 
     athleteProfile: 'Profil Atlet',
-    profileDesc: 'StreloIQ menggunakan data Anda untuk menyesuaikan rencana latihan',
+    profileDesc: 'Ace menggunakan data Anda untuk menyesuaikan rencana latihan',
     saveProfile: 'Simpan Profil',
 
     accountSettings: 'Pengaturan Akun',
@@ -1290,7 +1290,7 @@ const translations = {
     addRace: '+ दौड़ जोड़ें',
 
     athleteProfile: 'एथलीट प्रोफ़ाइल',
-    profileDesc: 'StreloIQ आपकी जानकारी का उपयोग प्रशिक्षण योजनाओं को अनुकूलित करने के लिए करता है',
+    profileDesc: 'Ace आपकी जानकारी का उपयोग प्रशिक्षण योजनाओं को अनुकूलित करने के लिए करता है',
     saveProfile: 'प्रोफ़ाइल सहेजें',
 
     accountSettings: 'खाता सेटिंग्स',
@@ -1375,7 +1375,7 @@ const translations = {
     addRace: '+ பந்தயம் சேர்',
 
     athleteProfile: 'விளையாட்டு வீரர் சுயவிவரம்',
-    profileDesc: 'StreloIQ உங்கள் தகவல்களைப் பயன்படுத்தி பயிற்சித் திட்டங்களைத் தனிப்பயனாக்குகிறது',
+    profileDesc: 'Ace உங்கள் தகவல்களைப் பயன்படுத்தி பயிற்சித் திட்டங்களைத் தனிப்பயனாக்குகிறது',
     saveProfile: 'சுயவிவரத்தைச் சேமி',
 
     accountSettings: 'கணக்கு அமைப்புகள்',
@@ -1452,7 +1452,7 @@ const translations = {
     racesPlanned: 'tävlingar planerade',
     addRace: '+ Lägg till tävling',
     athleteProfile: 'Atletprofil',
-    profileDesc: 'Dina uppgifter används av StreloIQ för att anpassa träningsplaner',
+    profileDesc: 'Dina uppgifter används av Ace för att anpassa träningsplaner',
     saveProfile: 'Spara profil',
     accountSettings: 'Kontoinställningar',
     changePassword: 'Ändra lösenord',
@@ -1528,7 +1528,7 @@ const translations = {
     racesPlanned: 'løp planlagt',
     addRace: '+ Legg til løp',
     athleteProfile: 'Utøverprofil',
-    profileDesc: 'Dine opplysninger brukes av StreloIQ for å tilpasse treningsplaner',
+    profileDesc: 'Dine opplysninger brukes av Ace for å tilpasse treningsplaner',
     saveProfile: 'Lagre profil',
     accountSettings: 'Kontoinnstillinger',
     changePassword: 'Endre passord',
@@ -1604,7 +1604,7 @@ const translations = {
     racesPlanned: 'løb planlagt',
     addRace: '+ Tilføj løb',
     athleteProfile: 'Atletprofil',
-    profileDesc: 'Dine oplysninger bruges af StreloIQ til at tilpasse træningsplaner',
+    profileDesc: 'Dine oplysninger bruges af Ace til at tilpasse træningsplaner',
     saveProfile: 'Gem profil',
     accountSettings: 'Kontoindstillinger',
     changePassword: 'Skift adgangskode',
@@ -1680,7 +1680,7 @@ const translations = {
     racesPlanned: 'kilpailua suunniteltu',
     addRace: '+ Lisää kilpailu',
     athleteProfile: 'Urheilijan profiili',
-    profileDesc: 'StreloIQ käyttää tietojasi harjoitussuunnitelmien räätälöintiin',
+    profileDesc: 'Ace käyttää tietojasi harjoitussuunnitelmien räätälöintiin',
     saveProfile: 'Tallenna profiili',
     accountSettings: 'Tiliasetukset',
     changePassword: 'Vaihda salasana',
@@ -1756,7 +1756,7 @@ const translations = {
     racesPlanned: 'wyścigów zaplanowanych',
     addRace: '+ Dodaj wyścig',
     athleteProfile: 'Profil sportowca',
-    profileDesc: 'Twoje dane są używane przez StreloIQ do personalizacji planów treningowych',
+    profileDesc: 'Twoje dane są używane przez Ace do personalizacji planów treningowych',
     saveProfile: 'Zapisz profil',
     accountSettings: 'Ustawienia konta',
     changePassword: 'Zmień hasło',
@@ -1832,7 +1832,7 @@ const translations = {
     racesPlanned: 'závodů naplánováno',
     addRace: '+ Přidat závod',
     athleteProfile: 'Profil sportovce',
-    profileDesc: 'Vaše údaje používá StreloIQ k přizpůsobení tréninkových plánů',
+    profileDesc: 'Vaše údaje používá Ace k přizpůsobení tréninkových plánů',
     saveProfile: 'Uložit profil',
     accountSettings: 'Nastavení účtu',
     changePassword: 'Změnit heslo',
@@ -1908,7 +1908,7 @@ const translations = {
     racesPlanned: 'соревнований запланировано',
     addRace: '+ Добавить соревнование',
     athleteProfile: 'Профиль спортсмена',
-    profileDesc: 'Ваши данные используются StreloIQ для персонализации тренировочных планов',
+    profileDesc: 'Ваши данные используются Ace для персонализации тренировочных планов',
     saveProfile: 'Сохранить профиль',
     accountSettings: 'Настройки аккаунта',
     changePassword: 'Изменить пароль',
@@ -1984,7 +1984,7 @@ const translations = {
     racesPlanned: 'змагань заплановано',
     addRace: '+ Додати змагання',
     athleteProfile: 'Профіль спортсмена',
-    profileDesc: 'Ваші дані використовуються StreloIQ для персоналізації тренувальних планів',
+    profileDesc: 'Ваші дані використовуються Ace для персоналізації тренувальних планів',
     saveProfile: 'Зберегти профіль',
     accountSettings: 'Налаштування акаунту',
     changePassword: 'Змінити пароль',
@@ -2060,7 +2060,7 @@ const translations = {
     racesPlanned: 'yarış planlandı',
     addRace: '+ Yarış Ekle',
     athleteProfile: 'Sporcu Profili',
-    profileDesc: 'Bilgileriniz StreloIQ tarafından antrenman planlarını kişiselleştirmek için kullanılır',
+    profileDesc: 'Bilgileriniz Ace tarafından antrenman planlarını kişiselleştirmek için kullanılır',
     saveProfile: 'Profili Kaydet',
     accountSettings: 'Hesap Ayarları',
     changePassword: 'Şifre Değiştir',
