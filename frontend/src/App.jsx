@@ -21,7 +21,7 @@ import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun, Wifi } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
@@ -45,6 +45,7 @@ export default function App() {
   const [workouts, setWorkouts] = useState([])
   const [races, setRaces] = useState([])
   const [loading, setLoading] = useState(true)
+  const [waking, setWaking] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [dark, setDark] = useState(() => localStorage.getItem('strelo_theme') === 'dark')
 
@@ -53,6 +54,13 @@ export default function App() {
     document.documentElement.classList.toggle('dark', dark)
     localStorage.setItem('strelo_theme', dark ? 'dark' : 'light')
   }, [dark])
+
+  // Show "waking up" if loading takes more than 2s (cold start)
+  useEffect(() => {
+    if (!loading) { setWaking(false); return }
+    const t = setTimeout(() => setWaking(true), 2000)
+    return () => clearTimeout(t)
+  }, [loading])
 
   const fetchAll = useCallback(async () => {
     try {
@@ -125,7 +133,17 @@ export default function App() {
   }
 
   const renderPage = () => {
-    if (loading) return <DashboardSkeleton />
+    if (loading) return (
+      <>
+        {waking && (
+          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-lg px-4 py-2.5 mb-3">
+            <Wifi size={14} strokeWidth={1.5} className="animate-pulse" />
+            Waking up the server — this only takes a few seconds on the first visit...
+          </div>
+        )}
+        <DashboardSkeleton />
+      </>
+    )
     switch (page) {
       case 'dashboard': return <Dashboard races={races} workouts={workouts} onWorkoutsAdded={fetchAll} user={user} onNavigate={navigate} />
       case 'plan':      return <PlanPage workouts={workouts} onRefresh={fetchAll} />

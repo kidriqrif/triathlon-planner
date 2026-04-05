@@ -125,7 +125,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             >
               <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 h-full hover:bg-white/[0.05] hover:border-white/[0.1] transition-colors">
                 <Zap size={20} strokeWidth={1.5} className="text-violet-400 mb-3" />
-                <h3 className="font-display text-lg font-bold mb-2">Strelo<span className="text-violet-400">IQ</span> writes your training week</h3>
+                <h3 className="font-display text-lg font-bold mb-2">Strelo<span className="text-rose-400">IQ</span> writes your training week</h3>
                 <p className="text-sm text-white/40 leading-relaxed max-w-md">
                   Tell it your goal race, available hours, and fitness level. It builds swim, bike, and run
                   sessions with the right mix of easy, tempo, and intervals — adjusted as your race approaches.
