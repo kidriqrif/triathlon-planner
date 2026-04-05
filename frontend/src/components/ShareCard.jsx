@@ -142,9 +142,9 @@ export default function ShareCard({ type, data }) {
           <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center gap-2">
             <div className="w-5 h-5 rounded bg-rose-600 flex items-center justify-center">
               <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
-                <path d="M10 6 L13 3 L16 6" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M5.5 11 L9 6 L12.5 11" stroke="rgba(255,255,255,0.65)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 15 L4.5 12 L7 15" stroke="rgba(255,255,255,0.35)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
+                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
               </svg>
             </div>
             <span className="text-xs font-semibold text-slate-500">Strelo</span>
