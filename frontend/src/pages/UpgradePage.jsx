@@ -95,7 +95,7 @@ export default function UpgradePage({ user }) {
             </ul>
             <div className="mt-4 space-y-2">
               <button onClick={() => handleUpgrade('monthly')} disabled={!!loading}
-                className="w-full py-2.5 rounded-lg text-sm font-semibold bg-rose-500 text-white hover:bg-rose-400 transition-colors disabled:opacity-50">
+                className="vista-btn w-full py-2.5 rounded-lg text-sm disabled:opacity-50">
                 {loading === 'monthly' ? 'Redirecting...' : 'Monthly — $12.99/mo'}
               </button>
               <button onClick={() => handleUpgrade('yearly')} disabled={!!loading}

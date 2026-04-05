@@ -40,7 +40,7 @@ export default function SupportChat() {
     <>
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col z-50 overflow-hidden">
+        <div className="fixed bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] vista-panel rounded-2xl flex flex-col z-50 overflow-hidden">
           {/* Header */}
           <div className="bg-slate-900 px-4 py-3 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">

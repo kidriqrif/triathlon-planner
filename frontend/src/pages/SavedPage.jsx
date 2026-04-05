@@ -116,7 +116,7 @@ export default function SavedPage({ user, onRefresh }) {
         {!showForm && (
           <button onClick={() => setShowForm(true)}
             disabled={!isPro && templates.length >= limit}
-            className="bg-slate-900 dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-medium px-3 py-2 rounded-lg text-sm transition-colors disabled:opacity-40 flex items-center gap-1.5">
+            className="vista-btn px-3 py-2 rounded-lg text-sm disabled:opacity-40 flex items-center gap-1.5">
             <Plus size={14} strokeWidth={2} /> {t('new')}
           </button>
         )}
@@ -224,7 +224,7 @@ export default function SavedPage({ user, onRefresh }) {
             {/* Actions */}
             <div className="flex gap-2 pt-1">
               <button type="submit"
-                className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-medium px-4 py-2.5 rounded-lg text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors">
+                className="vista-btn px-4 py-2.5 rounded-lg text-sm">
                 {t('saveTemplate')}
               </button>
               <button type="button" onClick={resetForm}

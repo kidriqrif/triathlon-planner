@@ -54,7 +54,7 @@ function SegmentCard({ seg, index, total, onChange, onDelete, onMove }) {
   const setNum = (field) => (e) =>
     onChange({ ...seg, [field]: e.target.value === '' ? '' : +e.target.value })
 
-  const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none'
+  const inputCls = 'vista-input w-full rounded-lg px-2 py-1.5 text-sm dark:text-white'
 
   return (
     <div className={`rounded-lg border-2 ${meta.border} ${meta.bg} w-36 flex-shrink-0 overflow-hidden flex flex-col`}>

@@ -8,7 +8,7 @@ import {
 import useDark from '../utils/useDark'
 import { useI18n } from '../i18n/I18nContext'
 
-const inputCls = 'w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white'
+const inputCls = 'vista-input w-full rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white'
 
 const QUALITY_LABELS = ['', 'Poor', 'Fair', 'OK', 'Good', 'Great']
 
@@ -166,7 +166,7 @@ export default function BodyLogPage() {
         </div>
 
         <button type="submit" disabled={saving}
-          className="w-full py-3 rounded-xl font-semibold text-white bg-slate-900 dark:bg-rose-600 hover:bg-slate-800 dark:hover:bg-rose-500 transition-colors disabled:opacity-50">
+          className="vista-btn w-full py-3 rounded-xl disabled:opacity-50">
           {saving ? t('saving') : t('logEntry')}
         </button>
       </form>

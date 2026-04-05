@@ -127,7 +127,7 @@ function RaceForm({ race, onSave, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="vista-panel rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Gradient header */}
         <div className={`bg-gradient-to-r ${catMeta.gradient} rounded-t-xl px-6 py-5 flex items-center justify-between`}>
           <div>
@@ -149,14 +149,14 @@ function RaceForm({ race, onSave, onClose }) {
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceName')}</label>
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required
               placeholder="e.g. City Olympic Tri 2025"
-              className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none bg-white dark:bg-slate-800 dark:text-white" />
+              className="vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white" />
           </div>
 
           {/* Date */}
           <div>
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('raceDate')}</label>
             <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required
-              className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none bg-white dark:bg-slate-800 dark:text-white" />
+              className="vista-input w-full rounded-xl px-3 py-2.5 text-sm dark:text-white" />
           </div>
 
           {/* Category tabs */}

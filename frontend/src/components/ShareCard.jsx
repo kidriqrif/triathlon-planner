@@ -155,7 +155,7 @@ export default function ShareCard({ type, data }) {
       {/* Action buttons */}
       <div className="flex gap-2">
         <button onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-rose-600 hover:bg-rose-500 text-white transition-colors">
+          className="flex-1 flex items-center justify-center gap-2 vista-btn px-4 py-2.5 rounded-xl text-sm">
           <Share2 size={15} strokeWidth={2} />
           Share
         </button>
