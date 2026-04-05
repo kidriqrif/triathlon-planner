@@ -7,6 +7,7 @@ export default {
       fontFamily: {
         sans: ['DM Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         display: ['Outfit', 'DM Sans', 'system-ui', 'sans-serif'],
+        logo: ['Orbitron', 'Outfit', 'sans-serif'],
       },
     },
   },
