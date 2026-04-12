@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { useI18n } from './i18n/I18nContext'
 import { LANGUAGES } from './i18n/translations'
 import Dashboard from './pages/Dashboard'
@@ -272,6 +273,7 @@ export default function App() {
       </main>
 
       <SupportChat />
+      <Analytics />
     </div>
   )
 }
