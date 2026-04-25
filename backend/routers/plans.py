@@ -145,6 +145,60 @@ PLAN_LIBRARY = [
             ],
         ],
     },
+    {
+        "id": "ironman-24",
+        "name": "Full Ironman — 24 Weeks",
+        "distance": "ironman",
+        "weeks": 24,
+        "level": "advanced",
+        "assumed_hours": 12.0,
+        "desc": "Six-month Ironman build for experienced triathletes. Four periodised blocks (base, build, peak, taper) progressing from 10 to 15 hours/week.",
+        "weekly": [
+            # Block 1 — Base (weeks 1–6): aerobic foundation, lower intensity
+            [
+                {"day": 0, "sport": "swim", "type": "easy",     "min": 60, "km": 2.5, "note": "Long aerobic swim, drills + steady pulls"},
+                {"day": 1, "sport": "bike", "type": "easy",     "min": 75, "km": 30.0, "note": "Zone 2 endurance ride"},
+                {"day": 1, "sport": "run",  "type": "easy",     "min": 30, "km": 5.0,  "note": "PM easy aerobic run, conversational"},
+                {"day": 2, "sport": "swim", "type": "easy",     "min": 45, "km": 1.8, "note": "Technique focus + steady laps"},
+                {"day": 3, "sport": "run",  "type": "easy",     "min": 50, "km": 9.0,  "note": "Aerobic run, hold zone 2"},
+                {"day": 4, "sport": "bike", "type": "tempo",    "min": 70, "km": 32.0, "note": "Sweetspot: 2x15min at 88-93% FTP"},
+                {"day": 5, "sport": "bike", "type": "long",     "min": 180, "km": 80.0, "note": "Long ride, practice nutrition every 30min"},
+                {"day": 6, "sport": "run",  "type": "long",     "min": 90, "km": 16.0, "note": "Long run, last 10min strong"},
+            ],
+            # Block 2 — Build (weeks 7–14): volume up, intensity introduced
+            [
+                {"day": 0, "sport": "swim", "type": "tempo",    "min": 60, "km": 2.8, "note": "10x200m at threshold, 30s rest"},
+                {"day": 1, "sport": "bike", "type": "tempo",    "min": 90, "km": 40.0, "note": "3x12min at FTP with 6min recovery"},
+                {"day": 1, "sport": "run",  "type": "recovery", "min": 25, "km": 4.0,  "note": "PM easy shake-out run"},
+                {"day": 2, "sport": "swim", "type": "interval", "min": 60, "km": 3.0, "note": "Race-pace continuous broken sets"},
+                {"day": 3, "sport": "run",  "type": "tempo",    "min": 60, "km": 11.0, "note": "20min warm-up, 25min tempo, cool-down"},
+                {"day": 4, "sport": "bike", "type": "interval", "min": 75, "km": 35.0, "note": "5x5min VO2max with equal recovery"},
+                {"day": 5, "sport": "brick","type": "long",     "min": 240, "km": None, "note": "3hr ride at IM effort + 30min run off the bike"},
+                {"day": 6, "sport": "run",  "type": "long",     "min": 120, "km": 22.0, "note": "Long run with last 5km at marathon pace"},
+            ],
+            # Block 3 — Peak (weeks 15–20): race-specific volume + intensity, longest sessions
+            [
+                {"day": 0, "sport": "swim", "type": "interval", "min": 75, "km": 3.5, "note": "10x300m at race pace, 20s rest"},
+                {"day": 1, "sport": "bike", "type": "tempo",    "min": 90, "km": 42.0, "note": "Sweetspot: 3x15min at 90% FTP"},
+                {"day": 1, "sport": "run",  "type": "easy",     "min": 30, "km": 5.0,  "note": "PM easy aerobic to load the legs"},
+                {"day": 2, "sport": "swim", "type": "long",     "min": 75, "km": 4.0, "note": "Continuous full IM swim distance"},
+                {"day": 3, "sport": "run",  "type": "interval", "min": 75, "km": 13.0, "note": "6x1km at threshold, 90s jog recovery"},
+                {"day": 4, "sport": "bike", "type": "interval", "min": 90, "km": 42.0, "note": "Race-pace simulation: 4x15min IM effort"},
+                {"day": 5, "sport": "brick","type": "long",     "min": 360, "km": None, "note": "5hr ride + 45min run — biggest brick of the block"},
+                {"day": 6, "sport": "run",  "type": "long",     "min": 150, "km": 28.0, "note": "Long run, focus nutrition + pacing for marathon"},
+            ],
+            # Block 4 — Taper (weeks 21–24): sharp reduction, maintain feel
+            [
+                {"day": 0, "sport": "swim", "type": "tempo",    "min": 45, "km": 2.0, "note": "Race-pace openers, short and sharp"},
+                {"day": 1, "sport": "bike", "type": "tempo",    "min": 60, "km": 25.0, "note": "Few race-pace surges, mostly easy"},
+                {"day": 2, "sport": "run",  "type": "tempo",    "min": 40, "km": 7.0, "note": "20min easy + 6x1min strides at race pace"},
+                {"day": 3, "sport": "swim", "type": "easy",     "min": 30, "km": 1.5, "note": "Easy technique swim, feel the water"},
+                {"day": 4, "sport": "bike", "type": "easy",     "min": 45, "km": 18.0, "note": "Easy spin + 4x30s race-pace surges"},
+                {"day": 5, "sport": "run",  "type": "easy",     "min": 30, "km": 5.0, "note": "Race-week shake-out with 4 strides"},
+                {"day": 6, "sport": "swim", "type": "easy",     "min": 20, "km": 0.8, "note": "Race-day -1 dip, very easy"},
+            ],
+        ],
+    },
 ]
 
 
