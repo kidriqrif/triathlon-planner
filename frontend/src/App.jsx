@@ -164,112 +164,139 @@ export default function App() {
     }
   }
 
-  return (
-    <div className="min-h-screen transition-colors">
-      {/* Top bar — slim, just logo + hamburger */}
-      <header className="sticky top-0 z-40 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl backdrop-saturate-150 border-b border-rose-200/50 dark:border-rose-900/30">
-        <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
-          <button onClick={() => navigate('dashboard')} className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full vista-orb flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="font-display font-bold text-slate-900 dark:text-white text-sm">Strelo</span>
+  const SidebarNav = ({ onNavigateClick }) => (
+    <>
+      <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
+        <span className="px-3 text-[10px] font-mono tracking-widest text-zinc-400 dark:text-zinc-500 uppercase mb-2 block">Command</span>
+        {NAV_ITEMS.map(({ id, tKey, Icon }) => (
+          <button key={id} onClick={() => onNavigateClick(id)}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative ${
+              page === id
+                ? 'bg-sunrise-subtle text-zinc-900 dark:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] hover:text-zinc-900 dark:hover:text-white'
+            }`}>
+            {page === id && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-sunrise-gradient rounded-r-full" />
+            )}
+            <Icon size={16} strokeWidth={1.75} className={page === id ? 'text-orange-500' : ''} />
+            {t(tKey)}
           </button>
+        ))}
 
-          <div className="flex items-center gap-1.5">
-            {/* Page label */}
-            <span className="text-xs font-medium text-slate-400 dark:text-slate-500 hidden sm:block capitalize">{page}</span>
-            {/* Dark mode toggle */}
-            <button onClick={() => setDark(d => !d)}
-              className="p-2 rounded-md text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              {dark ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-            </button>
-            {/* Menu */}
-            <button onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <Menu size={18} strokeWidth={2} />
-            </button>
+        {user.plan !== 'pro' && (
+          <button onClick={() => onNavigateClick('upgrade')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors mt-2 ${
+              page === 'upgrade'
+                ? 'bg-sunrise-subtle text-orange-500'
+                : 'text-orange-500 hover:bg-zinc-100 dark:hover:bg-white/[0.03]'
+            }`}>
+            <Sparkles size={16} strokeWidth={1.75} />
+            {t('upgradeToPro')}
+          </button>
+        )}
+      </nav>
+
+      <div className="border-t border-zinc-200/60 dark:border-white/5 p-3 space-y-0.5">
+        <button onClick={() => onNavigateClick('settings')}
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            page === 'settings'
+              ? 'bg-zinc-100 dark:bg-white/[0.05] text-zinc-900 dark:text-white'
+              : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03]'
+          }`}>
+          <Settings size={16} strokeWidth={1.75} />
+          {t('settings')}
+        </button>
+
+        <button onClick={() => setDark(d => !d)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] transition-colors">
+          {dark ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
+          {dark ? 'Light mode' : 'Dark mode'}
+        </button>
+
+        <button onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] hover:text-red-500 transition-colors">
+          <LogOut size={16} strokeWidth={1.75} />
+          {t('signOut')}
+        </button>
+
+        <div className="px-3 pt-3 pb-1 border-t border-zinc-200/60 dark:border-white/5 mt-2 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-sunrise-gradient flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-glow-sunrise">
+            {user.name?.[0]?.toUpperCase() || 'A'}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-zinc-900 dark:text-white truncate">{user.name}</p>
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">{user.email}</p>
           </div>
         </div>
-      </header>
+      </div>
+    </>
+  )
 
-      {/* Sidebar overlay */}
+  const StreloLogo = () => (
+    <button onClick={() => navigate('dashboard')} className="flex items-center gap-2.5">
+      <div className="w-8 h-8 rounded-lg bg-sunrise-gradient flex items-center justify-center shadow-glow-sunrise">
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+          <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+          <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.7)" strokeWidth="2.2" strokeLinecap="round"/>
+          <path d="M12 14L15 4" stroke="rgba(255,255,255,0.4)" strokeWidth="2.2" strokeLinecap="round"/>
+        </svg>
+      </div>
+      <span className="font-display font-bold text-zinc-900 dark:text-white text-base tracking-tight">Strelo</span>
+    </button>
+  )
+
+  return (
+    <div className="min-h-screen flex bg-zinc-50 dark:bg-[#030303] atmosphere relative">
+      <div className="topo-bg" />
+
+      {/* Persistent sidebar — md+ */}
+      <aside className="hidden md:flex flex-col w-[260px] shrink-0 h-screen sticky top-0 border-r border-zinc-200/60 dark:border-white/5 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl z-20">
+        <div className="px-6 py-6">
+          <StreloLogo />
+        </div>
+        <SidebarNav onNavigateClick={navigate} />
+      </aside>
+
+      {/* Mobile drawer */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
-          <div className="absolute inset-0 bg-black/30" onClick={() => setSidebarOpen(false)} />
-          <div className="relative w-72 vista-panel h-full flex flex-col rounded-none !border-0 !border-l !border-rose-200/50 dark:!border-rose-900/30">
-            {/* Sidebar header */}
-            <div className="px-5 h-14 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
-              <span className="font-bold text-slate-900 dark:text-white text-sm">{t('menu')}</span>
+        <div className="fixed inset-0 z-50 flex md:hidden">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <div className="relative w-72 bg-white dark:bg-zinc-900 h-full flex flex-col border-r border-zinc-200/60 dark:border-white/5 ml-0">
+            <div className="px-5 h-14 flex items-center justify-between border-b border-zinc-200/60 dark:border-white/5">
+              <StreloLogo />
               <button onClick={() => setSidebarOpen(false)}
-                className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+                className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors">
                 <X size={18} strokeWidth={2} />
               </button>
             </div>
-
-            {/* Nav links */}
-            <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
-              {NAV_ITEMS.map(({ id, tKey, Icon }) => (
-                <button key={id} onClick={() => navigate(id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    page === id
-                      ? 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}>
-                  <Icon size={16} strokeWidth={1.5} />
-                  {t(tKey)}
-                </button>
-              ))}
-
-              {user.plan !== 'pro' && (
-                <button onClick={() => navigate('upgrade')}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    page === 'upgrade'
-                      ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400'
-                      : 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800'
-                  }`}>
-                  <Sparkles size={16} strokeWidth={1.5} />
-                  {t('upgradeToPro')}
-                </button>
-              )}
-            </nav>
-
-            {/* Bottom section */}
-            <div className="border-t border-slate-100 dark:border-slate-800 p-3 space-y-0.5">
-              <button onClick={() => navigate('settings')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  page === 'settings'
-                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                }`}>
-                <Settings size={16} strokeWidth={1.5} />
-                {t('settings')}
-              </button>
-
-              <button onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-red-500 transition-colors">
-                <LogOut size={16} strokeWidth={1.5} />
-                {t('signOut')}
-              </button>
-
-              {/* User info */}
-              <div className="px-3 pt-3 pb-1 border-t border-slate-100 dark:border-slate-800 mt-2">
-                <p className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate">{user.name}</p>
-                <p className="text-xs text-slate-400 truncate">{user.email}</p>
-              </div>
-            </div>
+            <SidebarNav onNavigateClick={navigate} />
           </div>
         </div>
       )}
 
-      {/* Content */}
-      <main className="max-w-5xl mx-auto px-4 py-5">
-        {renderPage()}
-      </main>
+      {/* Main column */}
+      <div className="flex-1 min-w-0 relative z-10">
+        {/* Mobile top bar */}
+        <header className="md:hidden sticky top-0 z-30 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border-b border-zinc-200/60 dark:border-white/5">
+          <div className="px-4 h-14 flex items-center justify-between">
+            <StreloLogo />
+            <div className="flex items-center gap-1">
+              <button onClick={() => setDark(d => !d)}
+                className="p-2 rounded-md text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors">
+                {dark ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
+              </button>
+              <button onClick={() => setSidebarOpen(true)}
+                className="p-2 rounded-md text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors">
+                <Menu size={18} strokeWidth={2} />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+          {renderPage()}
+        </main>
+      </div>
 
       <SupportChat />
     </div>

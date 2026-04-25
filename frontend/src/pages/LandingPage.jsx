@@ -1,14 +1,30 @@
 import React, { useEffect } from 'react'
 import { motion } from 'motion/react'
-import { ArrowRight, Waves, Bike, Footprints, Calendar, BarChart3, Zap, Target, Watch, BookOpen } from 'lucide-react'
+import {
+  ArrowRight, Waves, Bike, Footprints, Calendar, BarChart3, Zap,
+  Target, Watch, BookOpen, Activity, CheckCircle2, Flag, Sparkles,
+} from 'lucide-react'
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
+const stagger = { show: { transition: { staggerChildren: 0.1 } } }
 
-const stagger = {
-  show: { transition: { staggerChildren: 0.1 } },
+function StreloMark({ size = 22 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <defs>
+        <linearGradient id="strelo-mark" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#ff7a00" />
+          <stop offset="100%" stopColor="#ff0080" />
+        </linearGradient>
+      </defs>
+      <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark)" opacity="0.15" />
+      <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark)" />
+      <path d="M16 11L12 21H22L16 11Z" fill="#52525b" />
+    </svg>
+  )
 }
 
 export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
@@ -17,279 +33,505 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans relative atmosphere overflow-x-hidden">
+      <div className="topo-bg" />
+
       {/* Nav */}
-      <header className="border-b border-white/5">
-        <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full vista-orb flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="font-display font-bold text-sm">Strelo</span>
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-zinc-950/70 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <StreloMark />
+            <span className="font-display font-bold text-lg tracking-tight">Strelo</span>
           </div>
-          <div className="flex items-center gap-5 text-sm">
-            <a href="#features" className="text-white/40 hover:text-white transition-colors hidden sm:block">Features</a>
-            <a href="#pricing" className="text-white/40 hover:text-white transition-colors hidden sm:block">Pricing</a>
-            <button onClick={onSignIn} className="text-white/50 hover:text-white transition-colors">Log in</button>
-            <button onClick={onGetStarted} className="font-medium bg-rose-500 hover:bg-rose-400 px-3.5 py-1.5 rounded-md transition-colors">
-              Sign up free
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+            <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+          </nav>
+          <div className="flex items-center gap-3 text-sm">
+            <button onClick={onSignIn} className="hidden sm:block text-zinc-300 hover:text-white transition-colors px-3 py-1.5">
+              Log in
+            </button>
+            <button onClick={onGetStarted} className="btn-sunrise text-sm px-4 py-2 rounded-full">
+              Get started free
             </button>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="max-w-5xl mx-auto px-5 pt-16 pb-10 sm:pt-24 sm:pb-16">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
-          <motion.div initial="hidden" animate="show" variants={stagger}>
-            <motion.div variants={fade} className="flex items-center gap-2 mb-6">
-              <span className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 font-medium">Swim</span>
-              <span className="text-xs px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 font-medium">Bike</span>
-              <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Run</span>
-            </motion.div>
-            <motion.h1 variants={fade} className="font-display text-4xl sm:text-5xl font-extrabold leading-[1.08] tracking-tight">
-              Build the plan<br />
-              your race demands.
-            </motion.h1>
-            <motion.p variants={fade} className="text-white/45 mt-5 leading-relaxed max-w-md">
-              Strelo structures your swim, bike, and run week around your race date,
-              fitness level, and available hours. <span className="font-logo font-extrabold tracking-wide uppercase text-rose-400">Ace</span> handles the periodisation.
-            </motion.p>
-            <motion.div variants={fade} className="flex items-center gap-3 mt-8">
-              <motion.button onClick={onGetStarted} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                className="font-semibold bg-rose-500 hover:bg-rose-400 px-5 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
-                Get started free <ArrowRight size={15} />
-              </motion.button>
-              <button onClick={onSignIn}
-                className="font-medium text-white/50 hover:text-white border border-white/10 hover:border-white/20 px-5 py-3 rounded-lg transition-colors text-sm">
-                Log in
-              </button>
-            </motion.div>
-            <motion.p variants={fade} className="text-xs text-white/25 mt-4">Free forever &middot; Syncs with Strava &middot; No credit card</motion.p>
-          </motion.div>
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 z-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div initial="hidden" animate="show" variants={stagger} className="lg:col-span-6 space-y-7">
+              <motion.div variants={fade} className="inline-flex items-center gap-3">
+                <span className="h-px w-8 bg-zinc-600 block" />
+                <span className="eyebrow">Pre-Dawn Protocol</span>
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-10 lg:mt-0"
-          >
-            <img src="/hero.webp" alt="Triathlon training" className="w-full rounded-xl" />
-          </motion.div>
+              <motion.h1 variants={fade}
+                className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight">
+                <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+                  Build the plan<br />your race demands.
+                </span>
+              </motion.h1>
+
+              <motion.p variants={fade} className="text-lg text-zinc-400 max-w-lg leading-relaxed">
+                Strelo structures your swim, bike, and run week around your race date,
+                fitness level, and available hours. <span className="text-white font-medium">Ace</span> handles
+                the periodisation. You do the work.
+              </motion.p>
+
+              <motion.div variants={fade} className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button onClick={onGetStarted} className="btn-sunrise text-base">
+                  Get started free <ArrowRight size={16} />
+                </button>
+                <button onClick={onSignIn} className="btn-ghost text-base">
+                  Log in
+                </button>
+              </motion.div>
+
+              <motion.div variants={fade} className="flex items-center gap-6 pt-6 border-t border-white/10 text-zinc-500">
+                <div className="flex items-center gap-2">
+                  <Activity size={14} className="text-orange-400" />
+                  <span className="text-xs font-mono uppercase tracking-wider">Strava synced</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Watch size={14} className="text-orange-400" />
+                  <span className="text-xs font-mono uppercase tracking-wider">Garmin ready</span>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Hero data visual */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 relative h-[540px] hidden md:block"
+            >
+              <div className="panel absolute inset-0 p-6 flex flex-col gap-5">
+                <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                  <div>
+                    <div className="eyebrow mb-1">Build Phase · Week 14</div>
+                    <div className="font-display font-medium text-lg text-white">Peak Overload</div>
+                  </div>
+                  <div className="flex -space-x-2">
+                    <div className="w-7 h-7 rounded-full bg-sport-swim border-2 border-zinc-900 flex items-center justify-center text-[10px] font-bold text-white">S</div>
+                    <div className="w-7 h-7 rounded-full bg-sport-bike border-2 border-zinc-900 flex items-center justify-center text-[10px] font-bold text-white">B</div>
+                    <div className="w-7 h-7 rounded-full bg-sport-run border-2 border-zinc-900 flex items-center justify-center text-[10px] font-bold text-white">R</div>
+                  </div>
+                </div>
+
+                {/* Volume bars */}
+                <div className="h-20 w-full flex items-end gap-1.5 px-1">
+                  {[30, 45, 70, 60, 85, 40, 95].map((h, i) => (
+                    <div key={i} className="w-full bg-white/5 rounded-t-sm relative" style={{ height: `${h}%` }}>
+                      {h === 70 && <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-sunrise-start to-sunrise-end rounded-full" />}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mini calendar */}
+                <div className="grid grid-cols-7 gap-1.5 flex-grow mt-1">
+                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                    <div key={i} className={`text-[10px] font-mono text-center ${i >= 5 ? 'text-white font-bold' : 'text-zinc-500'}`}>{d}</div>
+                  ))}
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1" />
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1">
+                    <div className="w-full h-7 chip-swim rounded flex items-center justify-center text-[9px] font-bold">2.5k</div>
+                  </div>
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1">
+                    <div className="w-full h-10 chip-bike rounded flex items-center justify-center text-[9px] font-bold">60m</div>
+                  </div>
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1">
+                    <div className="w-full h-9 chip-run rounded flex items-center justify-center text-[9px] font-bold">12k</div>
+                  </div>
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1" />
+                  <div className="bg-white/[0.02] rounded border border-orange-500/30 p-1 flex flex-col gap-1">
+                    <div className="w-full h-12 chip-bike rounded flex flex-col items-center justify-center text-[9px] font-bold leading-tight">
+                      <span>Long</span><span>120m</span>
+                    </div>
+                    <div className="w-full h-5 chip-run rounded flex items-center justify-center text-[9px] font-bold">5k</div>
+                  </div>
+                  <div className="bg-white/[0.02] rounded border border-white/5 p-1">
+                    <div className="w-full h-12 chip-run rounded flex flex-col items-center justify-center text-[9px] font-bold leading-tight">
+                      <span>Long</span><span>21k</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating fitness widget */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                className="panel absolute -right-4 top-1/4 p-3.5 flex items-center gap-3 z-20"
+              >
+                <div className="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center">
+                  <Activity size={16} className="text-orange-400" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-zinc-400 font-mono uppercase">Fitness</div>
+                  <div className="text-white font-display text-base font-semibold">104.2</div>
+                </div>
+              </motion.div>
+
+              {/* Floating countdown */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                className="panel absolute -left-6 bottom-1/4 p-4 z-20"
+              >
+                <div className="text-[10px] text-zinc-400 font-mono uppercase mb-1.5">Race countdown</div>
+                <div className="flex items-end gap-1.5">
+                  <span className="text-3xl font-display font-semibold text-white leading-none">84</span>
+                  <span className="text-xs text-zinc-500 mb-0.5">DAYS</span>
+                </div>
+                <div className="w-full bg-zinc-800 h-1 mt-2.5 rounded-full overflow-hidden">
+                  <div className="w-2/3 h-full bg-gradient-to-r from-sunrise-start to-sunrise-end" />
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section className="border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-5 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
-            <motion.p variants={fade} className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">How it works</motion.p>
-            <motion.h2 variants={fade} className="font-display text-2xl font-bold mb-14">Three steps to race-ready.</motion.h2>
-
-            <div className="grid sm:grid-cols-3 gap-10 sm:gap-8">
-              {[
-                { n: '01', title: 'Set your race', desc: 'Pick a distance and date. Strelo maps base, build, peak, and taper phases from day one.' },
-                { n: '02', title: 'Build your week', desc: 'Drag sessions onto the calendar yourself, or let Ace generate a balanced week for you.' },
-                { n: '03', title: 'Train and adapt', desc: 'Log results, sync from Strava, and export structured workouts to your Garmin or COROS.' },
-              ].map(({ n, title, desc }) => (
-                <motion.div key={n} variants={fade}>
-                  <p className="font-display text-3xl font-bold text-white/[0.06] mb-3">{n}</p>
-                  <h3 className="font-semibold text-sm mb-1.5">{title}</h3>
-                  <p className="text-sm text-white/40 leading-relaxed">{desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features — asymmetric layout */}
-      <section id="features" className="border-t border-white/5 scroll-mt-16">
-        <div className="max-w-5xl mx-auto px-5 pt-24 pb-20">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
-            <motion.p variants={fade} className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Features</motion.p>
-            <motion.h2 variants={fade} className="font-display text-2xl font-bold mb-10">What you get.</motion.h2>
+      <section id="how-it-works" className="relative py-24 z-10 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="mb-16">
+            <motion.span variants={fade} className="eyebrow block mb-3">How it works</motion.span>
+            <motion.h2 variants={fade} className="font-display text-4xl lg:text-5xl font-bold tracking-tight max-w-2xl">
+              Three steps to race-ready.
+            </motion.h2>
           </motion.div>
 
-          {/* Main feature + supporting pair */}
-          <div className="lg:grid lg:grid-cols-5 gap-4 mb-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5 }}
-              whileHover={{ y: -3 }}
-              className="lg:col-span-3"
-            >
-              <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 h-full hover:bg-white/[0.05] hover:border-white/[0.1] transition-colors">
-                <Zap size={20} strokeWidth={1.5} className="text-violet-400 mb-3" />
-                <h3 className="text-lg font-bold mb-2"><span className="font-logo font-extrabold tracking-wide uppercase text-rose-400">Ace</span> writes your training week</h3>
-                <p className="text-sm text-white/40 leading-relaxed max-w-md">
-                  Tell it your goal race, available hours, and fitness level. It builds swim, bike, and run
-                  sessions with the right mix of easy, tempo, and intervals — adjusted as your race approaches.
-                </p>
-              </div>
-            </motion.div>
-            <div className="lg:col-span-2 space-y-4 mt-4 lg:mt-0">
-              {[
-                { Icon: Calendar, color: 'text-blue-400', title: 'Drag-and-drop calendar', desc: 'Move sessions between days. Colour-coded by sport, filterable by week or month.' },
-                { Icon: Watch, color: 'text-cyan-400', title: 'Export to your watch', desc: '.FIT files for Garmin, COROS, and Wahoo. Follow structured workouts on your wrist.' },
-              ].map(({ Icon, color, title, desc }, i) => (
-                <motion.div key={title}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
-                  whileHover={{ y: -3 }}
-                >
-                  <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 hover:bg-white/[0.05] hover:border-white/[0.1] transition-colors">
-                    <Icon size={18} strokeWidth={1.5} className={`${color} mb-2`} />
-                    <h3 className="font-semibold text-sm mb-1">{title}</h3>
-                    <p className="text-xs text-white/40 leading-relaxed">{desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Secondary features — compact row */}
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}
-            variants={stagger}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-3"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            <div className="hidden md:block absolute top-12 left-0 right-0 h-px border-t border-dashed border-zinc-800" />
             {[
-              { Icon: Target, color: 'text-orange-400', title: 'Race periodisation', desc: 'Auto base, build, peak, taper' },
-              { Icon: BarChart3, color: 'text-emerald-400', title: 'Volume trends', desc: 'Weekly hours, sport balance, RPE' },
-              { Icon: BookOpen, color: 'text-rose-400', title: 'Strava sync', desc: 'Import activities automatically' },
-            ].map(({ Icon, color, title, desc }) => (
-              <motion.div key={title} variants={fade}
-                className="flex items-center gap-3 bg-white/[0.02] border border-white/[0.04] rounded-lg px-4 py-3 hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors">
-                <Icon size={16} strokeWidth={1.5} className={`${color} shrink-0`} />
-                <div>
-                  <p className="text-sm font-medium">{title}</p>
-                  <p className="text-xs text-white/35">{desc}</p>
+              {
+                n: '01', Icon: Flag, title: 'Set your race',
+                desc: 'Pick a distance and date. Strelo maps base, build, peak, and taper phases from day one.',
+                preview: <div className="bg-zinc-950/50 rounded-lg p-3 border border-white/5">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs text-zinc-500 font-mono">IRONMAN 70.3 · Oct 14</span>
+                    <Flag size={12} className="text-white" />
+                  </div>
+                  <div className="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="w-1/4 h-full bg-white rounded-full" />
+                  </div>
+                </div>,
+              },
+              {
+                n: '02', Icon: Calendar, title: 'Build your week',
+                desc: 'Drag sessions onto the calendar yourself, or let Ace generate a balanced week for you.',
+                preview: <div className="flex flex-wrap gap-1.5">
+                  {['Mon · Rest', 'Tue · Swim', 'Sat · Long', 'Sun · Brick'].map(t => (
+                    <span key={t} className="px-2 py-1 bg-zinc-900 border border-white/10 rounded text-[10px] text-zinc-300 font-mono">{t}</span>
+                  ))}
+                </div>,
+              },
+              {
+                n: '03', Icon: Sparkles, title: 'Train and adapt',
+                desc: 'Log results, sync from Strava, and Ace recalibrates the week if you miss a session.',
+                preview: <div className="border-l-2 border-orange-400 pl-3">
+                  <p className="text-xs text-white font-medium mb-1">Ace · Recalculation</p>
+                  <p className="text-[10px] text-zinc-500 leading-relaxed">"Shifted threshold run to Friday — Wednesday's HR drift suggests fatigue."</p>
+                </div>,
+                highlight: true,
+              },
+            ].map(({ n, Icon, title, desc, preview, highlight }, i) => (
+              <motion.div
+                key={n}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="panel p-7 relative overflow-hidden"
+              >
+                {highlight && (
+                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-orange-400 opacity-10 rounded-full blur-3xl" />
+                )}
+                <div className={`w-11 h-11 rounded-full flex items-center justify-center font-mono text-sm font-medium text-white mb-5 ${
+                  highlight
+                    ? 'bg-gradient-to-br from-sunrise-start to-sunrise-end shadow-glow-sunrise'
+                    : 'bg-zinc-900 border border-white/10'
+                }`}>
+                  {n}
                 </div>
+                <h3 className="text-xl font-display font-semibold text-white mb-2">{title}</h3>
+                <p className="text-sm text-zinc-400 leading-relaxed mb-5">{desc}</p>
+                <div className="relative">{preview}</div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Device section */}
-      <section className="border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-5 py-20">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
-              <motion.p variants={fade} className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Works everywhere</motion.p>
-              <motion.h2 variants={fade} className="font-display text-2xl font-bold mb-4">
-                Your plan on every device.
-              </motion.h2>
-              <motion.p variants={fade} className="text-sm text-white/40 leading-relaxed mb-6">
-                Strelo runs on desktop, tablet, and phone. Install it as a PWA for instant access.
-                Export workouts to your watch and sync completed sessions from Strava.
-              </motion.p>
-              <motion.ul variants={fade} className="space-y-2.5 text-sm text-white/50">
-                <li className="flex items-center gap-2.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Strava auto-sync</li>
-                <li className="flex items-center gap-2.5"><span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> .FIT export to watch</li>
-                <li className="flex items-center gap-2.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> PWA — install on phone</li>
-              </motion.ul>
-            </motion.div>
+      {/* Features bento */}
+      <section id="features" className="relative py-24 z-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="text-center mb-16">
+            <motion.span variants={fade} className="eyebrow block mb-3" style={{ color: '#ff7a00' }}>The architecture</motion.span>
+            <motion.h2 variants={fade} className="font-display text-4xl lg:text-5xl font-bold tracking-tight">
+              Engineered for execution.
+            </motion.h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-8 gap-4">
+            {/* Adaptive Calendar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }} transition={{ duration: 0.6 }}
-              className="mt-10 lg:mt-0 flex justify-center"
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="panel md:col-span-5 p-7 flex flex-col justify-between min-h-[320px]"
             >
-              <img src="/mobile.webp" alt="Strelo on mobile" className="max-h-96 rounded-xl" loading="lazy" />
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Calendar size={18} className="text-zinc-400" />
+                  <h3 className="text-2xl font-display font-medium text-white">Adaptive calendar</h3>
+                </div>
+                <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
+                  Drag, drop, and let the math handle the rest. Time-in-zone targeting auto-adjusts when you restructure your days.
+                </p>
+              </div>
+              <div className="relative w-full h-32 bg-zinc-950/60 rounded-xl border border-white/5 flex items-end px-4 py-3 gap-2 mt-6">
+                {[
+                  { sport: 'swim', h: 40 }, { sport: 'bike', h: 65 }, { sport: 'run', h: 30 },
+                  { sport: 'swim', h: 50 }, { sport: 'bike', h: 80 }, { sport: 'run', h: 45 },
+                  { sport: 'bike', h: 95 },
+                ].map((b, i) => (
+                  <div key={i} className={`w-1/7 flex-1 rounded-t-md border-t-2 ${
+                    b.sport === 'swim' ? 'bg-sport-swim/20 border-sport-swim/60' :
+                    b.sport === 'bike' ? 'bg-sport-bike/20 border-sport-bike/60' :
+                    'bg-sport-run/20 border-sport-run/60'
+                  }`} style={{ height: `${b.h}%` }} />
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Ace */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="panel md:col-span-3 p-7 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center gap-2.5 mb-3">
+                  <span className="pulse-dot" />
+                  <h3 className="text-xl font-display font-medium text-white">Meet Ace.</h3>
+                </div>
+                <p className="text-sm text-zinc-400 leading-relaxed">
+                  Your AI periodisation architect — running compliance checks against your macrocycle 24/7.
+                </p>
+              </div>
+              <div className="mt-6 bg-zinc-950/80 rounded-lg p-4 font-mono text-[11px] text-zinc-500 space-y-1.5 border border-white/5">
+                <p><span className="text-orange-400">{'>'}</span> Analyzing HR drift...</p>
+                <p className="pl-3 opacity-60">Fatigue decoupled by 5%.</p>
+                <p><span className="text-orange-400">{'>'}</span> Recommendation:</p>
+                <p className="text-white pl-3">Downgrade tomorrow's run to Z2.</p>
+              </div>
+            </motion.div>
+
+            {/* Sync */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="panel md:col-span-3 p-7 flex flex-col justify-between text-center items-center"
+            >
+              <div className="w-full flex justify-center items-center gap-4 mb-6 mt-2">
+                <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center">
+                  <Watch size={20} className="text-zinc-300" />
+                </div>
+                <div className="w-6 h-px bg-zinc-700" />
+                <div className="w-14 h-14 rounded-2xl p-[1px] bg-gradient-to-br from-sunrise-start to-sunrise-end">
+                  <div className="w-full h-full bg-zinc-950 rounded-[14px] flex items-center justify-center">
+                    <StreloMark size={20} />
+                  </div>
+                </div>
+                <div className="w-6 h-px bg-zinc-700" />
+                <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center">
+                  <Activity size={20} className="text-zinc-300" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-display font-medium text-white mb-2">Zero-friction sync</h3>
+                <p className="text-sm text-zinc-400 leading-relaxed">Pull from Strava. Push structured workouts to Garmin & COROS.</p>
+              </div>
+            </motion.div>
+
+            {/* Tracking */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="panel md:col-span-5 p-7 flex flex-col md:flex-row gap-8 items-center"
+            >
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <BarChart3 size={18} className="text-zinc-400" />
+                  <h3 className="text-2xl font-display font-medium text-white">Granular tracking</h3>
+                </div>
+                <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
+                  TSS ramp rates, ATL/CTL workload ratios, and exact discipline breakdowns at a glance.
+                </p>
+                <div className="space-y-3 max-w-[220px]">
+                  {[
+                    { label: 'SWIM', color: 'bg-sport-swim', w: 40 },
+                    { label: 'BIKE', color: 'bg-sport-bike', w: 85 },
+                    { label: 'RUN',  color: 'bg-sport-run',  w: 60 },
+                  ].map(r => (
+                    <div key={r.label} className="flex items-center gap-3">
+                      <div className="text-[10px] w-10 font-mono text-zinc-500">{r.label}</div>
+                      <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+                        <div className={`h-full ${r.color} rounded-full`} style={{ width: `${r.w}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="w-44 h-44 relative flex-shrink-0">
+                <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                  <circle cx="50" cy="50" r="45" fill="none" className="stroke-zinc-800" strokeWidth="6" />
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#sunrise-arc)" strokeWidth="6"
+                    strokeDasharray="283" strokeDashoffset="60" strokeLinecap="round" />
+                  <defs>
+                    <linearGradient id="sunrise-arc" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#ff7a00" />
+                      <stop offset="100%" stopColor="#ff0080" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-display font-bold text-white">78%</span>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider mt-1">Base Ready</span>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="border-t border-white/5 scroll-mt-16">
-        <div className="max-w-5xl mx-auto px-5 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
-            <div className="sm:flex items-start gap-12">
-              <motion.div variants={fade} className="mb-8 sm:mb-0 sm:w-1/3">
-                <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Pricing</p>
-                <h2 className="font-display text-xl font-bold">Free to start.<br />Pro when you're ready.</h2>
-                <p className="text-sm text-white/40 mt-2">Most features work forever on Free. Pro unlocks Ace and advanced stats.</p>
-              </motion.div>
-              <div className="sm:flex-1 grid sm:grid-cols-2 gap-4">
-                <motion.div variants={fade}
-                  className="border border-white/[0.08] rounded-xl p-5 bg-white/[0.02]">
-                  <div className="flex items-baseline justify-between">
-                    <p className="font-semibold text-sm">Free</p>
-                    <p className="font-display font-bold text-lg">$0</p>
-                  </div>
-                  <p className="text-xs text-white/30 mt-3 leading-relaxed">Calendar, workout log, basic stats, 1 race, 3 templates, Strava sync</p>
-                </motion.div>
-                <motion.div variants={fade} whileHover={{ y: -3 }}
-                  className="border border-rose-500/40 rounded-xl p-5 bg-rose-500/[0.04] relative">
-                  <div className="absolute -top-2.5 right-4 bg-rose-500 text-[10px] font-bold px-2 py-0.5 rounded-full">POPULAR</div>
-                  <div className="flex items-baseline justify-between">
-                    <p className="font-semibold text-sm">Pro</p>
-                    <p className="font-display font-bold text-lg">$12.99<span className="text-xs font-normal text-white/40">/mo</span></p>
-                  </div>
-                  <p className="text-xs text-white/30 mt-3 leading-relaxed">Ace, volume trends, FIT/CSV export, unlimited races & templates, support chat</p>
-                  <p className="text-xs text-white/30 mt-1.5">Annual: $123.99 <span className="text-emerald-400 font-medium">(save 20%)</span></p>
-                </motion.div>
-              </div>
-            </div>
+      <section id="pricing" className="relative py-24 z-10 border-t border-white/5">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="text-center mb-12">
+            <motion.span variants={fade} className="eyebrow block mb-3">Pricing</motion.span>
+            <motion.h2 variants={fade} className="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-3">
+              Free to start. Pro when you're ready.
+            </motion.h2>
+            <motion.p variants={fade} className="text-zinc-400 text-base max-w-md mx-auto">
+              Most features work forever on Free. Pro unlocks Ace and advanced analytics.
+            </motion.p>
           </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Free */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-3xl border border-white/10 bg-zinc-950/50 p-8 flex flex-col"
+            >
+              <h3 className="text-2xl font-display font-semibold text-white mb-2">Base Camp</h3>
+              <div className="flex items-end gap-1 mb-6">
+                <span className="text-5xl font-display font-bold text-white leading-none">$0</span>
+                <span className="text-zinc-500 mb-1.5 text-sm">/ forever</span>
+              </div>
+              <ul className="space-y-3 text-sm text-zinc-400 mb-8 flex-1">
+                {['Calendar, log, basic stats', '1 race · 3 templates', 'Strava sync', 'PWA mobile install'].map(t => (
+                  <li key={t} className="flex items-start gap-3"><CheckCircle2 size={15} className="text-zinc-600 mt-0.5 shrink-0" /> {t}</li>
+                ))}
+              </ul>
+              <button onClick={onGetStarted} className="btn-ghost w-full">Get started</button>
+            </motion.div>
+
+            {/* Pro */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative rounded-3xl p-[1px] bg-gradient-to-br from-orange-500/40 via-pink-500/30 to-orange-500/10"
+            >
+              <div className="rounded-[calc(1.5rem-1px)] bg-zinc-900 p-8 flex flex-col h-full relative overflow-hidden">
+                <div className="absolute -right-16 -top-16 w-48 h-48 bg-pink-500 opacity-15 rounded-full blur-3xl pointer-events-none" />
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-2xl font-display font-semibold text-white">Pro Engine</h3>
+                  <span className="px-2.5 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/30 rounded-full text-[10px] font-bold uppercase tracking-wider">Popular</span>
+                </div>
+                <div className="flex items-end gap-1 mb-6">
+                  <span className="text-5xl font-display font-bold text-sunrise leading-none">$12.99</span>
+                  <span className="text-zinc-500 mb-1.5 text-sm">/ month</span>
+                </div>
+                <ul className="space-y-3 text-sm text-zinc-300 mb-8 flex-1">
+                  {[
+                    'Ace AI periodisation & recalibration',
+                    'FIT/CSV export to Garmin & COROS',
+                    'Unlimited races & templates',
+                    'Advanced TSS, ATL/CTL charts',
+                    'Priority support',
+                  ].map(t => (
+                    <li key={t} className="flex items-start gap-3"><CheckCircle2 size={15} className="text-orange-400 mt-0.5 shrink-0" /> {t}</li>
+                  ))}
+                </ul>
+                <p className="text-xs text-zinc-500 mb-4">Annual: $123.99 — <span className="text-emerald-400 font-medium">save 20%</span></p>
+                <button onClick={onGetStarted} className="btn-sunrise w-full">
+                  Enable Pro Engine <ArrowRight size={15} />
+                </button>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} transition={{ duration: 0.6 }}
-        className="border-t border-white/5"
-      >
-        <div className="max-w-5xl mx-auto px-5 py-24 text-center">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold">Start planning your race.</h2>
-          <p className="text-white/40 mt-3 max-w-sm mx-auto text-sm">Set up in under a minute. Free forever, upgrade when you want more.</p>
-          <motion.button onClick={onGetStarted} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-            className="mt-8 font-semibold bg-rose-500 hover:bg-rose-400 px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
-            Create free account <ArrowRight size={15} />
-          </motion.button>
-        </div>
-      </motion.section>
-
-      {/* Contact */}
-      <section id="contact" className="border-t border-white/5 scroll-mt-16">
-        <div className="max-w-5xl mx-auto px-5 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
-            <div className="sm:flex items-start gap-12">
-              <motion.div variants={fade} className="mb-6 sm:mb-0 sm:w-1/3">
-                <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2">Contact</p>
-                <h2 className="font-display text-xl font-bold">Get in touch</h2>
-                <p className="text-sm text-white/40 mt-2">Questions, feedback, or partnership enquiries.</p>
-              </motion.div>
-              <motion.div variants={fade} className="sm:flex-1 space-y-3">
-                <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 hover:bg-white/[0.05] transition-colors">
-                  <p className="text-sm font-medium mb-1">Email</p>
-                  <a href="mailto:support@strelo.app" className="text-sm text-rose-400 hover:text-rose-300 transition-colors">support@strelo.app</a>
-                </div>
-                <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 hover:bg-white/[0.05] transition-colors">
-                  <p className="text-sm font-medium mb-1">Partnerships</p>
-                  <p className="text-sm text-white/40">Strava clubs, coaches, race organisers — reach out via email.</p>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+      {/* Final CTA */}
+      <section className="relative py-24 z-10 border-t border-white/5">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto px-6 text-center"
+        >
+          <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+            <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+              Start planning your race.
+            </span>
+          </h2>
+          <p className="text-zinc-400 text-base max-w-md mx-auto mb-8">
+            Set up in under a minute. Free forever — upgrade when you want more.
+          </p>
+          <button onClick={onGetStarted} className="btn-sunrise text-base">
+            Create free account <ArrowRight size={16} />
+          </button>
+        </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-5 py-6 flex items-center justify-between text-xs text-white/25">
-          <span>&copy; {new Date().getFullYear()} Strelo</span>
-          <div className="flex gap-4">
-            <button onClick={() => onNavigate('privacy')} className="hover:text-white/50 transition-colors">Privacy</button>
-            <button onClick={() => onNavigate('terms')} className="hover:text-white/50 transition-colors">Terms</button>
+      <footer className="relative border-t border-white/5 z-10 bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2.5 mb-4">
+              <StreloMark />
+              <span className="font-display font-bold text-lg tracking-tight">Strelo</span>
+            </div>
+            <p className="text-zinc-500 text-sm max-w-xs">Build the plan your race demands. Smarter periodisation for age-group athletes.</p>
           </div>
+          <div>
+            <h4 className="text-white font-medium mb-3 text-sm">Product</h4>
+            <ul className="space-y-2 text-sm text-zinc-500">
+              <li><a href="#how-it-works" className="hover:text-white transition-colors">How it works</a></li>
+              <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-medium mb-3 text-sm">Company</h4>
+            <ul className="space-y-2 text-sm text-zinc-500">
+              <li><button onClick={() => onNavigate('privacy')} className="hover:text-white transition-colors">Privacy</button></li>
+              <li><button onClick={() => onNavigate('terms')} className="hover:text-white transition-colors">Terms</button></li>
+              <li><a href="mailto:support@strelo.app" className="hover:text-white transition-colors">support@strelo.app</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 pb-8 text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-white/5 pt-6">
+          <span>© {new Date().getFullYear()} Strelo Training</span>
+          <span>v2.0 · Pre-Dawn Protocol</span>
         </div>
       </footer>
     </div>
