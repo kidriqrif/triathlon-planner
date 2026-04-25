@@ -10,8 +10,6 @@ const DISTANCE_META = {
   ironman: { label: 'Ironman', desc: '3.8km / 180km / 42.2km', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-500/10' },
 }
 
-const LEVEL_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' }
-
 export default function PlansLibraryPage({ onRefresh, user }) {
   const { t } = useI18n()
   const isPro = user?.plan === 'pro'
@@ -105,7 +103,7 @@ export default function PlansLibraryPage({ onRefresh, user }) {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-slate-800 dark:text-white text-sm">{plan.name}</h3>
                   <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
-                    {meta.desc} · {plan.weeks} weeks · {LEVEL_LABELS[plan.level] || plan.level}
+                    {meta.desc} · {plan.weeks} weeks
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">{plan.desc}</p>
 
