@@ -147,8 +147,8 @@ export default function WorkoutForm({ workout, defaultDate, onSave, onDelete, on
                   <button key={t} type="button" onClick={() => handleTypeChange(t)}
                     className={`px-3 py-1.5 rounded-xl text-sm font-semibold border transition-all ${
                       form.workout_type === t
-                        ? 'bg-rose-600 text-white border-rose-600'
-                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-rose-300'
+                        ? 'bg-orange-600 text-white border-orange-600'
+                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-orange-300'
                     }`}>
                     {TYPE_LABELS[t] || t}
                   </button>

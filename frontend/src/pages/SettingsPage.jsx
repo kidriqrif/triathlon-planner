@@ -174,7 +174,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
         <div>
           <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 block">{t('language')}</label>
           <select value={lang} onChange={e => setLang(e.target.value)}
-            className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-rose-400 cursor-pointer">
+            className="w-full text-sm font-medium rounded-lg px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 outline-none focus:ring-2 focus:ring-orange-400 cursor-pointer">
             {Object.entries(LANGUAGES).map(([code, { label, flag }]) => (
               <option key={code} value={code}>{flag} — {label}</option>
             ))}
@@ -238,7 +238,7 @@ export default function SettingsPage({ user, onUserUpdate, onLogout, dark, setDa
             {stravaConnected ? (
               <>
                 <button onClick={handleStravaSync} disabled={stravaSyncing}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 border border-rose-200 hover:border-rose-400 transition-all disabled:opacity-40">
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-orange-600 border border-orange-200 hover:border-orange-400 transition-all disabled:opacity-40">
                   <RefreshCw size={13} strokeWidth={2} className={stravaSyncing ? 'animate-spin' : ''} />
                   {stravaSyncing ? t('syncing') : t('sync')}
                 </button>

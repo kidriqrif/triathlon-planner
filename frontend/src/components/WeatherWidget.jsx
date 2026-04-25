@@ -189,9 +189,9 @@ export default function WeatherWidget({ workouts = [] }) {
       <div className="flex gap-2 overflow-x-auto">
         {/* Today */}
         {todayWeather && (
-          <div className="flex-1 min-w-[5rem] bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/50 rounded-lg px-3 py-2.5 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-rose-500 dark:text-rose-400 mb-1">Today</p>
-            <WeatherIcon code={todayWeather.code} size={20} className="mx-auto text-rose-500 dark:text-rose-400 mb-1" />
+          <div className="flex-1 min-w-[5rem] bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2.5 text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-orange-500 dark:text-orange-400 mb-1">Today</p>
+            <WeatherIcon code={todayWeather.code} size={20} className="mx-auto text-orange-500 dark:text-orange-400 mb-1" />
             <p className="text-xs font-medium text-slate-700 dark:text-slate-200">
               {todayWeather.high}° / {todayWeather.low}°
             </p>

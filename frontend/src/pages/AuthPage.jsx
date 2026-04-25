@@ -239,7 +239,7 @@ export default function AuthPage({ onAuth, resetToken }) {
           {/* Forgot password link */}
           {mode === 'login' && (
             <button onClick={() => switchMode('forgot')}
-              className="block w-full text-center text-xs text-slate-400 hover:text-rose-500 mt-3 transition-colors">
+              className="block w-full text-center text-xs text-slate-400 hover:text-orange-500 mt-3 transition-colors">
               Forgot your password?
             </button>
           )}
@@ -249,7 +249,7 @@ export default function AuthPage({ onAuth, resetToken }) {
           <p className="text-center text-xs text-slate-400 mt-4">
             {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
             <button onClick={() => switchMode(mode === 'login' ? 'register' : 'login')}
-              className="text-rose-500 font-semibold hover:underline">
+              className="text-orange-500 font-semibold hover:underline">
               {mode === 'login' ? 'Sign up free' : 'Sign in'}
             </button>
           </p>

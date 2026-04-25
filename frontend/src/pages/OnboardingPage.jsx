@@ -117,7 +117,7 @@ export default function OnboardingPage({ user, onComplete }) {
             <button key={value} onClick={() => setFitness(value)}
               className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all ${
                 fitness === value
-                  ? 'border-rose-400 bg-rose-50 dark:bg-rose-900/30'
+                  ? 'border-orange-400 bg-orange-50 dark:bg-orange-900/30'
                   : 'border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
               }`}>
               <p className="font-bold text-sm text-slate-800 dark:text-white">{label}</p>
@@ -130,8 +130,8 @@ export default function OnboardingPage({ user, onComplete }) {
           <div className="flex items-center gap-3 mt-1">
             <input type="range" min="3" max="20" step="0.5" value={weeklyHours}
               onChange={e => setWeeklyHours(parseFloat(e.target.value))}
-              className="flex-1 accent-rose-500" />
-            <span className="text-sm font-bold text-rose-600 w-12 text-right">{weeklyHours}h</span>
+              className="flex-1 accent-orange-500" />
+            <span className="text-sm font-bold text-orange-600 w-12 text-right">{weeklyHours}h</span>
           </div>
         </div>
         <div>
@@ -141,7 +141,7 @@ export default function OnboardingPage({ user, onComplete }) {
               <button key={d} onClick={() => toggleDay(d)}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedDays.includes(d)
-                    ? 'bg-rose-500 text-white'
+                    ? 'bg-orange-500 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}>
                 {d}
@@ -224,7 +224,7 @@ export default function OnboardingPage({ user, onComplete }) {
                   <button key={value} onClick={() => setRaceDistance(value)}
                     className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all ${
                       raceDistance === value
-                        ? 'border-rose-400 bg-rose-50 dark:bg-rose-900/30'
+                        ? 'border-orange-400 bg-orange-50 dark:bg-orange-900/30'
                         : 'border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
                     }`}>
                     <p className="font-bold text-sm text-slate-800 dark:text-white">{label}</p>
@@ -243,7 +243,7 @@ export default function OnboardingPage({ user, onComplete }) {
             <Flag size={32} strokeWidth={1.5} className="mx-auto text-slate-300 mb-3" />
             <p className="text-sm text-slate-400">No race set. You can add one anytime from the Races tab.</p>
             <button onClick={() => setSkipRace(false)}
-              className="text-xs text-rose-500 font-semibold hover:underline mt-2">
+              className="text-xs text-orange-500 font-semibold hover:underline mt-2">
               Actually, let me add one
             </button>
           </div>
@@ -264,7 +264,7 @@ export default function OnboardingPage({ user, onComplete }) {
           Your profile is ready. Head to the dashboard to start planning your training.
         </p>
         {!skipRace && raceName && (
-          <div className="mt-4 inline-flex items-center gap-2 bg-rose-50 text-rose-600 text-sm font-semibold px-4 py-2 rounded-xl">
+          <div className="mt-4 inline-flex items-center gap-2 bg-orange-50 text-orange-600 text-sm font-semibold px-4 py-2 rounded-xl">
             <Flag size={14} strokeWidth={2} />
             {raceName} — {raceDate}
           </div>
@@ -283,7 +283,7 @@ export default function OnboardingPage({ user, onComplete }) {
         <div className="flex gap-1.5 mb-4">
           {steps.map((_, i) => (
             <div key={i} className={`h-1 flex-1 rounded-full transition-all ${
-              i <= step ? 'bg-rose-500' : 'bg-slate-200 dark:bg-slate-700'
+              i <= step ? 'bg-orange-500' : 'bg-slate-200 dark:bg-slate-700'
             }`} />
           ))}
         </div>

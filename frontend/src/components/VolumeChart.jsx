@@ -57,28 +57,28 @@ export default function VolumeChart({ workouts }) {
     <div className="vista-panel rounded-2xl p-4">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
         <div>
-          <p className="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-[0.25em]">Weekly volume</p>
+          <p className="text-[10px] font-bold text-orange-600 dark:text-orange-400 uppercase tracking-[0.25em]">Weekly volume</p>
           <h2 className="font-display text-lg font-bold text-slate-800 dark:text-white">Training load</h2>
         </div>
         <div className="flex gap-2">
-          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-rose-200/50 dark:border-rose-900/30 shadow-inner">
+          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-orange-200/50 dark:border-orange-900/30 shadow-inner">
             {['distance', 'hours'].map(t => (
               <button key={t}
                 onClick={() => setChartType(t)}
                 className={`px-3 py-1.5 font-semibold transition-all ${chartType === t
                   ? 'vista-btn rounded-md m-0.5'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400'}`}>
+                  : 'text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400'}`}>
                 {t === 'distance' ? 'km' : 'hrs'}
               </button>
             ))}
           </div>
-          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-rose-200/50 dark:border-rose-900/30 shadow-inner">
+          <div className="flex rounded-lg overflow-hidden text-xs bg-white/60 dark:bg-slate-800/60 backdrop-blur border border-orange-200/50 dark:border-orange-900/30 shadow-inner">
             {[4, 8, 12].map(w => (
               <button key={w}
                 onClick={() => setRange(w)}
                 className={`px-3 py-1.5 font-semibold transition-all ${range === w
                   ? 'vista-btn rounded-md m-0.5'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400'}`}>
+                  : 'text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400'}`}>
                 {w}w
               </button>
             ))}

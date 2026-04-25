@@ -10,7 +10,7 @@ function formatHours(hours) {
 function WeekContent({ data }) {
   return (
     <>
-      <p className="text-xs font-medium uppercase tracking-wider text-rose-400">Week Summary</p>
+      <p className="text-xs font-medium uppercase tracking-wider text-orange-400">Week Summary</p>
       <p className="text-3xl font-bold text-white mt-2">
         {data.sessions} <span className="text-lg font-semibold text-slate-400">sessions</span>
       </p>
@@ -41,7 +41,7 @@ function RaceContent({ data }) {
 
   return (
     <>
-      <p className="text-xs font-medium uppercase tracking-wider text-rose-400">Race Day</p>
+      <p className="text-xs font-medium uppercase tracking-wider text-orange-400">Race Day</p>
       <p className="text-2xl font-bold text-white mt-2">{data.name || 'Upcoming Race'}</p>
       {formattedDate && (
         <p className="text-sm font-medium text-slate-400 mt-1">{formattedDate}</p>

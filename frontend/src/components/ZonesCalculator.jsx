@@ -95,14 +95,14 @@ export default function ZonesCalculator() {
   const hrZones = maxHR > 0 ? computeHRZones(Number(maxHR)) : null
   const powerZones = ftp > 0 ? computePowerZones(Number(ftp)) : null
 
-  const inputCls = 'w-24 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none'
+  const inputCls = 'w-24 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none'
 
   return (
     <div className="vista-panel rounded-xl p-4">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-900 flex items-center justify-center">
-          <Heart size={16} strokeWidth={1.5} className="text-rose-600 dark:text-rose-400" />
+        <div className="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
+          <Heart size={16} strokeWidth={1.5} className="text-orange-600 dark:text-orange-400" />
         </div>
         <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Training Zones</h2>
       </div>
@@ -113,7 +113,7 @@ export default function ZonesCalculator() {
           onClick={() => setTab('hr')}
           className={`flex-1 px-4 py-2 font-medium transition-colors flex items-center justify-center gap-1.5 ${
             tab === 'hr'
-              ? 'bg-rose-600 text-white'
+              ? 'bg-orange-600 text-white'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
           }`}
         >
@@ -124,7 +124,7 @@ export default function ZonesCalculator() {
           onClick={() => setTab('power')}
           className={`flex-1 px-4 py-2 font-medium transition-colors flex items-center justify-center gap-1.5 ${
             tab === 'power'
-              ? 'bg-rose-600 text-white'
+              ? 'bg-orange-600 text-white'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
           }`}
         >

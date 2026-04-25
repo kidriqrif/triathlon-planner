@@ -221,7 +221,7 @@ export default function PlanPage({ workouts, onRefresh }) {
                   <div className="px-4 py-10 text-center">
                     <p className="text-sm text-slate-400 dark:text-slate-500">No workouts</p>
                     <button onClick={() => setFormState({ workout: null, defaultDate: selectedDate })}
-                      className="text-xs text-rose-500 hover:text-rose-400 font-medium mt-1">
+                      className="text-xs text-orange-500 hover:text-orange-400 font-medium mt-1">
                       Add one
                     </button>
                   </div>
@@ -248,7 +248,7 @@ export default function PlanPage({ workouts, onRefresh }) {
                           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button onClick={() => setFormState({ workout: w, defaultDate: null })}
                               title="Edit"
-                              className="p-1.5 rounded text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
+                              className="p-1.5 rounded text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950 transition-colors">
                               <Pencil size={12} strokeWidth={2} />
                             </button>
                             <button onClick={() => { setSelectedDate(null); setMovingWorkout(w) }}

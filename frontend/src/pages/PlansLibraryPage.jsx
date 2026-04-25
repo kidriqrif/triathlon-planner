@@ -50,7 +50,7 @@ export default function PlansLibraryPage({ onRefresh, user }) {
 
       {/* Pro personalization banner */}
       {isPro ? (
-        <div className="flex items-center gap-2 bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 text-xs font-medium rounded-lg px-4 py-2.5">
+        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 text-xs font-medium rounded-lg px-4 py-2.5">
           <Sparkles size={14} strokeWidth={1.5} />
           Plans are personalized to your profile — paces, volume, and fitness level
         </div>

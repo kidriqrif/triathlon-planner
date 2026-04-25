@@ -81,7 +81,7 @@ export default function ProfilePage() {
           </div>
           <p className="text-slate-600 dark:text-slate-400 font-semibold">{error}</p>
           <button onClick={() => { setError(null); window.location.reload() }}
-            className="text-rose-600 text-sm underline">{t('retry')}</button>
+            className="text-orange-600 text-sm underline">{t('retry')}</button>
         </div>
       </div>
     )
@@ -142,18 +142,18 @@ export default function ProfilePage() {
                 onClick={() => setForm(f => ({ ...f, fitness_level: key }))}
                 className={`w-full flex items-center gap-4 p-3.5 rounded-lg border-2 text-left transition-all ${
                   form.fitness_level === key
-                    ? 'bg-rose-50 dark:bg-rose-900/30 border-rose-400'
+                    ? 'bg-orange-50 dark:bg-orange-900/30 border-orange-400'
                     : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                 }`}>
-                <Icon size={22} strokeWidth={1.5} className={form.fitness_level === key ? 'text-rose-500' : 'text-slate-400'} />
+                <Icon size={22} strokeWidth={1.5} className={form.fitness_level === key ? 'text-orange-500' : 'text-slate-400'} />
                 <div>
-                  <p className={`text-sm font-bold ${form.fitness_level === key ? 'text-rose-700' : 'text-slate-700 dark:text-slate-300'}`}>
+                  <p className={`text-sm font-bold ${form.fitness_level === key ? 'text-orange-700' : 'text-slate-700 dark:text-slate-300'}`}>
                     {t(key)}
                   </p>
                   <p className="text-xs text-slate-400 mt-0.5">{t(`${key}Desc`)}</p>
                 </div>
                 {form.fitness_level === key && (
-                  <span className="ml-auto text-rose-500 font-bold">✓</span>
+                  <span className="ml-auto text-orange-500 font-bold">✓</span>
                 )}
               </button>
             ))}
@@ -194,7 +194,7 @@ export default function ProfilePage() {
             <input type="range" min="2" max="30" step="0.5"
               value={form.weekly_hours_target}
               onChange={set('weekly_hours_target')}
-              className="flex-1 accent-rose-600" />
+              className="flex-1 accent-orange-600" />
             <div className="w-20 shrink-0">
               <input type="number" step="0.5" min="1" max="40"
                 value={form.weekly_hours_target}
@@ -219,7 +219,7 @@ export default function ProfilePage() {
               <button key={day} type="button" onClick={() => toggleDay(day)}
                 className={`flex-1 py-2 rounded-xl text-xs font-bold border-2 transition-all ${
                   selectedDays.includes(day)
-                    ? 'bg-rose-600 text-white border-rose-600'
+                    ? 'bg-orange-600 text-white border-orange-600'
                     : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                 }`}>
                 {day}

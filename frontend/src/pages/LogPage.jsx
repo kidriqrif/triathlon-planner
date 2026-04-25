@@ -153,7 +153,7 @@ export default function LogPage({ workouts, onRefresh, user }) {
                     <button
                       onClick={e => { e.stopPropagation(); exportFit(w.id) }}
                       title="Download .FIT file"
-                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950 transition-all shrink-0"
+                      className="p-1.5 sm:p-2 rounded-lg text-slate-300 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950 transition-all shrink-0"
                     >
                       <Download size={14} strokeWidth={2} />
                     </button>

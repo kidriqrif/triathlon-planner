@@ -97,7 +97,7 @@ export default function BodyLogPage() {
       <form onSubmit={handleSubmit}
         className="vista-panel rounded-xl p-3.5 space-y-3">
         <div className="flex items-center gap-2 mb-1">
-          <Plus size={16} strokeWidth={2} className="text-rose-500" />
+          <Plus size={16} strokeWidth={2} className="text-orange-500" />
           <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('newEntry')}</p>
         </div>
 
@@ -143,7 +143,7 @@ export default function BodyLogPage() {
                   onClick={() => setForm(f => ({ ...f, sleep_quality: f.sleep_quality === String(q) ? '' : String(q) }))}
                   className={`flex-1 py-2.5 rounded-xl text-xs font-bold border-2 transition-all ${
                     form.sleep_quality === String(q)
-                      ? 'bg-rose-600 text-white border-rose-600'
+                      ? 'bg-orange-600 text-white border-orange-600'
                       : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}
                   title={QUALITY_LABELS[q]}>

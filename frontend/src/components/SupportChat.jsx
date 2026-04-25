@@ -57,13 +57,13 @@ export default function SupportChat() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.role === 'assistant' && (
-                  <div className="w-6 h-6 rounded-lg bg-rose-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Bot size={13} strokeWidth={2} className="text-rose-500" />
+                  <div className="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Bot size={13} strokeWidth={2} className="text-orange-500" />
                   </div>
                 )}
                 <div className={`max-w-[80%] text-sm leading-relaxed px-3 py-2 rounded-lg ${
                   msg.role === 'user'
-                    ? 'bg-rose-500 text-white rounded-br-md'
+                    ? 'bg-orange-500 text-white rounded-br-md'
                     : 'bg-slate-100 text-slate-700 rounded-bl-md'
                 }`}>
                   {msg.content}
@@ -77,8 +77,8 @@ export default function SupportChat() {
             ))}
             {loading && (
               <div className="flex gap-2">
-                <div className="w-6 h-6 rounded-lg bg-rose-100 flex items-center justify-center shrink-0">
-                  <Bot size={13} strokeWidth={2} className="text-rose-500" />
+                <div className="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
+                  <Bot size={13} strokeWidth={2} className="text-orange-500" />
                 </div>
                 <div className="bg-slate-100 text-slate-400 text-sm px-3 py-2 rounded-lg rounded-bl-md">
                   <span className="flex gap-1">
@@ -97,7 +97,7 @@ export default function SupportChat() {
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Ask a question..."
-              className="flex-1 text-sm border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none"
+              className="flex-1 text-sm border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
             />
             <button type="submit" disabled={loading || !input.trim()}
               className="vista-btn w-9 h-9 rounded-xl flex items-center justify-center disabled:opacity-40 shrink-0">

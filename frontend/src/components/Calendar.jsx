@@ -80,7 +80,7 @@ function CustomToolbar({ date, onNavigate }) {
 
       {/* Today button */}
       <button onClick={() => onNavigate('TODAY')}
-        className="text-xs font-medium text-rose-600 dark:text-rose-400 hover:text-rose-500 px-2 py-1 rounded hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
+        className="text-xs font-medium text-orange-600 dark:text-orange-400 hover:text-orange-500 px-2 py-1 rounded hover:bg-orange-50 dark:hover:bg-orange-950 transition-colors">
         Today
       </button>
     </div>

@@ -9,7 +9,7 @@ const RACE_CATEGORIES = {
   triathlon: {
     label: 'Triathlon', Icon: Activity,
     gradient: 'from-slate-700 to-slate-900',
-    badge: 'bg-rose-100 text-rose-700 border-rose-200',
+    badge: 'bg-orange-100 text-orange-700 border-orange-200',
     types: {
       sprint:  'Sprint  ·  750m / 20km / 5km',
       olympic: 'Olympic  ·  1.5km / 40km / 10km',
@@ -63,7 +63,7 @@ const RACE_CATEGORIES = {
   },
   other: {
     label: 'Other', Icon: Medal,
-    gradient: 'from-rose-500 to-pink-600',
+    gradient: 'from-orange-500 to-pink-600',
     badge: 'bg-violet-100 text-violet-700 border-violet-200',
     types: {
       duathlon:  'Duathlon',
@@ -201,7 +201,7 @@ function RaceForm({ race, onSave, onClose }) {
               <input type="checkbox" checked={form.is_active}
                 onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))}
                 className="sr-only" />
-              <div className={`w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-rose-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+              <div className={`w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-orange-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
               <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${form.is_active ? 'translate-x-5' : ''}`} />
             </div>
             <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('setAsGoal')}</span>
@@ -229,11 +229,11 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
     ? `${daysToRace} ${t('daysToGo')}`
     : daysToRace === 0 ? t('raceDay') : `${Math.abs(daysToRace)} ${t('daysAgo')}`
 
-  const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-rose-600'
+  const countdownColor = daysToRace < 0 ? 'text-slate-400' : daysToRace <= 14 ? 'text-orange-500' : 'text-orange-600'
 
   return (
     <div className={`bg-white dark:bg-slate-900 rounded-lg border-2 overflow-hidden transition-all ${
-      race.is_active ? 'border-rose-200 dark:border-rose-800 shadow-rose-100 shadow-sm' : 'border-slate-100 dark:border-slate-800'
+      race.is_active ? 'border-orange-200 dark:border-orange-800 shadow-orange-100 shadow-sm' : 'border-slate-100 dark:border-slate-800'
     }`}>
       {/* Top colour bar */}
       <div className={`h-1.5 bg-gradient-to-r ${meta.gradient}`} />
@@ -264,7 +264,7 @@ function RaceCard({ race, onEdit, onDelete, onToggleActive }) {
             className={`text-xs px-3 py-1.5 rounded-xl border font-semibold transition-colors ${
               race.is_active
                 ? 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                : 'border-rose-200 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30'
+                : 'border-orange-200 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/30'
             }`}>
             {race.is_active ? t('deactivate') : t('setGoal')}
           </button>

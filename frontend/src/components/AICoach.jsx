@@ -32,7 +32,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
   return (
     <div className="space-y-2 mt-2">
       {plan.week_focus && (
-        <p className="text-xs font-semibold text-rose-600 dark:text-rose-400">{plan.week_focus}</p>
+        <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">{plan.week_focus}</p>
       )}
       {plan.workouts?.map((w, i) => {
         const Icon = SPORT_ICON[w.sport] || Footprints
@@ -54,7 +54,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
                 className={`shrink-0 p-1 rounded-md transition-colors ${
                   added
                     ? 'text-emerald-500'
-                    : 'text-slate-400 hover:text-rose-500 hover:bg-white dark:hover:bg-slate-800'
+                    : 'text-slate-400 hover:text-orange-500 hover:bg-white dark:hover:bg-slate-800'
                 }`}
                 title={added ? 'Added' : 'Add to calendar'}
               >
@@ -72,7 +72,7 @@ function PlanCard({ plan, onAdd, addedIds, addingId }) {
       {plan.workouts?.length > 0 && (
         <button
           onClick={() => plan.workouts.forEach((w, i) => { if (!addedIds.has(i)) onAdd(w, i) })}
-          className="w-full text-xs font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg py-2 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
+          className="w-full text-xs font-semibold text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-orange-800 rounded-lg py-2 hover:bg-orange-50 dark:hover:bg-orange-950 transition-colors">
           Add all to calendar
         </button>
       )}
@@ -147,10 +147,10 @@ export default function AICoach({ onWorkoutsAdded }) {
     <div className="vista-panel rounded-2xl flex flex-col overflow-hidden"
       style={{ height: isEmpty ? 'auto' : '520px' }}>
       {/* Header */}
-      <div className="px-4 py-3 border-b border-rose-200/40 dark:border-rose-900/30 shrink-0 bg-gradient-to-b from-white/50 to-transparent dark:from-rose-900/10">
+      <div className="px-4 py-3 border-b border-orange-200/40 dark:border-orange-900/30 shrink-0 bg-gradient-to-b from-white/50 to-transparent dark:from-orange-900/10">
         <h2 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-          <Bot size={16} strokeWidth={1.5} className="text-rose-500" />
-          <span className="font-logo font-extrabold tracking-wider uppercase text-rose-500">Ace</span>
+          <Bot size={16} strokeWidth={1.5} className="text-orange-500" />
+          <span className="font-display font-extrabold tracking-wider uppercase text-orange-500">Ace</span>
         </h2>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Discuss your week, then push it to your calendar</p>
       </div>
@@ -178,15 +178,15 @@ export default function AICoach({ onWorkoutsAdded }) {
           {messages.map((msg, i) => (
             <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'assistant' && (
-                <div className="w-6 h-6 rounded-md bg-rose-100 dark:bg-rose-900 flex items-center justify-center shrink-0 mt-0.5">
-                  <Bot size={13} strokeWidth={2} className="text-rose-500 dark:text-rose-400" />
+                <div className="w-6 h-6 rounded-md bg-orange-100 dark:bg-orange-900 flex items-center justify-center shrink-0 mt-0.5">
+                  <Bot size={13} strokeWidth={2} className="text-orange-500 dark:text-orange-400" />
                 </div>
               )}
               <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
                 <div className={`text-sm leading-relaxed px-3 py-2 rounded-lg ${
                   msg.role === 'user'
                     ? 'vista-btn text-white rounded-br-sm !font-normal'
-                    : 'bg-white/70 dark:bg-slate-800/70 backdrop-blur text-slate-700 dark:text-slate-300 rounded-bl-sm border border-rose-200/40 dark:border-rose-900/20 shadow-sm'
+                    : 'bg-white/70 dark:bg-slate-800/70 backdrop-blur text-slate-700 dark:text-slate-300 rounded-bl-sm border border-orange-200/40 dark:border-orange-900/20 shadow-sm'
                 }`}>
                   {msg.content}
                 </div>
@@ -208,8 +208,8 @@ export default function AICoach({ onWorkoutsAdded }) {
           ))}
           {loading && (
             <div className="flex gap-2">
-              <div className="w-6 h-6 rounded-md bg-rose-100 dark:bg-rose-900 flex items-center justify-center shrink-0">
-                <Bot size={13} strokeWidth={2} className="text-rose-500 dark:text-rose-400" />
+              <div className="w-6 h-6 rounded-md bg-orange-100 dark:bg-orange-900 flex items-center justify-center shrink-0">
+                <Bot size={13} strokeWidth={2} className="text-orange-500 dark:text-orange-400" />
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 text-slate-400 text-sm px-3 py-2 rounded-lg rounded-bl-sm">
                 <span className="flex gap-1">
@@ -224,7 +224,7 @@ export default function AICoach({ onWorkoutsAdded }) {
       )}
 
       {/* Input */}
-      <form onSubmit={handleSend} className="px-3 py-3 border-t border-rose-200/40 dark:border-rose-900/30 flex gap-2 shrink-0 bg-gradient-to-t from-white/40 to-transparent dark:from-rose-900/10">
+      <form onSubmit={handleSend} className="px-3 py-3 border-t border-orange-200/40 dark:border-orange-900/30 flex gap-2 shrink-0 bg-gradient-to-t from-white/40 to-transparent dark:from-orange-900/10">
         <input
           value={input}
           onChange={e => setInput(e.target.value)}

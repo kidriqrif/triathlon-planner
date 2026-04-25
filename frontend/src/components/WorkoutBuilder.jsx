@@ -270,7 +270,7 @@ export default function WorkoutBuilder({ value, onChange }) {
       <div className="flex flex-wrap gap-2">
         {Object.entries(BLOCK_META).map(([type, meta]) => (
           <button key={type} type="button" onClick={() => addBlock(type)}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-all">
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-orange-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-all">
             <meta.Icon size={12} strokeWidth={1.5} /> {meta.label}
           </button>
         ))}
