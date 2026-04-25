@@ -128,9 +128,3 @@ class BodyLogOut(BodyLogCreate):
     id: int
 
     model_config = {"from_attributes": True}
-
-
-# --- AI ---
-
-class AISuggestRequest(BaseModel):
-    pass  # All data fetched from DB server-side

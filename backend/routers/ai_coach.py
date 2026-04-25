@@ -1,8 +1,10 @@
 import os
 import json
 from datetime import date, timedelta
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
@@ -270,9 +272,6 @@ Include 5-7 workouts spread across the week."""
 
 
 # ─── Conversational chat endpoint ────────────────────────────────────────────
-
-from pydantic import BaseModel
-from typing import List, Optional
 
 
 class ChatMessage(BaseModel):

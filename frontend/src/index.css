@@ -196,12 +196,6 @@ body {
   color: #f4f4f5;
 }
 .dark .vista-input:focus { border-color: #ff7a00; box-shadow: 0 0 0 3px rgba(255,122,0,0.2); }
-.vista-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(255,122,0,0.3), transparent); }
-.vista-orb {
-  background: linear-gradient(135deg, #ff7a00 0%, #ff0080 100%);
-  border-radius: 9999px;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 4px 14px rgba(255,80,40,0.35);
-}
 .font-logo { font-family: 'Outfit', 'DM Sans', sans-serif; font-weight: 700; letter-spacing: 0.02em; }
 
 /* Sport accent chips */

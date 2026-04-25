@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+import os
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -25,8 +27,6 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
         content={"detail": "Too many requests. Please slow down."},
     )
 
-
-import os
 
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",

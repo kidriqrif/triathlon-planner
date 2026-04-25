@@ -1,31 +1,15 @@
 import React, { useEffect } from 'react'
 import { motion } from 'motion/react'
 import {
-  ArrowRight, Waves, Bike, Footprints, Calendar, BarChart3, Zap,
-  Target, Watch, BookOpen, Activity, CheckCircle2, Flag, Sparkles,
+  ArrowRight, Calendar, BarChart3, Watch, Activity, CheckCircle2, Flag, Sparkles,
 } from 'lucide-react'
+import StreloMark from '../components/StreloMark'
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
 const stagger = { show: { transition: { staggerChildren: 0.1 } } }
-
-function StreloMark({ size = 22 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <defs>
-        <linearGradient id="strelo-mark" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ff7a00" />
-          <stop offset="100%" stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
-      <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark)" opacity="0.15" />
-      <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark)" />
-      <path d="M16 11L12 21H22L16 11Z" fill="#52525b" />
-    </svg>
-  )
-}
 
 export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
   useEffect(() => {

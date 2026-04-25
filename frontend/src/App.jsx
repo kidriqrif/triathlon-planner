@@ -21,7 +21,8 @@ import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun, Wifi, ChevronsLeft, ChevronsRight, Camera } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun, Wifi, ChevronsLeft, ChevronsRight } from 'lucide-react'
+import StreloMark from './components/StreloMark'
 
 const NAV_ITEMS = [
   { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
@@ -259,17 +260,7 @@ export default function App() {
 
   const StreloLogo = () => (
     <button onClick={() => navigate('dashboard')} className="flex items-center gap-2.5">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <defs>
-          <linearGradient id="strelo-mark-app" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ff7a00" />
-            <stop offset="100%" stopColor="#ff0080" />
-          </linearGradient>
-        </defs>
-        <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark-app)" opacity="0.15" />
-        <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark-app)" />
-        <path d="M16 11L12 21H22L16 11Z" fill="#71717a" />
-      </svg>
+      <StreloMark size={26} />
       <span className="font-display font-bold text-zinc-900 dark:text-white text-base tracking-tight">Strelo</span>
     </button>
   )
@@ -285,17 +276,7 @@ export default function App() {
         <div className={`py-6 flex items-center ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-6'}`}>
           {sidebarCollapsed ? (
             <button onClick={() => navigate('dashboard')}>
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <defs>
-                  <linearGradient id="strelo-mark-collapsed" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#ff7a00" />
-                    <stop offset="100%" stopColor="#ff0080" />
-                  </linearGradient>
-                </defs>
-                <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark-collapsed)" opacity="0.15" />
-                <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark-collapsed)" />
-                <path d="M16 11L12 21H22L16 11Z" fill="#71717a" />
-              </svg>
+              <StreloMark size={26} />
             </button>
           ) : <StreloLogo />}
           {!sidebarCollapsed && (

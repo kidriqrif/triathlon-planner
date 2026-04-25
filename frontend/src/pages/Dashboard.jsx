@@ -4,10 +4,10 @@ import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
 import LoadChart from '../components/LoadChart'
 import {
-  Waves, Bike, Footprints, Dumbbell, Layers, Flame, Flag, Lock, ArrowRight, Circle,
+  Waves, Bike, Footprints, Dumbbell, Layers, Flame, Flag, ArrowRight, Circle,
   Target, Sparkles, Activity,
 } from 'lucide-react'
-import { format, differenceInDays, startOfWeek, addDays, isToday, parseISO } from 'date-fns'
+import { format, differenceInDays, startOfWeek, parseISO } from 'date-fns'
 
 const SPORT_META = {
   swim:  { Icon: Waves,      hex: '#3b82f6', chip: 'chip-swim',  label: 'Swim'  },
