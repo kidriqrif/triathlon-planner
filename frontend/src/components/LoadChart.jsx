@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import {
   ResponsiveContainer, ComposedChart, Area, Line, XAxis, YAxis, Tooltip, ReferenceLine, Bar,
 } from 'recharts'
-import { Activity, TrendingUp, TrendingDown, Minus } from 'lucide-react'
-import { loadSeries, tsbState, rampRate } from '../utils/load'
+import { Activity, TrendingUp, TrendingDown, Minus, Zap, HeartPulse, CircleDot } from 'lucide-react'
+import { loadSeries, tsbState, rampRate, tssSourceMix } from '../utils/load'
+import { getAthlete } from '../api'
 
 const TONE = {
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
@@ -27,9 +28,13 @@ function CustomTooltip({ active, payload }) {
 }
 
 export default function LoadChart({ workouts }) {
-  const series = useMemo(() => loadSeries(workouts, 84), [workouts])
+  const [athlete, setAthlete] = useState(null)
+  useEffect(() => { getAthlete().then(setAthlete).catch(() => {}) }, [])
+
+  const series = useMemo(() => loadSeries(workouts, athlete, 84), [workouts, athlete])
   const last = series[series.length - 1] || { ctl: 0, atl: 0, tsb: 0 }
   const ramp = useMemo(() => rampRate(series), [series])
+  const mix = useMemo(() => tssSourceMix(workouts, athlete), [workouts, athlete])
   const state = tsbState(last.tsb)
   const RampIcon = ramp > 5 ? TrendingUp : ramp < -5 ? TrendingDown : Minus
   const rampTone = ramp > 5 ? 'text-orange-400' : ramp < -5 ? 'text-emerald-400' : 'text-zinc-400'
@@ -95,9 +100,19 @@ export default function LoadChart({ workouts }) {
           <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-red-500" style={{ borderTop: '1px dashed' }} /> Fatigue (7d)</span>
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 bg-white/10" /> Daily TSS</span>
         </div>
-        <div className={`flex items-center gap-1.5 text-xs font-mono ${rampTone}`}>
-          <RampIcon size={13} />
-          Ramp <span className="text-white font-semibold tabular-nums">{ramp > 0 ? '+' : ''}{ramp}</span> TSS / wk
+        <div className="flex items-center gap-3 text-xs font-mono">
+          {mix.total > 0 && (
+            <span className="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400" title="Share of recent TSS computed from real HR or power data vs estimate">
+              {mix.realPct >= 50
+                ? <HeartPulse size={13} className="text-emerald-400" />
+                : <CircleDot size={13} className="text-zinc-500" />}
+              <span className={mix.realPct >= 50 ? 'text-emerald-400' : ''}>{mix.realPct}% real</span>
+            </span>
+          )}
+          <span className={`flex items-center gap-1.5 ${rampTone}`}>
+            <RampIcon size={13} />
+            Ramp <span className="text-zinc-900 dark:text-white font-semibold tabular-nums">{ramp > 0 ? '+' : ''}{ramp}</span> TSS/wk
+          </span>
         </div>
       </div>
     </section>

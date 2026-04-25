@@ -14,6 +14,10 @@ class WorkoutBase(BaseModel):
     duration_min: Optional[int] = None
     rpe: Optional[int] = None
     notes: Optional[str] = None
+    avg_hr: Optional[int] = None
+    max_hr: Optional[int] = None
+    avg_power: Optional[int] = None
+    np_power: Optional[int] = None
 
 
 class WorkoutCreate(WorkoutBase):
@@ -29,6 +33,10 @@ class WorkoutUpdate(BaseModel):
     duration_min: Optional[int] = None
     rpe: Optional[int] = None
     notes: Optional[str] = None
+    avg_hr: Optional[int] = None
+    max_hr: Optional[int] = None
+    avg_power: Optional[int] = None
+    np_power: Optional[int] = None
 
 
 class WorkoutOut(WorkoutBase):
@@ -76,6 +84,7 @@ class AthleteBase(BaseModel):
     run_pace_km: Optional[str] = None
     run_easy_pace_km: Optional[str] = None
     run_5k_pace_km: Optional[str] = None
+    threshold_hr: Optional[int] = None
     preferred_days: Optional[str] = None
     injuries_notes: Optional[str] = None
     goal_description: Optional[str] = None
@@ -92,6 +101,7 @@ class AthleteUpdate(BaseModel):
     run_pace_km: Optional[str] = None
     run_easy_pace_km: Optional[str] = None
     run_5k_pace_km: Optional[str] = None
+    threshold_hr: Optional[int] = None
     preferred_days: Optional[str] = None
     injuries_notes: Optional[str] = None
     goal_description: Optional[str] = None

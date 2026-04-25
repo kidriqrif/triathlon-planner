@@ -160,6 +160,7 @@ def sync_strava_activities(
         raise HTTPException(status_code=502, detail="Failed to fetch Strava activities")
 
     activities = resp.json()
+    athlete = db.query(models.Athlete).filter(models.Athlete.user_id == current_user.id).first()
     imported = 0
 
     for act in activities:
@@ -169,7 +170,7 @@ def sync_strava_activities(
 
         act_date = date.fromisoformat(act["start_date_local"][:10])
 
-        # Skip if we already have a workout on this date+sport with similar duration
+        # Skip if we already have a workout on this date+sport from this Strava activity
         existing = db.query(models.Workout).filter(
             models.Workout.user_id == current_user.id,
             models.Workout.date == act_date,
@@ -181,15 +182,26 @@ def sync_strava_activities(
 
         duration_min = round(act.get("moving_time", 0) / 60)
         distance_km = round(act.get("distance", 0) / 1000, 2)
+        avg_hr = round(act["average_heartrate"]) if act.get("average_heartrate") else None
+        max_hr = round(act["max_heartrate"]) if act.get("max_heartrate") else None
+        avg_power = round(act["average_watts"]) if act.get("average_watts") else None
+        np_power = round(act["weighted_average_watts"]) if act.get("weighted_average_watts") else None
+
+        # Infer workout type from intensity if data is rich enough.
+        wtype = _infer_workout_type(sport, athlete, avg_hr, np_power, duration_min)
 
         workout = models.Workout(
             user_id=current_user.id,
             date=act_date,
             sport=sport,
-            workout_type="easy",
+            workout_type=wtype,
             status="completed",
             duration_min=duration_min if duration_min > 0 else None,
             distance_km=distance_km if distance_km > 0 else None,
+            avg_hr=avg_hr,
+            max_hr=max_hr,
+            avg_power=avg_power,
+            np_power=np_power,
             notes=f"strava:{act['id']} — {act.get('name', '')}",
         )
         db.add(workout)
@@ -197,3 +209,34 @@ def sync_strava_activities(
 
     db.commit()
     return {"imported": imported, "total_found": len(activities)}
+
+
+def _infer_workout_type(sport, athlete, avg_hr, np_power, duration_min):
+    """Pick a workout_type from intensity vs the athlete's threshold anchors.
+
+    Falls back to "easy" when there is no intensity signal or threshold reference.
+    """
+    if not athlete or not duration_min:
+        return "easy"
+
+    # Bike with power: classify by IF = NP/FTP
+    if sport == "bike" and np_power and athlete.bike_ftp_watts:
+        if_ = np_power / athlete.bike_ftp_watts
+        if if_ >= 0.95:                    return "interval"
+        if if_ >= 0.83:                    return "tempo"
+        if if_ >= 0.65 and duration_min >= 90: return "long"
+        if if_ < 0.55:                     return "recovery"
+        return "easy"
+
+    # Anything with HR: classify against threshold HR
+    if avg_hr and athlete.threshold_hr:
+        ratio = avg_hr / athlete.threshold_hr
+        if ratio >= 0.97:                  return "interval"
+        if ratio >= 0.88:                  return "tempo"
+        if ratio < 0.70:                   return "recovery"
+        if duration_min >= 90:             return "long"
+        return "easy"
+
+    # No intensity data: long flag based on duration alone
+    if duration_min >= 120:                return "long"
+    return "easy"

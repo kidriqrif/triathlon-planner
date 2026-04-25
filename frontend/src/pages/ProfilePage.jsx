@@ -69,6 +69,7 @@ export default function ProfilePage() {
         run_pace_km: a.run_pace_km ?? '',
         run_easy_pace_km: a.run_easy_pace_km ?? '',
         run_5k_pace_km: a.run_5k_pace_km ?? '',
+        threshold_hr: a.threshold_hr ?? '',
         preferred_days: a.preferred_days ?? '',
         injuries_notes: a.injuries_notes ?? '',
         goal_description: a.goal_description ?? '',
@@ -101,6 +102,7 @@ export default function ProfilePage() {
         run_pace_km: form.run_pace_km || null,
         run_easy_pace_km: form.run_easy_pace_km || null,
         run_5k_pace_km: form.run_5k_pace_km || null,
+        threshold_hr: form.threshold_hr !== '' ? parseInt(form.threshold_hr) : null,
         preferred_days: form.preferred_days || null,
         injuries_notes: form.injuries_notes || null,
         goal_description: form.goal_description || null,
@@ -276,6 +278,14 @@ export default function ProfilePage() {
                 <p className="text-[11px] text-slate-400 mt-1">All-out 5k race pace — used for intervals.</p>
               </div>
             </div>
+          </div>
+
+          {/* Threshold HR */}
+          <div>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Threshold heart rate</label>
+            <input type="number" min="100" max="220" value={form.threshold_hr} onChange={set('threshold_hr')}
+              placeholder="170" className={inputCls} />
+            <p className="text-[11px] text-slate-400 mt-1">Avg HR you can hold for ~1 hour all-out. Powers HR-based TSS when Strava activities have HR data.</p>
           </div>
         </div>
 

@@ -98,6 +98,12 @@ class Workout(Base):
     rpe = Column(Integer, nullable=True)
     notes = Column(Text, nullable=True)
 
+    # Real intensity data (populated by Strava sync when available)
+    avg_hr = Column(Integer, nullable=True)
+    max_hr = Column(Integer, nullable=True)
+    avg_power = Column(Integer, nullable=True)         # bike: avg watts
+    np_power = Column(Integer, nullable=True)          # bike: normalized power (NP)
+
     owner = relationship("User", back_populates="workouts")
 
 
@@ -131,6 +137,7 @@ class Athlete(Base):
     run_pace_km = Column(String, nullable=True)        # Threshold pace (~1 hour effort)
     run_easy_pace_km = Column(String, nullable=True)   # Easy aerobic pace (multi-hour effort)
     run_5k_pace_km = Column(String, nullable=True)     # 5k race pace (short effort)
+    threshold_hr = Column(Integer, nullable=True)      # bpm — for HR-based TSS
     preferred_days = Column(String, nullable=True)
     injuries_notes = Column(Text, nullable=True)
     goal_description = Column(Text, nullable=True)

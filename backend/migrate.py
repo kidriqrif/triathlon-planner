@@ -39,11 +39,26 @@ with engine.connect() as conn:
         new_athlete_cols = {
             "run_easy_pace_km": "VARCHAR",
             "run_5k_pace_km": "VARCHAR",
+            "threshold_hr": "INTEGER",
         }
         for col, dtype in new_athlete_cols.items():
             if col not in athlete_cols:
                 conn.execute(text(f"ALTER TABLE athletes ADD COLUMN {col} {dtype}"))
                 print(f"  athletes.{col} added")
+                added += 1
+
+    if "workouts" in insp.get_table_names():
+        workout_cols = {c["name"] for c in insp.get_columns("workouts")}
+        new_workout_cols = {
+            "avg_hr": "INTEGER",
+            "max_hr": "INTEGER",
+            "avg_power": "INTEGER",
+            "np_power": "INTEGER",
+        }
+        for col, dtype in new_workout_cols.items():
+            if col not in workout_cols:
+                conn.execute(text(f"ALTER TABLE workouts ADD COLUMN {col} {dtype}"))
+                print(f"  workouts.{col} added")
                 added += 1
 
     conn.commit()
