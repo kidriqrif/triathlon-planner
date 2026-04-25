@@ -234,13 +234,17 @@ export default function App() {
 
   const StreloLogo = () => (
     <button onClick={() => navigate('dashboard')} className="flex items-center gap-2.5">
-      <div className="w-8 h-8 rounded-lg bg-sunrise-gradient flex items-center justify-center shadow-glow-sunrise">
-        <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-          <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-          <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.7)" strokeWidth="2.2" strokeLinecap="round"/>
-          <path d="M12 14L15 4" stroke="rgba(255,255,255,0.4)" strokeWidth="2.2" strokeLinecap="round"/>
-        </svg>
-      </div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="strelo-mark-app" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ff7a00" />
+            <stop offset="100%" stopColor="#ff0080" />
+          </linearGradient>
+        </defs>
+        <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark-app)" opacity="0.15" />
+        <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark-app)" />
+        <path d="M16 11L12 21H22L16 11Z" fill="#71717a" />
+      </svg>
       <span className="font-display font-bold text-zinc-900 dark:text-white text-base tracking-tight">Strelo</span>
     </button>
   )

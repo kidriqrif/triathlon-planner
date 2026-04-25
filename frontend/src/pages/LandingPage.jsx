@@ -33,7 +33,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans relative atmosphere overflow-x-hidden">
+    <div className="dark min-h-screen bg-zinc-950 text-zinc-100 font-sans relative atmosphere overflow-x-hidden">
       <div className="topo-bg" />
 
       {/* Nav */}
