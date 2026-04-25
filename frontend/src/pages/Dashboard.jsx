@@ -2,6 +2,7 @@ import React from 'react'
 import { useI18n } from '../i18n/I18nContext'
 import VolumeChart from '../components/VolumeChart'
 import AICoach from '../components/AICoach'
+import LoadChart from '../components/LoadChart'
 import {
   Waves, Bike, Footprints, Dumbbell, Layers, Flame, Flag, Lock, ArrowRight, Circle,
   Target, Sparkles, Activity,
@@ -337,7 +338,12 @@ export default function Dashboard({ races, workouts, onWorkoutsAdded, user, onNa
 
       <StatStrip workouts={workouts} />
 
-      {isPro && <VolumeChart workouts={workouts} />}
+      {isPro && (
+        <>
+          <LoadChart workouts={workouts} />
+          <VolumeChart workouts={workouts} />
+        </>
+      )}
     </div>
   )
 }

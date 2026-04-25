@@ -369,10 +369,10 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-3">
                   <BarChart3 size={18} className="text-zinc-400" />
-                  <h3 className="text-2xl font-display font-medium text-white">Volume tracking</h3>
+                  <h3 className="text-2xl font-display font-medium text-white">Performance load</h3>
                 </div>
                 <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
-                  Weekly hours by sport, training streak, and your swim/bike/run balance — the numbers that tell you if your week was actually balanced.
+                  Estimated TSS per session feeds rolling CTL (fitness) and ATL (fatigue), so you see your form trend — not just how many hours you logged.
                 </p>
                 <div className="space-y-3 max-w-[220px]">
                   {[
@@ -465,7 +465,7 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
                     'Ace AI periodisation & recalibration',
                     'FIT/CSV export to Garmin & COROS',
                     'Unlimited races & templates',
-                    'Volume trends, sport balance, training streak',
+                    'TSS · CTL · ATL form charts',
                     'Priority support',
                   ].map(t => (
                     <li key={t} className="flex items-start gap-3"><CheckCircle2 size={15} className="text-orange-400 mt-0.5 shrink-0" /> {t}</li>
@@ -529,9 +529,8 @@ export default function LandingPage({ onGetStarted, onSignIn, onNavigate }) {
             </ul>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 pb-8 text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-white/5 pt-6">
+        <div className="max-w-7xl mx-auto px-6 pb-8 text-xs text-zinc-600 font-mono border-t border-white/5 pt-6">
           <span>© {new Date().getFullYear()} Strelo Training</span>
-          <span>v2.0 · Pre-Dawn Protocol</span>
         </div>
       </footer>
     </div>
