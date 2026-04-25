@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { getAthlete, updateAthlete } from '../api'
 import ZonesCalculator from '../components/ZonesCalculator'
-import { Sprout, Zap, Flame, AlertTriangle, User } from 'lucide-react'
+import { Sprout, Zap, Flame, AlertTriangle, User, Camera, Trash2 } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 
 const FITNESS_LEVELS = [
@@ -19,6 +19,42 @@ export default function ProfilePage() {
   const [form, setForm]     = useState(null)
   const [saved, setSaved]   = useState(false)
   const [error, setError]   = useState(null)
+  const [avatar, setAvatar] = useState(() => localStorage.getItem('strelo_avatar') || '')
+  const fileInputRef = useRef(null)
+
+  const handleAvatarPick = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (!file.type.startsWith('image/')) { setError('Please pick an image file.'); return }
+    if (file.size > 2 * 1024 * 1024) { setError('Image must be under 2 MB.'); return }
+    const reader = new FileReader()
+    reader.onload = () => {
+      // Resize via canvas to 256x256 JPEG to keep localStorage small
+      const img = new Image()
+      img.onload = () => {
+        const size = 256
+        const canvas = document.createElement('canvas')
+        canvas.width = size; canvas.height = size
+        const ctx = canvas.getContext('2d')
+        const min = Math.min(img.width, img.height)
+        const sx = (img.width - min) / 2
+        const sy = (img.height - min) / 2
+        ctx.drawImage(img, sx, sy, min, min, 0, 0, size, size)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
+        localStorage.setItem('strelo_avatar', dataUrl)
+        setAvatar(dataUrl)
+        window.dispatchEvent(new Event('strelo:avatar-changed'))
+      }
+      img.src = reader.result
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleAvatarRemove = () => {
+    localStorage.removeItem('strelo_avatar')
+    setAvatar('')
+    window.dispatchEvent(new Event('strelo:avatar-changed'))
+  }
 
   useEffect(() => {
     getAthlete()
@@ -111,6 +147,36 @@ export default function ProfilePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        {/* Avatar */}
+        <div className="vista-panel rounded-xl p-4 flex items-center gap-4">
+          <div className="w-20 h-20 rounded-full overflow-hidden shrink-0 shadow-glow-sunrise relative">
+            {avatar ? (
+              <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-sunrise-gradient flex items-center justify-center text-2xl font-bold text-white">
+                {form.name?.[0]?.toUpperCase() || 'A'}
+              </div>
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Profile picture</p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => fileInputRef.current?.click()}
+                className="btn-ghost text-xs px-3 py-1.5">
+                <Camera size={13} /> {avatar ? 'Change' : 'Upload'}
+              </button>
+              {avatar && (
+                <button type="button" onClick={handleAvatarRemove}
+                  className="btn-ghost text-xs px-3 py-1.5 hover:!text-red-500">
+                  <Trash2 size={13} /> Remove
+                </button>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-1.5">Square image, &lt; 2 MB. Stored locally.</p>
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleAvatarPick} className="hidden" />
+          </div>
+        </div>
+
         {/* Name + basics */}
         <div className="vista-panel rounded-xl p-3.5 space-y-3">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('basics')}</p>

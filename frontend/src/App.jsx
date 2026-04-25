@@ -21,7 +21,7 @@ import { getWorkouts, getRaces, getMe } from './api'
 import { DashboardSkeleton } from './components/Skeleton'
 import SupportChat from './components/SupportChat'
 import { requestNotificationPermission, notifyPlannedWorkouts } from './utils/notifications'
-import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun, Wifi } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, Flag, User, Sparkles, LogOut, Settings, Menu, X, BookMarked, Library, NotebookPen, Scale, Moon, Sun, Wifi, ChevronsLeft, ChevronsRight, Camera } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'dashboard', tKey: 'dashboard', Icon: LayoutDashboard },
@@ -47,7 +47,18 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [waking, setWaking] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => localStorage.getItem('strelo_sidebar_collapsed') === '1')
+  const [avatar, setAvatar] = useState(() => localStorage.getItem('strelo_avatar') || '')
   const [dark, setDark] = useState(() => localStorage.getItem('strelo_theme') === 'dark')
+
+  useEffect(() => { localStorage.setItem('strelo_sidebar_collapsed', sidebarCollapsed ? '1' : '0') }, [sidebarCollapsed])
+
+  // Listen for avatar changes from ProfilePage
+  useEffect(() => {
+    const handler = () => setAvatar(localStorage.getItem('strelo_avatar') || '')
+    window.addEventListener('strelo:avatar-changed', handler)
+    return () => window.removeEventListener('strelo:avatar-changed', handler)
+  }, [])
 
   // Apply dark class
   useEffect(() => {
@@ -164,73 +175,87 @@ export default function App() {
     }
   }
 
-  const SidebarNav = ({ onNavigateClick }) => (
-    <>
-      <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
-        <span className="px-3 text-[10px] font-mono tracking-widest text-zinc-400 dark:text-zinc-500 uppercase mb-2 block">Command</span>
-        {NAV_ITEMS.map(({ id, tKey, Icon }) => (
-          <button key={id} onClick={() => onNavigateClick(id)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative ${
-              page === id
-                ? 'bg-sunrise-subtle text-zinc-900 dark:text-white'
-                : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] hover:text-zinc-900 dark:hover:text-white'
-            }`}>
-            {page === id && (
-              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-sunrise-gradient rounded-r-full" />
+  const SidebarNav = ({ onNavigateClick, collapsed = false }) => {
+    const navBtn = (active, isOrange = false) =>
+      `w-full flex items-center ${collapsed ? 'justify-center px-0' : 'gap-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-colors relative group ${
+        active
+          ? isOrange ? 'bg-sunrise-subtle text-orange-500' : 'bg-sunrise-subtle text-zinc-900 dark:text-white'
+          : isOrange ? 'text-orange-500 hover:bg-zinc-100 dark:hover:bg-white/[0.03]'
+                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] hover:text-zinc-900 dark:hover:text-white'
+      }`
+
+    const tip = (label) => collapsed && (
+      <span className="absolute left-full ml-2 px-2 py-1 text-xs font-medium bg-zinc-900 dark:bg-zinc-800 text-white rounded-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-lg border border-white/10">
+        {label}
+      </span>
+    )
+
+    return (
+      <>
+        <nav className="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto overflow-x-hidden">
+          {!collapsed && (
+            <span className="px-3 text-[10px] font-mono tracking-widest text-zinc-400 dark:text-zinc-500 uppercase mb-2 block">Command</span>
+          )}
+          {NAV_ITEMS.map(({ id, tKey, Icon }) => (
+            <button key={id} onClick={() => onNavigateClick(id)} className={navBtn(page === id)}>
+              {page === id && !collapsed && (
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-sunrise-gradient rounded-r-full" />
+              )}
+              <Icon size={16} strokeWidth={1.75} className={page === id ? 'text-orange-500' : ''} />
+              {!collapsed && t(tKey)}
+              {tip(t(tKey))}
+            </button>
+          ))}
+
+          {user.plan !== 'pro' && (
+            <button onClick={() => onNavigateClick('upgrade')} className={navBtn(page === 'upgrade', true) + ' mt-2'}>
+              <Sparkles size={16} strokeWidth={1.75} />
+              {!collapsed && t('upgradeToPro')}
+              {tip(t('upgradeToPro'))}
+            </button>
+          )}
+        </nav>
+
+        <div className="border-t border-zinc-200/60 dark:border-white/5 p-3 space-y-0.5">
+          <button onClick={() => onNavigateClick('settings')} className={navBtn(page === 'settings')}>
+            <Settings size={16} strokeWidth={1.75} />
+            {!collapsed && t('settings')}
+            {tip(t('settings'))}
+          </button>
+
+          <button onClick={() => setDark(d => !d)} className={navBtn(false)}>
+            {dark ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
+            {!collapsed && (dark ? 'Light mode' : 'Dark mode')}
+            {tip(dark ? 'Light mode' : 'Dark mode')}
+          </button>
+
+          <button onClick={handleLogout} className={navBtn(false) + ' hover:!text-red-500'}>
+            <LogOut size={16} strokeWidth={1.75} />
+            {!collapsed && t('signOut')}
+            {tip(t('signOut'))}
+          </button>
+
+          <div className={`pt-3 mt-2 border-t border-zinc-200/60 dark:border-white/5 ${collapsed ? 'flex justify-center' : 'px-3 flex items-center gap-3'}`}>
+            <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 shadow-glow-sunrise relative">
+              {avatar ? (
+                <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-sunrise-gradient flex items-center justify-center text-xs font-bold text-white">
+                  {user.name?.[0]?.toUpperCase() || 'A'}
+                </div>
+              )}
+            </div>
+            {!collapsed && (
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-medium text-zinc-900 dark:text-white truncate">{user.name}</p>
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">{user.email}</p>
+              </div>
             )}
-            <Icon size={16} strokeWidth={1.75} className={page === id ? 'text-orange-500' : ''} />
-            {t(tKey)}
-          </button>
-        ))}
-
-        {user.plan !== 'pro' && (
-          <button onClick={() => onNavigateClick('upgrade')}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors mt-2 ${
-              page === 'upgrade'
-                ? 'bg-sunrise-subtle text-orange-500'
-                : 'text-orange-500 hover:bg-zinc-100 dark:hover:bg-white/[0.03]'
-            }`}>
-            <Sparkles size={16} strokeWidth={1.75} />
-            {t('upgradeToPro')}
-          </button>
-        )}
-      </nav>
-
-      <div className="border-t border-zinc-200/60 dark:border-white/5 p-3 space-y-0.5">
-        <button onClick={() => onNavigateClick('settings')}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-            page === 'settings'
-              ? 'bg-zinc-100 dark:bg-white/[0.05] text-zinc-900 dark:text-white'
-              : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03]'
-          }`}>
-          <Settings size={16} strokeWidth={1.75} />
-          {t('settings')}
-        </button>
-
-        <button onClick={() => setDark(d => !d)}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] transition-colors">
-          {dark ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
-          {dark ? 'Light mode' : 'Dark mode'}
-        </button>
-
-        <button onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/[0.03] hover:text-red-500 transition-colors">
-          <LogOut size={16} strokeWidth={1.75} />
-          {t('signOut')}
-        </button>
-
-        <div className="px-3 pt-3 pb-1 border-t border-zinc-200/60 dark:border-white/5 mt-2 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-sunrise-gradient flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-glow-sunrise">
-            {user.name?.[0]?.toUpperCase() || 'A'}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-zinc-900 dark:text-white truncate">{user.name}</p>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">{user.email}</p>
           </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 
   const StreloLogo = () => (
     <button onClick={() => navigate('dashboard')} className="flex items-center gap-2.5">
@@ -254,11 +279,41 @@ export default function App() {
       <div className="topo-bg" />
 
       {/* Persistent sidebar — md+ */}
-      <aside className="hidden md:flex flex-col w-[260px] shrink-0 h-screen sticky top-0 border-r border-zinc-200/60 dark:border-white/5 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl z-20">
-        <div className="px-6 py-6">
-          <StreloLogo />
+      <aside className={`hidden md:flex flex-col shrink-0 h-screen sticky top-0 border-r border-zinc-200/60 dark:border-white/5 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl z-20 transition-[width] duration-200 ease-out ${
+        sidebarCollapsed ? 'w-[72px]' : 'w-[260px]'
+      }`}>
+        <div className={`py-6 flex items-center ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-6'}`}>
+          {sidebarCollapsed ? (
+            <button onClick={() => navigate('dashboard')}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="strelo-mark-collapsed" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ff7a00" />
+                    <stop offset="100%" stopColor="#ff0080" />
+                  </linearGradient>
+                </defs>
+                <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark-collapsed)" opacity="0.15" />
+                <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark-collapsed)" />
+                <path d="M16 11L12 21H22L16 11Z" fill="#71717a" />
+              </svg>
+            </button>
+          ) : <StreloLogo />}
+          {!sidebarCollapsed && (
+            <button onClick={() => setSidebarCollapsed(true)}
+              className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors"
+              title="Collapse sidebar">
+              <ChevronsLeft size={16} strokeWidth={2} />
+            </button>
+          )}
         </div>
-        <SidebarNav onNavigateClick={navigate} />
+        <SidebarNav onNavigateClick={navigate} collapsed={sidebarCollapsed} />
+        {sidebarCollapsed && (
+          <button onClick={() => setSidebarCollapsed(false)}
+            className="border-t border-zinc-200/60 dark:border-white/5 py-3 flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition-colors"
+            title="Expand sidebar">
+            <ChevronsRight size={16} strokeWidth={2} />
+          </button>
+        )}
       </aside>
 
       {/* Mobile drawer */}
