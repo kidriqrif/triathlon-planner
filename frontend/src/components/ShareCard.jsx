@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Share2, Download, Copy, Check } from 'lucide-react'
+import StreloMark from './StreloMark'
 
 function formatHours(hours) {
   const h = Math.floor(hours)
@@ -140,13 +141,7 @@ export default function ShareCard({ type, data }) {
 
           {/* Branding */}
           <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full vista-orb flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-            </div>
+            <StreloMark size={18} />
             <span className="text-xs font-semibold text-slate-500">Strelo</span>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import StreloMark from '../components/StreloMark'
 
 export default function PrivacyPage({ onBack }) {
   return (
@@ -6,14 +7,8 @@ export default function PrivacyPage({ onBack }) {
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-slate-100">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center">
           <button onClick={onBack} className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full vista-orb flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.3)" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="font-black text-slate-800 text-lg tracking-tight">Strelo</span>
+            <StreloMark size={28} />
+            <span className="font-display font-bold text-slate-800 text-lg tracking-tight">Strelo</span>
           </button>
         </div>
       </header>

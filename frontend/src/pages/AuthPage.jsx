@@ -112,15 +112,19 @@ export default function AuthPage({ onAuth, resetToken }) {
         {/* Brand */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
-            <div className="w-11 h-11 rounded-full vista-orb flex items-center justify-center">
-              <svg width="22" height="22" viewBox="0 0 18 18" fill="none">
-                <path d="M5 14L8 4" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M8.5 14L11.5 4" stroke="rgba(255,255,255,0.5)" strokeWidth="2.2" strokeLinecap="round"/>
-                <path d="M12 14L15 4" stroke="rgba(255,255,255,0.25)" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-            </div>
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
+              <defs>
+                <linearGradient id="strelo-mark-auth" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ff7a00" />
+                  <stop offset="100%" stopColor="#ff0080" />
+                </linearGradient>
+              </defs>
+              <path d="M12 2L2 22H22L12 2Z" fill="url(#strelo-mark-auth)" opacity="0.15" />
+              <path d="M12 2L2 22H10L14 12L12 2Z" fill="url(#strelo-mark-auth)" />
+              <path d="M16 11L12 21H22L16 11Z" fill="#71717a" />
+            </svg>
           </div>
-          <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">Strelo</h1>
+          <h1 className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">Strelo</h1>
         </div>
 
         {/* Card */}

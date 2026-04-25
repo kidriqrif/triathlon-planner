@@ -179,7 +179,23 @@ body {
 .vista-panel { @apply panel; }
 .vista-btn,
 .vista-btn-ghost { @apply btn-ghost; }
-.vista-input { @apply field; }
+.vista-input {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
+  color: #18181b;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.vista-input:focus {
+  outline: none;
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 3px rgba(255,122,0,0.15);
+}
+.dark .vista-input {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+  color: #f4f4f5;
+}
+.dark .vista-input:focus { border-color: #ff7a00; box-shadow: 0 0 0 3px rgba(255,122,0,0.2); }
 .vista-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(255,122,0,0.3), transparent); }
 .vista-orb {
   background: linear-gradient(135deg, #ff7a00 0%, #ff0080 100%);
