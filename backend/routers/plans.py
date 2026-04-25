@@ -206,6 +206,16 @@ PLAN_LIBRARY = [
 
 LEVEL_FACTOR = {"beginner": 0.85, "intermediate": 1.0, "advanced": 1.15}
 
+# Run pace anchor per workout type: which of the athlete's three run paces to start from.
+RUN_PACE_ANCHOR = {
+    "recovery": "easy",     # multi-hour aerobic
+    "easy":     "easy",
+    "long":     "easy",
+    "tempo":    "threshold",
+    "interval": "5k",       # short hard reps
+}
+
+# Within an anchor, fine adjust by the workout's actual intensity sub-flavour.
 RUN_PACE_FACTOR = {
     "easy": 1.15, "long": 1.10, "tempo": 1.0, "interval": 0.90, "recovery": 1.25,
 }
@@ -262,12 +272,19 @@ def _personalize_session(session, athlete, volume_scale):
     scale = volume_scale * fitness
     s["min"] = max(10, round(s["min"] * scale))
 
-    # Run: recalculate distance from actual pace
-    if s["sport"] == "run" and athlete.run_pace_km:
-        pace = _parse_pace(athlete.run_pace_km)
-        if pace and s.get("km"):
+    # Run: pick the right anchor pace for the session, then recalc distance + note
+    if s["sport"] == "run":
+        threshold = _parse_pace(athlete.run_pace_km)
+        easy = _parse_pace(getattr(athlete, "run_easy_pace_km", None)) or (threshold * 1.15 if threshold else None)
+        five_k = _parse_pace(getattr(athlete, "run_5k_pace_km", None)) or (threshold * 0.92 if threshold else None)
+        anchor = RUN_PACE_ANCHOR.get(s["type"], "threshold")
+        anchor_pace = {"easy": easy, "threshold": threshold, "5k": five_k}.get(anchor)
+
+        if anchor_pace and s.get("km"):
+            # Multiplier centred on the anchor — keeps subtle variation within a zone.
+            anchor_centre = {"easy": 1.10, "threshold": 1.0, "5k": 0.92}[anchor]
             factor = RUN_PACE_FACTOR.get(s["type"], 1.0)
-            target_pace = pace * factor
+            target_pace = anchor_pace * (factor / anchor_centre)
             s["km"] = round(s["min"] / target_pace, 1)
             s["note"] = f"Target: {_format_pace(target_pace)}/km — {s.get('note', '')}"
 

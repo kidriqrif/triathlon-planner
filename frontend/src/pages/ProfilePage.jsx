@@ -67,6 +67,8 @@ export default function ProfilePage() {
         swim_pace_100m: a.swim_pace_100m ?? '',
         bike_ftp_watts: a.bike_ftp_watts ?? '',
         run_pace_km: a.run_pace_km ?? '',
+        run_easy_pace_km: a.run_easy_pace_km ?? '',
+        run_5k_pace_km: a.run_5k_pace_km ?? '',
         preferred_days: a.preferred_days ?? '',
         injuries_notes: a.injuries_notes ?? '',
         goal_description: a.goal_description ?? '',
@@ -97,6 +99,8 @@ export default function ProfilePage() {
         bike_ftp_watts: form.bike_ftp_watts !== '' ? parseInt(form.bike_ftp_watts) : null,
         swim_pace_100m: form.swim_pace_100m || null,
         run_pace_km: form.run_pace_km || null,
+        run_easy_pace_km: form.run_easy_pace_km || null,
+        run_5k_pace_km: form.run_5k_pace_km || null,
         preferred_days: form.preferred_days || null,
         injuries_notes: form.injuries_notes || null,
         goal_description: form.goal_description || null,
@@ -227,26 +231,50 @@ export default function ProfilePage() {
         </div>
 
         {/* Current paces / thresholds */}
-        <div className="vista-panel rounded-xl p-3.5 space-y-3">
+        <div className="vista-panel rounded-xl p-3.5 space-y-4">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('currentBenchmarks')}</p>
             <p className="text-xs text-slate-400 mt-0.5">{t('benchmarksDesc')}</p>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+
+          {/* Swim + bike */}
+          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('swimPace')}</label>
               <input value={form.swim_pace_100m} onChange={set('swim_pace_100m')}
                 placeholder="1:45" className={inputCls} />
+              <p className="text-[11px] text-slate-400 mt-1">CSS pace per 100m — what you'd hold for ~30 min.</p>
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('bikeFtp')}</label>
               <input type="number" min="50" max="500" value={form.bike_ftp_watts} onChange={set('bike_ftp_watts')}
                 placeholder="220" className={inputCls} />
+              <p className="text-[11px] text-slate-400 mt-1">FTP in watts — the power you can hold for ~1 hour.</p>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">{t('runPace')}</label>
-              <input value={form.run_pace_km} onChange={set('run_pace_km')}
-                placeholder="5:30" className={inputCls} />
+          </div>
+
+          {/* Run pace zones — three anchors */}
+          <div>
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Run pace anchors</p>
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Easy</label>
+                <input value={form.run_easy_pace_km} onChange={set('run_easy_pace_km')}
+                  placeholder="5:30" className={inputCls} />
+                <p className="text-[11px] text-slate-400 mt-1">Pace you can hold for hours, conversational.</p>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Threshold</label>
+                <input value={form.run_pace_km} onChange={set('run_pace_km')}
+                  placeholder="4:15" className={inputCls} />
+                <p className="text-[11px] text-slate-400 mt-1">~1-hour effort — your tempo / 10k-ish pace.</p>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">5k</label>
+                <input value={form.run_5k_pace_km} onChange={set('run_5k_pace_km')}
+                  placeholder="3:45" className={inputCls} />
+                <p className="text-[11px] text-slate-400 mt-1">All-out 5k race pace — used for intervals.</p>
+              </div>
             </div>
           </div>
         </div>

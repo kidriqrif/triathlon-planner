@@ -74,6 +74,8 @@ class AthleteBase(BaseModel):
     swim_pace_100m: Optional[str] = None
     bike_ftp_watts: Optional[int] = None
     run_pace_km: Optional[str] = None
+    run_easy_pace_km: Optional[str] = None
+    run_5k_pace_km: Optional[str] = None
     preferred_days: Optional[str] = None
     injuries_notes: Optional[str] = None
     goal_description: Optional[str] = None
@@ -88,6 +90,8 @@ class AthleteUpdate(BaseModel):
     swim_pace_100m: Optional[str] = None
     bike_ftp_watts: Optional[int] = None
     run_pace_km: Optional[str] = None
+    run_easy_pace_km: Optional[str] = None
+    run_5k_pace_km: Optional[str] = None
     preferred_days: Optional[str] = None
     injuries_notes: Optional[str] = None
     goal_description: Optional[str] = None
