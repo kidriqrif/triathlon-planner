@@ -5,9 +5,9 @@ not on every app startup.
 from dotenv import load_dotenv
 load_dotenv()
 
-from database import engine, Base
-import models  # noqa: F401 — registers models with Base
-from sqlalchemy import inspect, text
+from database import engine, Base  # noqa: E402
+import models  # noqa: F401, E402 - registers models with Base
+from sqlalchemy import inspect, text  # noqa: E402
 
 print("Running migrations...")
 
