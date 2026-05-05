@@ -3,7 +3,6 @@ import io
 import json
 import secrets
 import time
-import os
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
@@ -58,10 +57,14 @@ def _format_target(t_type, t_value):
     if t_type == "zone":
         z = ZONE_LABELS.get(t_value, t_value)
         return f"{t_value} {z}"
-    if t_type == "hr":    return f"{t_value} bpm"
-    if t_type == "pace":  return f"{t_value}/km"
-    if t_type == "power": return f"{t_value} W"
-    if t_type == "rpe":   return f"RPE {t_value}"
+    if t_type == "hr":
+        return f"{t_value} bpm"
+    if t_type == "pace":
+        return f"{t_value}/km"
+    if t_type == "power":
+        return f"{t_value} W"
+    if t_type == "rpe":
+        return f"RPE {t_value}"
     return str(t_value)
 
 
