@@ -342,21 +342,30 @@ def _infer_workout_type(sport, athlete, avg_hr, np_power, duration_min):
     # Bike with power: classify by IF = NP/FTP
     if sport == "bike" and np_power and athlete.bike_ftp_watts:
         if_ = np_power / athlete.bike_ftp_watts
-        if if_ >= 0.95:                    return "interval"
-        if if_ >= 0.83:                    return "tempo"
-        if if_ >= 0.65 and duration_min >= 90: return "long"
-        if if_ < 0.55:                     return "recovery"
+        if if_ >= 0.95:
+            return "interval"
+        if if_ >= 0.83:
+            return "tempo"
+        if if_ >= 0.65 and duration_min >= 90:
+            return "long"
+        if if_ < 0.55:
+            return "recovery"
         return "easy"
 
     # Anything with HR: classify against threshold HR
     if avg_hr and athlete.threshold_hr:
         ratio = avg_hr / athlete.threshold_hr
-        if ratio >= 0.97:                  return "interval"
-        if ratio >= 0.88:                  return "tempo"
-        if ratio < 0.70:                   return "recovery"
-        if duration_min >= 90:             return "long"
+        if ratio >= 0.97:
+            return "interval"
+        if ratio >= 0.88:
+            return "tempo"
+        if ratio < 0.70:
+            return "recovery"
+        if duration_min >= 90:
+            return "long"
         return "easy"
 
     # No intensity data: long flag based on duration alone
-    if duration_min >= 120:                return "long"
+    if duration_min >= 120:
+        return "long"
     return "easy"
