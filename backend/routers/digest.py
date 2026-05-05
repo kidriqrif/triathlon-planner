@@ -109,7 +109,7 @@ def send_digest(
 
     active_race = db.query(models.Race).filter(
         models.Race.user_id == current_user.id,
-        models.Race.is_active == True,
+        models.Race.is_active,
     ).order_by(models.Race.date).first()
 
     html = _build_digest_html(current_user, last_week, this_week, active_race)
