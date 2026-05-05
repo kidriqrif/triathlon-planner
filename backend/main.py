@@ -1,17 +1,17 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-import os
+import os  # noqa: E402
 
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from slowapi import Limiter
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
+from fastapi import FastAPI, Request  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.responses import JSONResponse  # noqa: E402
+from slowapi import Limiter  # noqa: E402
+from slowapi.util import get_remote_address  # noqa: E402
+from slowapi.errors import RateLimitExceeded  # noqa: E402
 
-import models  # noqa: F401 — registers models with Base
-from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export, support, templates, plans, bodylog, digest
+import models  # noqa: F401, E402 - registers models with Base
+from routers import workouts, races, athlete, ai_coach, auth, billing, strava, export, support, templates, plans, bodylog, digest  # noqa: E402
 
 # Rate limiter
 limiter = Limiter(key_func=get_remote_address, default_limits=["120/minute"])
@@ -21,7 +21,7 @@ app.state.limiter = limiter
 
 
 @app.exception_handler(RateLimitExceeded)
-async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+async def rate_limit_handler(request: Request, _exc: RateLimitExceeded):
     return JSONResponse(
         status_code=429,
         content={"detail": "Too many requests. Please slow down."},
