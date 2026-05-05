@@ -2,7 +2,7 @@ import os
 import secrets
 import logging
 from datetime import datetime, timedelta, timezone
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from slowapi import Limiter
@@ -250,7 +250,7 @@ def reset_password(request: Request, payload: ResetPasswordRequest, db: Session 
 
     reset = db.query(models.PasswordReset).filter(
         models.PasswordReset.token == payload.token,
-        models.PasswordReset.used == False,
+        ~models.PasswordReset.used,
         models.PasswordReset.expires_at > datetime.now(timezone.utc),
     ).first()
 
