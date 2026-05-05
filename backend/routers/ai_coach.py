@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import date, timedelta
-from typing import List, Optional
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -140,7 +140,7 @@ def suggest_week(
 
     active_race = (
         db.query(models.Race)
-        .filter(models.Race.user_id == current_user.id, models.Race.is_active == True)
+        .filter(models.Race.user_id == current_user.id, models.Race.is_active)
         .order_by(models.Race.date)
         .first()
     )
@@ -160,7 +160,6 @@ def suggest_week(
 
     training_summary = _build_training_summary(recent_workouts)
 
-    race_info = "No upcoming race set."
     phase = "Base"
     days_to_race = 999
     race_distance = "unknown"
@@ -171,7 +170,6 @@ def suggest_week(
         phase = _get_training_phase(days_to_race)
         race_distance = active_race.distance
         race_date_str = str(active_race.date)
-        race_info = f"{active_race.name} ({race_distance}) on {race_date_str} — {days_to_race} days away"
 
     api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key:
@@ -343,7 +341,7 @@ def ai_chat(
 
     active_race = (
         db.query(models.Race)
-        .filter(models.Race.user_id == current_user.id, models.Race.is_active == True)
+        .filter(models.Race.user_id == current_user.id, models.Race.is_active)
         .order_by(models.Race.date)
         .first()
     )
